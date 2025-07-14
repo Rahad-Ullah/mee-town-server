@@ -23,7 +23,6 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
-    "@types/multer": "^1.4.11",
     "@types/nodemailer": "^6.4.15",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
@@ -33,6 +32,7 @@
     "typescript": "^5.5.3"
   },
   "dependencies": {
+    "@types/multer": "^2.0.0",
     "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

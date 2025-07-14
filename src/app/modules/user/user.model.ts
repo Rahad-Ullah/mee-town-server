@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 import { model, Schema } from 'mongoose';
 import config from '../../../config';
-import { USER_ROLES } from '../../../enums/user';
+import { RelationshipStatus, USER_ROLES } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import { IUser, UserModal } from './user.interface';
 
@@ -12,33 +12,85 @@ const userSchema = new Schema<IUser, UserModal>(
       type: String,
       required: true,
     },
-    role: {
+    phone: {
       type: String,
-      enum: Object.values(USER_ROLES),
-      required: true,
+      unique: true,
     },
     email: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
       lowercase: true,
     },
     password: {
       type: String,
-      required: true,
-      select: 0,
+      required: false,
+      select: false,
       minlength: 8,
+    },
+    role: {
+      type: String,
+      enum: Object.values(USER_ROLES),
+      required: true,
+    },
+    username: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
+    gender: {
+      type: String,
+      enum: ['Male', 'Female'],
+    },
+    relationshipStatus: {
+      type: String,
+      enum: Object.values(RelationshipStatus),
+    },
+    profession: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
+    nationality: {
+      type: String,
+    },
+    height: {
+      type: Number,
+    },
+    birthday: {
+      type: Date,
+    },
+    bio: {
+      type: String,
     },
     image: {
       type: String,
       default: 'https://i.ibb.co/z5YHLV9/profile.png',
     },
+    interests: {
+      type: [String],
+      default: [],
+    },
+    languages: {
+      type: [String],
+      default: [],
+    },
+    visitedPlaces: {
+      type: [String],
+      default: [],
+    },
     status: {
       type: String,
-      enum: ['active', 'delete'],
-      default: 'active',
+      enum: ['Active', 'Blocked'],
+      default: 'Active',
     },
     verified: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
       type: Boolean,
       default: false,
     },
@@ -57,7 +109,6 @@ const userSchema = new Schema<IUser, UserModal>(
           default: null,
         },
       },
-      select: 0,
     },
   },
   { timestamps: true }
@@ -90,11 +141,13 @@ userSchema.pre('save', async function (next) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Email already exist!');
   }
 
-  //password hash
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(config.bcrypt_salt_rounds)
-  );
+  // Only hash the password if it has been modified and exists
+  if (this.isModified('password') && this.password) {
+    this.password = await bcrypt.hash(
+      this.password,
+      Number(config.bcrypt_salt_rounds)
+    );
+  }
   next();
 });
 

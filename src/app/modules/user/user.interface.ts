@@ -1,16 +1,29 @@
 import { Model } from 'mongoose';
-import { USER_ROLES } from '../../../enums/user';
+import { RelationshipStatus, USER_ROLES } from '../../../enums/user';
 
 export type IUser = {
   name: string;
+  phone?: string;
+  email?: string;
+  password?: string;
   role: USER_ROLES;
-  contact: string;
-  email: string;
-  password: string;
-  location: string;
+  username?: string;
+  location?: string;
+  gender?: 'Male' | 'Female';
+  relationshipStatus?: RelationshipStatus;
+  profession?: string;
+  education?: string;
+  nationality?: string;
+  height?: number;
+  birthday?: Date;
+  bio?: string;
   image?: string;
-  status: 'active' | 'delete';
+  interests?: string[];
+  languages?: string[];
+  visitedPlaces?: string[];
+  status: 'Active' | 'Blocked';
   verified: boolean;
+  isDeleted?: boolean;
   authentication?: {
     isResetPassword: boolean;
     oneTimeCode: number;
