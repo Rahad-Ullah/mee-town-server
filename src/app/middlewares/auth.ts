@@ -34,6 +34,8 @@ const auth =
         }
 
         next();
+      } else {
+        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Token is not valid');
       }
     } catch (error) {
       next(error);
