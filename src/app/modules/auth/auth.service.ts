@@ -43,10 +43,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
   }
 
   //check match password
-  if (
-    password &&
-    !(await User.isMatchPassword(password, isExistUser.password!))
-  ) {
+  if (!(await User.isMatchPassword(password, isExistUser.password!))) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is incorrect!');
   }
 
@@ -217,10 +214,7 @@ const changePasswordToDB = async (
   }
 
   //current password match
-  if (
-    currentPassword &&
-    !(await User.isMatchPassword(currentPassword, isExistUser.password!))
-  ) {
+  if (!(await User.isMatchPassword(currentPassword, isExistUser.password!))) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is incorrect');
   }
 

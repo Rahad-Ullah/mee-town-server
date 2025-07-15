@@ -37,7 +37,9 @@ const createChangePasswordZodSchema = z.object({
     currentPassword: z.string({
       required_error: 'Current Password is required',
     }),
-    newPassword: z.string({ required_error: 'New Password is required' }),
+    newPassword: z
+      .string({ required_error: 'New Password is required' })
+      .min(8, { message: 'Password must be at least 8 characters long' }),
     confirmPassword: z.string({
       required_error: 'Confirm Password is required',
     }),
