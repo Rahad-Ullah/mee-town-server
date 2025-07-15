@@ -7,6 +7,14 @@ import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
 const router = express.Router();
 
+// create user
+router.post(
+  'create',
+  validateRequest(UserValidation.createUserZodSchema),
+  UserController.createUser
+);
+
+// get and update profile
 router
   .route('/profile')
   .get(
@@ -19,11 +27,7 @@ router
     validateRequest(UserValidation.updateUserZodSchema)
   );
 
-router
-  .route('/create')
-  .post(
-    validateRequest(UserValidation.createUserZodSchema),
-    UserController.createUser
-  );
+// get single user
+router.get('/:id', UserController.getSingleUser);
 
 export const UserRoutes = router;

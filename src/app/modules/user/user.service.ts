@@ -75,8 +75,19 @@ const updateProfileToDB = async (
   return updateDoc;
 };
 
+// ---------------------------- get single user -----------------------------
+const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
+  const isExistUser = await User.findById(id).select('-authentication');
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  return isExistUser;
+};
+
 export const UserService = {
   createUserToDB,
   getUserProfileFromDB,
   updateProfileToDB,
+  getSingleUserFromDB,
 };
