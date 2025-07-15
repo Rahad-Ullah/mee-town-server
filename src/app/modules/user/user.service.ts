@@ -8,6 +8,7 @@ import unlinkFile from '../../../shared/unlinkFile';
 import generateOTP from '../../../util/generateOTP';
 import { IUser } from './user.interface';
 import { User } from './user.model';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // ------------------ create user service ------------ ----------
 const createUserToDB = async (payload: Partial<IUser>) => {
@@ -85,9 +86,22 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
   return isExistUser;
 };
 
+// ---------------------------- get all users -----------------------------
+const getAllUsersFromDB = async (query: Record<string, any>) => {
+  const userQuery = new QueryBuilder(User.find({role: USER_ROLES.USER}), query)
+    .paginate()
+    .sort()
+    .filter();
+    
+    const [users, pagination] = await Promise.all([userQuery.modelQuery.lean(), userQuery.getPaginationInfo()])
+
+  return {users, pagination};
+};
+
 export const UserService = {
   createUserToDB,
   getUserProfileFromDB,
   updateProfileToDB,
   getSingleUserFromDB,
+  getAllUsersFromDB
 };

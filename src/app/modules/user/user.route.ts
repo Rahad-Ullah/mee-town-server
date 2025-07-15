@@ -30,4 +30,7 @@ router
 // get single user
 router.get('/:id', UserController.getSingleUser);
 
+// get all users
+router.get('/', auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN), UserController.getAllUsers);
+
 export const UserRoutes = router;
