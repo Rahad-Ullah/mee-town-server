@@ -4,9 +4,19 @@ export enum USER_ROLES {
   USER = 'USER',
 }
 
-export enum RelationshipStatus {
-  Single = 'Single',
-  Married = 'Married',
-  Divorced = 'Divorced',
-  Widowed = 'Widowed',
+export enum RELATIONSHIP_STATUS {
+  SINGLE = 'Single',
+  MARRIED = 'Married',
+  DIVORCED = 'Divorced',
+  WIDOWED = 'Widowed',
+}
+
+export enum GENDER {
+  MALE = 'Male',
+  FEMALE = 'Female',
+}
+
+export enum USER_STATUS {
+  ACTIVE = 'Active',
+  BLOCKED = 'Blocked',
 }

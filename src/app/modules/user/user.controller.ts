@@ -5,8 +5,9 @@ import { getSingleFilePath } from '../../../shared/getFilePath';
 import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './user.service';
 
+// create user
 const createUser = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { ...userData } = req.body;
     const result = await UserService.createUserToDB(userData);
 
@@ -19,6 +20,7 @@ const createUser = catchAsync(
   }
 );
 
+// get user profile
 const getUserProfile = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const result = await UserService.getUserProfileFromDB(user);

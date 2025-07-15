@@ -2,7 +2,12 @@ import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 import { model, Schema } from 'mongoose';
 import config from '../../../config';
-import { RelationshipStatus, USER_ROLES } from '../../../enums/user';
+import {
+  GENDER,
+  RELATIONSHIP_STATUS,
+  USER_ROLES,
+  USER_STATUS,
+} from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import { IUser, UserModal } from './user.interface';
 
@@ -10,16 +15,14 @@ const userSchema = new Schema<IUser, UserModal>(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     phone: {
       type: String,
-      unique: true,
     },
     email: {
       type: String,
       required: false,
-      unique: true,
       lowercase: true,
     },
     password: {
@@ -41,11 +44,11 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     gender: {
       type: String,
-      enum: ['Male', 'Female'],
+      enum: Object.values(GENDER),
     },
     relationshipStatus: {
       type: String,
-      enum: Object.values(RelationshipStatus),
+      enum: Object.values(RELATIONSHIP_STATUS),
     },
     profession: {
       type: String,
@@ -83,7 +86,7 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     status: {
       type: String,
-      enum: ['Active', 'Blocked'],
+      enum: Object.values(USER_STATUS),
       default: 'Active',
     },
     verified: {
@@ -125,6 +128,16 @@ userSchema.statics.isExistUserByEmail = async (email: string) => {
   return isExist;
 };
 
+userSchema.statics.isExistUserByPhone = async (phone: string) => {
+  const isExist = await User.findOne({ phone });
+  return isExist;
+};
+
+userSchema.statics.isExistUserByUsername = async (username: string) => {
+  const isExist = await User.findOne({ username });
+  return isExist;
+};
+
 //is match password
 userSchema.statics.isMatchPassword = async (
   password: string,
@@ -133,12 +146,30 @@ userSchema.statics.isMatchPassword = async (
   return await bcrypt.compare(password, hashPassword);
 };
 
-//check user
+// pre save middleware
 userSchema.pre('save', async function (next) {
-  //check user
-  const isExist = await User.findOne({ email: this.email });
-  if (isExist) {
-    throw new ApiError(StatusCodes.BAD_REQUEST, 'Email already exist!');
+  if (this.email) {
+    const isExist = await User.findOne({ email: this.email });
+    if (isExist) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, 'Email already exist!');
+    }
+  }
+
+  if (this.username) {
+    const isUsernameExist = await User.findOne({ username: this.username });
+    if (isUsernameExist) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, 'Username already taken!');
+    }
+  }
+
+  if (this.phone) {
+    const isExistByPhone = await User.findOne({ phone: this.phone });
+    if (isExistByPhone) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        'Phone number already exist!'
+      );
+    }
   }
 
   // Only hash the password if it has been modified and exists

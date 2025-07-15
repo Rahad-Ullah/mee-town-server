@@ -16,8 +16,9 @@ import cryptoToken from '../../../util/cryptoToken';
 import generateOTP from '../../../util/generateOTP';
 import { ResetToken } from '../resetToken/resetToken.model';
 import { User } from '../user/user.model';
+import { USER_STATUS } from '../../../enums/user';
 
-//login
+// ------------------ login user service ------------ ----------
 const loginUserFromDB = async (payload: ILoginData) => {
   const { email, password } = payload;
   const isExistUser = await User.findOne({ email }).select('+password');
@@ -34,7 +35,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
   }
 
   //check user status
-  if (isExistUser.status === 'delete') {
+  if (isExistUser.status !== USER_STATUS.ACTIVE) {
     throw new ApiError(
       StatusCodes.BAD_REQUEST,
       'You don’t have permission to access this content.It looks like your account has been deactivated.'
@@ -44,7 +45,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
   //check match password
   if (
     password &&
-    !(await User.isMatchPassword(password, isExistUser.password))
+    !(await User.isMatchPassword(password, isExistUser.password!))
   ) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is incorrect!');
   }
@@ -59,7 +60,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
   return { createToken };
 };
 
-//forget password
+// ------------------ forgot password service ------------ ----------
 const forgetPasswordToDB = async (email: string) => {
   const isExistUser = await User.isExistUserByEmail(email);
   if (!isExistUser) {
@@ -83,7 +84,7 @@ const forgetPasswordToDB = async (email: string) => {
   await User.findOneAndUpdate({ email }, { $set: { authentication } });
 };
 
-//verify email
+// ------------------ verify otp service ------------ ----------
 const verifyEmailToDB = async (payload: IVerifyEmail) => {
   const { email, oneTimeCode } = payload;
   const isExistUser = await User.findOne({ email }).select('+authentication');
@@ -98,10 +99,12 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
     );
   }
 
+  // match otp
   if (isExistUser.authentication?.oneTimeCode !== oneTimeCode) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'You provided wrong otp');
   }
 
+  // check expire time
   const date = new Date();
   if (date > isExistUser.authentication?.expireAt) {
     throw new ApiError(
@@ -112,7 +115,7 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
 
   let message;
   let data;
-
+  // update user verify and authentication status when otp verify successful
   if (!isExistUser.verified) {
     await User.findOneAndUpdate(
       { _id: isExistUser._id },
@@ -145,7 +148,7 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
   return { data, message };
 };
 
-//forget password
+// ------------------ reset password service ------------ ----------
 const resetPasswordToDB = async (
   token: string,
   payload: IAuthResetPassword
@@ -202,6 +205,7 @@ const resetPasswordToDB = async (
   });
 };
 
+// ------------------ change password service ------------ ----------
 const changePasswordToDB = async (
   user: JwtPayload,
   payload: IChangePassword
@@ -215,7 +219,7 @@ const changePasswordToDB = async (
   //current password match
   if (
     currentPassword &&
-    !(await User.isMatchPassword(currentPassword, isExistUser.password))
+    !(await User.isMatchPassword(currentPassword, isExistUser.password!))
   ) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is incorrect');
   }

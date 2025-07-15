@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { RelationshipStatus, USER_ROLES } from '../../../enums/user';
+import { RELATIONSHIP_STATUS, USER_ROLES } from '../../../enums/user';
 
 export type IUser = {
   name: string;
@@ -10,7 +10,7 @@ export type IUser = {
   username?: string;
   location?: string;
   gender?: 'Male' | 'Female';
-  relationshipStatus?: RelationshipStatus;
+  relationshipStatus?: RELATIONSHIP_STATUS;
   profession?: string;
   education?: string;
   nationality?: string;
@@ -34,5 +34,7 @@ export type IUser = {
 export type UserModal = {
   isExistUserById(id: string): any;
   isExistUserByEmail(email: string): any;
+  isExistUserByPhone(phone: string): any;
+  isExistUserByUsername(username: string): any;
   isMatchPassword(password: string, hashPassword: string): boolean;
 } & Model<IUser>;
