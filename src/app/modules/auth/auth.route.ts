@@ -19,7 +19,7 @@ router.post(
 );
 
 router.post(
-  '/verify-email',
+  '/verify-otp',
   validateRequest(AuthValidation.createVerifyEmailZodSchema),
   AuthController.verifyEmail
 );
