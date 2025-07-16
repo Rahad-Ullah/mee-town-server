@@ -14,4 +14,6 @@ router.post(
   ReactionController.createReaction
 );
 
+router.get('/:id', auth(USER_ROLES.USER), ReactionController.getSingleReaction);
+
 export const ReactionRoutes = router;
