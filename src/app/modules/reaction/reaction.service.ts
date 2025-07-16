@@ -24,7 +24,14 @@ const getSingleReactionFromDB = async (userId: string, reactorId: string) => {
   return result;
 };
 
+// --------------------- get my reactions ---------------------
+const getMyReactionsFromDB = async (userId: string) => {
+  const result = await Reaction.find({ reactor: userId });
+  return result;
+};
+
 export const ReactionService = {
   createReactionIntoDB,
   getSingleReactionFromDB,
+  getMyReactionsFromDB,
 };
