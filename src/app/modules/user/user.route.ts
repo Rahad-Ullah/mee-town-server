@@ -38,6 +38,9 @@ router.patch(
   UserController.updateProfile
 );
 
+// delete user
+router.delete('/:id', UserController.deleteUser);
+
 // get single user
 router.get('/:id', UserController.getSingleUser);
 

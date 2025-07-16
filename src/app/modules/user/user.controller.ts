@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../../shared/catchAsync';
 import { getSingleFilePath } from '../../../shared/getFilePath';
@@ -6,19 +6,17 @@ import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './user.service';
 
 // create user
-const createUser = catchAsync(
-  async (req: Request, res: Response) => {
-    const { ...userData } = req.body;
-    const result = await UserService.createUserToDB(userData);
+const createUser = catchAsync(async (req: Request, res: Response) => {
+  const { ...userData } = req.body;
+  const result = await UserService.createUserToDB(userData);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: StatusCodes.OK,
-      message: 'User created successfully. Please check your email for OTP.',
-      data: result,
-    });
-  }
-);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'User created successfully. Please check your email for OTP.',
+    data: result,
+  });
+});
 
 // get user profile
 const getUserProfile = catchAsync(async (req: Request, res: Response) => {
@@ -52,6 +50,19 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete user
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await UserService.deleteUserFromDB(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'User deleted successfully',
+    data: result,
+  });
+});
+
 // get user profile
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -78,18 +89,24 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 });
 
 // create admin
-const createAdmin = catchAsync(
-  async (req: Request, res: Response) => {
-    const { ...payload } = req.body;
-    const result = await UserService.createAdminToDB(payload);
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { ...payload } = req.body;
+  const result = await UserService.createAdminToDB(payload);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: StatusCodes.OK,
-      message: 'Admin created successfully.',
-      data: result,
-    });
-  }
-);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Admin created successfully.',
+    data: result,
+  });
+});
 
-export const UserController = { createUser, createAdmin, getUserProfile, updateProfile, getSingleUser, getAllUsers };
+export const UserController = {
+  createUser,
+  createAdmin,
+  getUserProfile,
+  updateProfile,
+  deleteUser,
+  getSingleUser,
+  getAllUsers,
+};

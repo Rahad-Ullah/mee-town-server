@@ -116,6 +116,18 @@ const getAllUsersFromDB = async (query: Record<string, any>) => {
   return { users, pagination };
 };
 
+// ---------------------------- soft delete user -----------------------------
+const deleteUserFromDB = async (id: string): Promise<Partial<IUser> | null> => {
+  const isExistUser = await User.findById(id);
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+  
+  const result = await User.findByIdAndUpdate(id, { isDeleted: true }, {new: true});
+
+  return result;
+};
+
 // ------------------ create admin service ------------ ----------
 const createAdminToDB = async (payload: Partial<IUser>) => {
   // check the payload is empty or not
@@ -139,6 +151,7 @@ export const UserService = {
   createAdminToDB,
   getUserProfileFromDB,
   updateProfileToDB,
+  deleteUserFromDB,
   getSingleUserFromDB,
   getAllUsersFromDB,
 };
