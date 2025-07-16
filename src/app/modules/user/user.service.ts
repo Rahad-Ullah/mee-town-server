@@ -122,8 +122,15 @@ const deleteUserFromDB = async (id: string): Promise<Partial<IUser> | null> => {
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
-  
-  const result = await User.findByIdAndUpdate(id, { isDeleted: true }, {new: true});
+  if (isExistUser.isDeleted) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'User already deleted!');
+  }
+
+  const result = await User.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true }
+  );
 
   return result;
 };
