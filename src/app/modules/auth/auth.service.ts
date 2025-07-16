@@ -34,11 +34,19 @@ const loginUserFromDB = async (payload: ILoginData) => {
     );
   }
 
+  //check if user is deleted
+  if (isExistUser.isDeleted) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account has been deleted.'
+    );
+  }
+
   //check user status
   if (isExistUser.status !== USER_STATUS.ACTIVE) {
     throw new ApiError(
       StatusCodes.BAD_REQUEST,
-      'You don’t have permission to access this content.It looks like your account has been deactivated.'
+      'Your account has been deactivated. Please contact the admin'
     );
   }
 
@@ -62,6 +70,22 @@ const forgetPasswordToDB = async (email: string) => {
   const isExistUser = await User.isExistUserByEmail(email);
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  //check if user is deleted
+  if (isExistUser.isDeleted) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account has been deleted.'
+    );
+  }
+
+  //check user status
+  if (isExistUser.status !== USER_STATUS.ACTIVE) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account has been deactivated. Please contact the admin'
+    );
   }
 
   //send mail
@@ -211,6 +235,22 @@ const changePasswordToDB = async (
   const isExistUser = await User.findById(user.id).select('+password');
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  //check if user is deleted
+  if (isExistUser.isDeleted) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account has been deleted.'
+    );
+  }
+
+  //check user status
+  if (isExistUser.status !== USER_STATUS.ACTIVE) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account has been deactivated. Please contact the admin'
+    );
   }
 
   //current password match

@@ -55,6 +55,12 @@ const getUserProfileFromDB = async (
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
+  if (isExistUser.isDeleted) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'User is deleted!');
+  }
+  if (isExistUser.status === 'Blocked') {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'User is blocked!');
+  }
 
   return isExistUser;
 };
@@ -94,7 +100,7 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
 // ---------------------------- get all users -----------------------------
 const getAllUsersFromDB = async (query: Record<string, any>) => {
   const userQuery = new QueryBuilder(
-    User.find({ role: USER_ROLES.USER }).select('-authentication'),
+    User.find({ isDeleted: false }).select('-authentication'),
     query
   )
     .paginate()
