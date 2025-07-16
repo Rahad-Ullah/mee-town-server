@@ -33,7 +33,10 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     role: {
       type: String,
-      enum: Object.values(USER_ROLES),
+      enum: {
+        values: Object.values(USER_ROLES),
+        message: '{VALUE} is not a valid role',
+      },
       required: true,
     },
     username: {
@@ -44,11 +47,17 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     gender: {
       type: String,
-      enum: Object.values(GENDER),
+      enum: {
+        values: Object.values(GENDER),
+        message: '{VALUE} is not a valid gender',
+      },
     },
     relationshipStatus: {
       type: String,
-      enum: Object.values(RELATIONSHIP_STATUS),
+      enum: {
+        values: Object.values(RELATIONSHIP_STATUS),
+        message: '{VALUE} is not a valid relationship status',
+      },
     },
     profession: {
       type: String,
@@ -86,8 +95,11 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     status: {
       type: String,
-      enum: Object.values(USER_STATUS),
-      default: 'Active',
+      enum: {
+        values: Object.values(USER_STATUS),
+        message: '{VALUE} is not a valid status',
+      },
+      default: USER_STATUS.ACTIVE,
     },
     verified: {
       type: Boolean,
@@ -114,12 +126,19 @@ const userSchema = new Schema<IUser, UserModal>(
       },
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+// Add schema-level validation for updates
+userSchema.pre(['findOneAndUpdate', 'updateOne', 'updateMany'], function () {
+  this.setOptions({ runValidators: true });
+});
 
 //exist user check
 userSchema.statics.isExistUserById = async (id: string) => {
-  const isExist = await User.findById(id);
+  const isExist = await User.findByIdAndUpdate(id);
   return isExist;
 };
 

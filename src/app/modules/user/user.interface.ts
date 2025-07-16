@@ -1,5 +1,9 @@
 import { Model } from 'mongoose';
-import { RELATIONSHIP_STATUS, USER_ROLES } from '../../../enums/user';
+import {
+  RELATIONSHIP_STATUS,
+  USER_ROLES,
+  USER_STATUS,
+} from '../../../enums/user';
 
 export type IUser = {
   name: string;
@@ -21,7 +25,7 @@ export type IUser = {
   interests?: string[];
   languages?: string[];
   visitedPlaces?: string[];
-  status: 'Active' | 'Blocked';
+  status: USER_STATUS;
   verified: boolean;
   isDeleted?: boolean;
   authentication?: {

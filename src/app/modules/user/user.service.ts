@@ -12,6 +12,11 @@ import QueryBuilder from '../../builder/QueryBuilder';
 
 // ------------------ create user service ------------ ----------
 const createUserToDB = async (payload: Partial<IUser>) => {
+  // check the payload is empty or not
+  if (Object.keys(payload).length === 0) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Payload is empty');
+  }
+
   //set role
   payload.role = USER_ROLES.USER;
   const createUser = await User.create(payload);
@@ -88,14 +93,20 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
 
 // ---------------------------- get all users -----------------------------
 const getAllUsersFromDB = async (query: Record<string, any>) => {
-  const userQuery = new QueryBuilder(User.find({role: USER_ROLES.USER}), query)
+  const userQuery = new QueryBuilder(
+    User.find({ role: USER_ROLES.USER }).select('-authentication'),
+    query
+  )
     .paginate()
     .sort()
     .filter();
-    
-    const [users, pagination] = await Promise.all([userQuery.modelQuery.lean(), userQuery.getPaginationInfo()])
 
-  return {users, pagination};
+  const [users, pagination] = await Promise.all([
+    userQuery.modelQuery.lean(),
+    userQuery.getPaginationInfo(),
+  ]);
+
+  return { users, pagination };
 };
 
 export const UserService = {

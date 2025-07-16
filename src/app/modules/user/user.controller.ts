@@ -34,25 +34,23 @@ const getUserProfile = catchAsync(async (req: Request, res: Response) => {
 });
 
 //update profile
-const updateProfile = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user;
-    let image = getSingleFilePath(req.files, 'image');
+const updateProfile = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  let image = getSingleFilePath(req.files, 'image');
 
-    const data = {
-      image,
-      ...req.body,
-    };
-    const result = await UserService.updateProfileToDB(user, data);
+  const data = {
+    image,
+    ...req.body,
+  };
+  const result = await UserService.updateProfileToDB(user, data);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: StatusCodes.OK,
-      message: 'Profile updated successfully',
-      data: result,
-    });
-  }
-);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Profile updated successfully',
+    data: result,
+  });
+});
 
 // get user profile
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {

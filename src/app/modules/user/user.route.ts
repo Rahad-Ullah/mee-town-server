@@ -9,23 +9,27 @@ const router = express.Router();
 
 // create user
 router.post(
-  'create',
+  '/create',
   validateRequest(UserValidation.createUserZodSchema),
   UserController.createUser
 );
 
-// get and update profile
+// get profile
 router
   .route('/profile')
   .get(
     auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
     UserController.getUserProfile
-  )
-  .patch(
-    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
-    fileUploadHandler(),
-    validateRequest(UserValidation.updateUserZodSchema)
   );
+
+// update profile
+router.patch(
+  '/profile',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
+  fileUploadHandler(),
+  validateRequest(UserValidation.updateUserZodSchema),
+  UserController.updateProfile
+);
 
 // get single user
 router.get('/:id', UserController.getSingleUser);
