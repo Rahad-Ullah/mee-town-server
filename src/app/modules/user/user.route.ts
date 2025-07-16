@@ -9,9 +9,16 @@ const router = express.Router();
 
 // create user
 router.post(
-  '/create',
+  '/create-user',
   validateRequest(UserValidation.createUserZodSchema),
   UserController.createUser
+);
+
+// create admin
+router.post(
+  '/create-admin',
+  validateRequest(UserValidation.createUserZodSchema),
+  UserController.createAdmin
 );
 
 // get profile

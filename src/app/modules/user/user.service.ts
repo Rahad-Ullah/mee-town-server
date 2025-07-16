@@ -99,7 +99,8 @@ const getAllUsersFromDB = async (query: Record<string, any>) => {
   )
     .paginate()
     .sort()
-    .filter();
+    .filter()
+    .search(['name', 'email', 'phone', 'username']);
 
   const [users, pagination] = await Promise.all([
     userQuery.modelQuery.lean(),
@@ -109,10 +110,29 @@ const getAllUsersFromDB = async (query: Record<string, any>) => {
   return { users, pagination };
 };
 
+// ------------------ create admin service ------------ ----------
+const createAdminToDB = async (payload: Partial<IUser>) => {
+  // check the payload is empty or not
+  if (Object.keys(payload).length === 0) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Payload is empty');
+  }
+
+  //set role and verified status
+  payload.role = USER_ROLES.ADMIN;
+  payload.verified = true;
+  const result = await User.create(payload);
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create admin');
+  }
+
+  return null;
+};
+
 export const UserService = {
   createUserToDB,
+  createAdminToDB,
   getUserProfileFromDB,
   updateProfileToDB,
   getSingleUserFromDB,
-  getAllUsersFromDB
+  getAllUsersFromDB,
 };

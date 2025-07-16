@@ -77,4 +77,19 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const UserController = { createUser, getUserProfile, updateProfile, getSingleUser, getAllUsers };
+// create admin
+const createAdmin = catchAsync(
+  async (req: Request, res: Response) => {
+    const { ...payload } = req.body;
+    const result = await UserService.createAdminToDB(payload);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: StatusCodes.OK,
+      message: 'Admin created successfully.',
+      data: result,
+    });
+  }
+);
+
+export const UserController = { createUser, createAdmin, getUserProfile, updateProfile, getSingleUser, getAllUsers };
