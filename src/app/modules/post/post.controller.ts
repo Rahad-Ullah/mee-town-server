@@ -47,4 +47,16 @@ const deletePost = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const PostController = { createPost, updatePost, deletePost };
+// get my posts
+const getMyPosts = catchAsync(async (req: Request, res: Response) => {
+  const result = await PostServices.getMyPostsFromDB(req.user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Posts retrieved successfully',
+    data: result,
+  });
+})
+
+export const PostController = { createPost, updatePost, deletePost, getMyPosts };

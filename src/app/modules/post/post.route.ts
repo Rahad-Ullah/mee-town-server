@@ -28,4 +28,7 @@ router.patch(
 // soft delete post
 router.delete('/:id', auth(USER_ROLES.USER), PostController.deletePost);
 
+// get my posts
+router.get('/my-posts', auth(USER_ROLES.USER), PostController.getMyPosts);
+
 export const PostRoutes = router;

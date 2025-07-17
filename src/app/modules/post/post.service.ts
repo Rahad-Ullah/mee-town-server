@@ -53,8 +53,15 @@ const deletePostFromDB = async (id: string) => {
   return result;
 };
 
+// --------------- get my posts ---------------
+const getMyPostsFromDB = async (user: any) => {
+  const result = await Post.find({ user: user.id });
+  return result;
+};
+
 export const PostServices = {
   createPostIntoDB,
   updatePostIntoDB,
   deletePostFromDB,
+  getMyPostsFromDB,
 };
