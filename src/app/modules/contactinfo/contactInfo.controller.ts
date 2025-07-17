@@ -1,4 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import { ContactInfoServices } from './ContactInfo.service';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { ContactInfoServices } from './contactInfo.service';
 
-export const ContactInfoController = { };
+const updateContactInfo = catchAsync(async (req: Request, res: Response) => {
+    const result = await ContactInfoServices.updateContactInfoIntoDB(req.body);
+    
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Contact Info updated successfully',
+        data: result
+    })
+});
+
+export const ContactInfoController = { updateContactInfo};

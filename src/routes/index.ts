@@ -5,6 +5,7 @@ import { ReactionRoutes } from '../app/modules/reaction/reaction.route';
 import { PostRoutes } from '../app/modules/post/post.route';
 import { DisclaimerRoutes } from '../app/modules/disclaimer/disclaimer.route';
 import { PostReactionRoutes } from '../app/modules/postReaction/postReaction.route';
+import { ContactInfoRoutes } from '../app/modules/contactInfo/contactInfo.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -31,6 +32,10 @@ const apiRoutes = [
   {
     path: '/disclaimer',
     route: DisclaimerRoutes,
+  },
+  {
+    path: '/contact-info',
+    route: ContactInfoRoutes,
   },
 ];
 
