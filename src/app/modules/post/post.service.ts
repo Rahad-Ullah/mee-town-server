@@ -4,6 +4,7 @@ import { IPost, PostModel } from './post.interface';
 import { Post } from './post.model';
 import unlinkFile from '../../../shared/unlinkFile';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { PostReaction } from '../postReaction/postReaction.model';
 
 // --------------- create post ---------------
 const createPostIntoDB = async (payload: IPost) => {
@@ -75,10 +76,24 @@ const getAllPostsFromDB = async (query: Record<string, any>) => {
   return { posts, pagination };
 };
 
+// --------------- get my liked posts ---------------
+const getMyLikedPostsFromDB = async (user: any) => {
+  const result = await PostReaction.find({
+    reactor: user.id,
+    isLike: true,
+  })
+    .populate('post')
+    .select('post');
+
+  // return only post
+  return result.map(item => item.post);
+};
+
 export const PostServices = {
   createPostIntoDB,
   updatePostIntoDB,
   deletePostFromDB,
   getMyPostsFromDB,
   getAllPostsFromDB,
+  getMyLikedPostsFromDB,
 };

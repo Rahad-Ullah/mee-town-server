@@ -31,6 +31,9 @@ router.delete('/:id', auth(USER_ROLES.USER), PostController.deletePost);
 // get my posts
 router.get('/my-posts', auth(USER_ROLES.USER), PostController.getMyPosts);
 
+// get my liked posts
+router.get('/my-liked-posts', auth(USER_ROLES.USER), PostController.getMyLikedPosts);
+
 // get all posts
 router.get('/', auth(USER_ROLES.USER, USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PostController.getAllPosts);
 
