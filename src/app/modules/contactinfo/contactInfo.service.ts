@@ -10,4 +10,10 @@ const updateContactInfoIntoDB = async (payload: IContactInfo) => {
   return result;
 };
 
-export const ContactInfoServices = { updateContactInfoIntoDB };
+// -------------- get contact info --------------
+const getContactInfoFromDB = async () => {
+  const result = await ContactInfo.findOne({}).lean();
+  return result;
+};
+
+export const ContactInfoServices = { updateContactInfoIntoDB, getContactInfoFromDB };

@@ -14,4 +14,7 @@ router.post(
   ContactInfoController.updateContactInfo
 );
 
+// get contact info
+router.get('/', ContactInfoController.getContactInfo);
+
 export const ContactInfoRoutes = router;

@@ -14,4 +14,16 @@ const updateContactInfo = catchAsync(async (req: Request, res: Response) => {
     })
 });
 
-export const ContactInfoController = { updateContactInfo};
+// get contact info
+const getContactInfo = catchAsync(async (req: Request, res: Response) => {
+    const result = await ContactInfoServices.getContactInfoFromDB();
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Contact Info fetched successfully',
+        data: result
+    })
+})
+
+export const ContactInfoController = { updateContactInfo, getContactInfo };
