@@ -21,8 +21,8 @@ const createPost = catchAsync(async (req: Request, res: Response) => {
 
 // update post
 const updatePost = catchAsync(async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const image = getSingleFilePath(req.files, 'image');
+  const { id } = req.params;
+  const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, image };
   const result = await PostServices.updatePostIntoDB(id, payload);
 
@@ -34,4 +34,17 @@ const updatePost = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const PostController = { createPost, updatePost };
+// delete post (soft delete)
+const deletePost = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await PostServices.deletePostFromDB(id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Post deleted successfully',
+    data: result,
+  });
+});
+
+export const PostController = { createPost, updatePost, deletePost };
