@@ -1,8 +1,8 @@
-import { DisclaimerModel, IDisclaimer } from './disclaimer.interface';
+import { IDisclaimer } from './disclaimer.interface';
 import { Disclaimer } from './disclaimer.model';
 
 // --------------- create/update disclaimer ---------------
-export const createDisclaimer = async (payload: IDisclaimer) => {
+export const createDisclaimerIntoDB = async (payload: IDisclaimer) => {
   const result = await Disclaimer.findOneAndUpdate(
     { type: payload.type },
     payload,
@@ -12,4 +12,13 @@ export const createDisclaimer = async (payload: IDisclaimer) => {
   return result;
 };
 
-export const DisclaimerServices = { createDisclaimer };
+// --------------- get disclaimer ---------------
+export const getDisclaimerFromDB = async (type: string) => {
+  const result = await Disclaimer.findOne({ type }).lean();
+  return result;
+};
+
+export const DisclaimerServices = {
+  createDisclaimerIntoDB,
+  getDisclaimerFromDB,
+};

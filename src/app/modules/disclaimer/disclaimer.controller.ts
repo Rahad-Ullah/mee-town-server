@@ -5,7 +5,7 @@ import sendResponse from '../../../shared/sendResponse';
 
 // --------------- create/update disclaimer ---------------
 const createDisclaimer = catchAsync(async (req: Request, res: Response) => {
-  const result = await DisclaimerServices.createDisclaimer(req.body);
+  const result = await DisclaimerServices.createDisclaimerIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: 200,
@@ -15,4 +15,16 @@ const createDisclaimer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const DisclaimerController = { createDisclaimer };
+// get disclaimer
+const getDisclaimer = catchAsync(async (req: Request, res: Response) => {
+  const result = await DisclaimerServices.getDisclaimerFromDB(req.params.type);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Disclaimer retrieved successfully',
+    data: result,
+  });
+});
+
+export const DisclaimerController = { createDisclaimer, getDisclaimer };
