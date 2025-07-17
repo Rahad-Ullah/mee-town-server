@@ -19,7 +19,7 @@ const createPostZodSchema = z.object({
       })
       .min(1, 'Message cannot be empty'),
     // Image will be handled by file upload middleware, so we can make it optional here
-    image: z.string().optional(),
+    image: z.string({ required_error: 'Image is required' }).optional(),
   }),
 });
 
