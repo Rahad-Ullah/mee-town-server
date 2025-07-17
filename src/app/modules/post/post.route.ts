@@ -31,4 +31,7 @@ router.delete('/:id', auth(USER_ROLES.USER), PostController.deletePost);
 // get my posts
 router.get('/my-posts', auth(USER_ROLES.USER), PostController.getMyPosts);
 
+// get all posts
+router.get('/', auth(USER_ROLES.USER, USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PostController.getAllPosts);
+
 export const PostRoutes = router;

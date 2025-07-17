@@ -3,6 +3,7 @@ import ApiError from '../../../errors/ApiError';
 import { IPost, PostModel } from './post.interface';
 import { Post } from './post.model';
 import unlinkFile from '../../../shared/unlinkFile';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // --------------- create post ---------------
 const createPostIntoDB = async (payload: IPost) => {
@@ -55,8 +56,23 @@ const deletePostFromDB = async (id: string) => {
 
 // --------------- get my posts ---------------
 const getMyPostsFromDB = async (user: any) => {
-  const result = await Post.find({ user: user.id });
+  const result = await Post.find({ user: user.id, isDeleted: false });
   return result;
+};
+
+// --------------- get all posts ---------------
+const getAllPostsFromDB = async (query: Record<string, any>) => {
+  const postQuery = new QueryBuilder(Post.find({ isDeleted: false }), query)
+    .paginate()
+    .filter()
+    .search(['place', 'title', 'message'])
+    .sort();
+
+  const [posts, pagination] = await Promise.all([
+    postQuery.modelQuery.lean(),
+    postQuery.getPaginationInfo(),
+  ]);
+  return { posts, pagination };
 };
 
 export const PostServices = {
@@ -64,4 +80,5 @@ export const PostServices = {
   updatePostIntoDB,
   deletePostFromDB,
   getMyPostsFromDB,
+  getAllPostsFromDB,
 };
