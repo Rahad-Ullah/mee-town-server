@@ -34,4 +34,9 @@ const postSchema = new Schema<IPost, PostModel>(
   }
 );
 
+// Add schema-level validation for updates
+postSchema.pre(['findOneAndUpdate', 'updateOne', 'updateMany'], function () {
+  this.setOptions({ runValidators: true });
+});
+
 export const Post = model<IPost, PostModel>('Post', postSchema);

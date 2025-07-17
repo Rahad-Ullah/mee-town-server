@@ -8,6 +8,7 @@ import { PostValidations } from './post.validation';
 
 const router = express.Router();
 
+// create post
 router.post(
   '/',
   auth(USER_ROLES.USER),
@@ -15,5 +16,13 @@ router.post(
   validateRequest(PostValidations.createPostZodSchema),
   PostController.createPost
 ); 
+// update post
+router.patch(
+  '/:id',
+  auth(USER_ROLES.USER),
+  fileUploadHandler(),
+  validateRequest(PostValidations.updatePostZodSchema),
+  PostController.updatePost
+);
 
 export const PostRoutes = router;
