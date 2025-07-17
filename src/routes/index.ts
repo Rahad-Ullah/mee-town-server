@@ -6,6 +6,7 @@ import { PostRoutes } from '../app/modules/post/post.route';
 import { DisclaimerRoutes } from '../app/modules/disclaimer/disclaimer.route';
 import { PostReactionRoutes } from '../app/modules/postReaction/postReaction.route';
 import { ContactInfoRoutes } from '../app/modules/contactInfo/contactInfo.route';
+import { GalleryRoutes } from '../app/modules/gallery/gallery.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -36,6 +37,10 @@ const apiRoutes = [
   {
     path: '/contact-info',
     route: ContactInfoRoutes,
+  },
+  {
+    path: '/gallery',
+    route: GalleryRoutes,
   },
 ];
 

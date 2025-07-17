@@ -1,4 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import { GalleryServices } from './gallery.service';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { getSingleFilePath } from '../../../shared/getFilePath';
 
-export const GalleryController = { };
+// create gallery controller
+const createGallery = catchAsync(async (req: Request, res: Response) => {
+  const image = getSingleFilePath(req.files, 'image');
+  const payload = { ...req.body, user: req.user.id, image };
+
+  const result = await GalleryServices.createGalleryIntoDB(payload);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Gallery created successfully',
+    data: result,
+  });
+});
+
+export const GalleryController = { createGallery };

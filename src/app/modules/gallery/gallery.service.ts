@@ -1,3 +1,10 @@
-import { GalleryModel } from './gallery.interface';
+import { IGallery } from './gallery.interface';
+import { Gallery } from './gallery.model';
 
-export const GalleryServices = { };
+// --------------- create gallery service ---------------
+const createGalleryIntoDB = async (payload: IGallery) => {
+  const result = await Gallery.create(payload);
+  return result;
+};
+
+export const GalleryServices = { createGalleryIntoDB };
