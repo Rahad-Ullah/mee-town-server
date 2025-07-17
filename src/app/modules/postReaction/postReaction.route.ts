@@ -14,4 +14,7 @@ router.post(
   PostReactionController.createPostReaction
 );
 
+// get postReaction by post id
+router.get('/:id', auth(USER_ROLES.USER), PostReactionController.getPostReactionByPostId);
+
 export const PostReactionRoutes = router;

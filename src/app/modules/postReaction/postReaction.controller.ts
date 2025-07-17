@@ -18,4 +18,16 @@ const createPostReaction = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const PostReactionController = { createPostReaction };
+// --------------- get postReaction by post id ---------------
+const getPostReactionByPostId = catchAsync(async (req: Request, res: Response) => {
+  const result = await PostReactionServices.getPostReactionByPostId(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'PostReaction fetched successfully',
+    data: result,
+  });
+})
+
+export const PostReactionController = { createPostReaction, getPostReactionByPostId };

@@ -19,4 +19,20 @@ const createPostReaction = async (payload: IPostReaction) => {
   return result;
 };
 
-export const PostReactionServices = { createPostReaction };
+// --------------- get postReaction by post id ---------------
+const getPostReactionByPostId = async (postId: string) => {
+  const result = await PostReaction.find({ post: postId }).populate({
+    path: 'reactor',
+    select: 'name email phone username image',
+    match: { isDeleted: false },
+  });
+  // filter out deleted users
+  const filteredResult = result.filter(item => item.reactor !== null);
+
+  return filteredResult;
+};
+
+export const PostReactionServices = {
+  createPostReaction,
+  getPostReactionByPostId,
+};
