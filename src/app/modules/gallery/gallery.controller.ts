@@ -19,4 +19,17 @@ const createGallery = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const GalleryController = { createGallery };
+// delete gallery controller
+const deleteGallery = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await GalleryServices.deleteGalleryFromDB(id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Gallery deleted successfully',
+    data: result,
+  });
+})
+
+export const GalleryController = { createGallery, deleteGallery };
