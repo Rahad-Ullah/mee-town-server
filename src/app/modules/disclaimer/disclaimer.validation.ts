@@ -6,24 +6,14 @@ const createDisclaimerZodSchema = z.object({
     type: z.nativeEnum(DisclaimerType, {
       required_error: 'Type is required',
     }),
-    content: z.string({
-      required_error: 'Content is required',
-    }),
-  }),
-});
-
-const updateDisclaimerZodSchema = z.object({
-  body: z.object({
-    type: z.nativeEnum(DisclaimerType, {
-      required_error: 'Type is required',
-    }),
-    content: z.string({
-      required_error: 'Content is required',
-    }),
+    content: z
+      .string({
+        required_error: 'Content is required',
+      })
+      .nonempty({ message: 'Content cannot be empty' }),
   }),
 });
 
 export const DisclaimerValidations = {
   createDisclaimerZodSchema,
-  updateDisclaimerZodSchema,
 };
