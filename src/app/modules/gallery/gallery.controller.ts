@@ -32,4 +32,17 @@ const deleteGallery = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
-export const GalleryController = { createGallery, deleteGallery };
+// get my gallery controller
+const getMyGallery = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.user;
+  const result = await GalleryServices.getMyGalleryFromDB(id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Gallery fetched successfully',
+    data: result,
+  });
+})
+
+export const GalleryController = { createGallery, deleteGallery, getMyGallery };

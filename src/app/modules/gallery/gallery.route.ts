@@ -19,4 +19,7 @@ router.post(
 // delete gallery
 router.delete('/:id', auth(USER_ROLES.USER), GalleryController.deleteGallery);
 
+// get my gallery
+router.get('/my-gallery', auth(USER_ROLES.USER), GalleryController.getMyGallery);
+
 export const GalleryRoutes = router;

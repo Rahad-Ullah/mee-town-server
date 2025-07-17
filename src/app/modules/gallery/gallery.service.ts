@@ -26,4 +26,11 @@ const deleteGalleryFromDB = async (id: string) => {
   return result;
 };
 
-export const GalleryServices = { createGalleryIntoDB, deleteGalleryFromDB };
+// --------------- get my gallery ---------------
+const getMyGalleryFromDB = async (id: string) => {
+    console.log(id);
+  const result = await Gallery.find({ user: id });
+  return result;
+};
+
+export const GalleryServices = { createGalleryIntoDB, deleteGalleryFromDB, getMyGalleryFromDB };
