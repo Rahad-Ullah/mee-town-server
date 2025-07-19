@@ -5,10 +5,24 @@ import { Post } from './post.model';
 import unlinkFile from '../../../shared/unlinkFile';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { PostReaction } from '../postReaction/postReaction.model';
+import { User } from '../user/user.model';
 
 // --------------- create post ---------------
 const createPostIntoDB = async (payload: IPost) => {
   const result = await Post.create(payload);
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create post');
+  }
+
+  // add visited place to the profile
+  await User.findByIdAndUpdate(
+    payload.user,
+    {
+      $addToSet: { visitedPlaces: result.place },
+    },
+    { new: true }
+  );
+
   return result;
 };
 
