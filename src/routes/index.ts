@@ -8,6 +8,7 @@ import { PostReactionRoutes } from '../app/modules/postReaction/postReaction.rou
 import { ContactInfoRoutes } from '../app/modules/contactInfo/contactInfo.route';
 import { GalleryRoutes } from '../app/modules/gallery/gallery.route';
 import { FaqRoutes } from '../app/modules/faq/faq.route';
+import { PackageRoutes } from '../app/modules/package/package.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -46,6 +47,10 @@ const apiRoutes = [
   {
     path: '/faq',
     route: FaqRoutes,
+  },
+  {
+    path: '/packages',
+    route: PackageRoutes,
   },
 ];
 

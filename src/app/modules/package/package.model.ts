@@ -31,7 +31,7 @@ const packageSchema = new Schema<IPackage, PackageModel>(
     },
     tag: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     isDeleted: {
