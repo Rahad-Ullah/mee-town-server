@@ -8,6 +8,7 @@ import fileUploadHandler from '../../middlewares/fileUploadHandler';
 
 const router = express.Router();
 
+// create trip
 router.post(
   '/',
   auth(USER_ROLES.USER),
@@ -16,6 +17,7 @@ router.post(
   TripController.createTrip
 ); 
 
+// update trip
 router.patch(
   '/:id',
   auth(USER_ROLES.USER),
@@ -23,5 +25,8 @@ router.patch(
   validateRequest(TripValidations.updateTripSchema),
   TripController.updateTrip
 );
+
+// get trip by user id
+router.get('/:id', auth(USER_ROLES.USER), TripController.getTripByUserId);
 
 export const TripRoutes = router;

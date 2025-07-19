@@ -29,4 +29,10 @@ const updateTripIntoDB = async (id: string, payload: Partial<ITrip>) => {
   return result;
 };
 
-export const TripServices = { createTripIntoDB, updateTripIntoDB };
+// --------------- get trip by user id ----------------
+const getTripByUserId = async (userId: string): Promise<ITrip[]> => {
+  const result = await Trip.find({ user: userId, isDeleted: false });
+  return result;
+}
+
+export const TripServices = { createTripIntoDB, updateTripIntoDB, getTripByUserId };

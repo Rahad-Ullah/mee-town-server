@@ -33,4 +33,17 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
-export const TripController = { createTrip, updateTrip };
+// get trip by user id
+const getTripByUserId = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await TripServices.getTripByUserId(id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Trip retrieved successfully',
+    data: result,
+  });
+})
+
+export const TripController = { createTrip, updateTrip, getTripByUserId };
