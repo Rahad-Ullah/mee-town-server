@@ -16,4 +16,12 @@ router.post(
   TripController.createTrip
 ); 
 
+router.patch(
+  '/:id',
+  auth(USER_ROLES.USER),
+  fileUploadHandler(),
+  validateRequest(TripValidations.updateTripSchema),
+  TripController.updateTrip
+);
+
 export const TripRoutes = router;

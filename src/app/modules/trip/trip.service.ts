@@ -1,3 +1,4 @@
+import unlinkFile from '../../../shared/unlinkFile';
 import { ITrip } from './trip.interface';
 import { Trip } from './trip.model';
 
@@ -8,4 +9,24 @@ export const createTripIntoDB = async (payload: ITrip): Promise<ITrip> => {
   return result;
 };
 
-export const TripServices = { createTripIntoDB };
+// --------------- update trip ----------------
+const updateTripIntoDB = async (id: string, payload: Partial<ITrip>) => {
+  // check if the trip exists
+  const isTripExist = await Trip.findById(id);
+  if (!isTripExist) {
+    throw new Error('Trip not found');
+  }
+
+  const result = await Trip.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  // unlink the image from the server
+  if (payload.image && result) {
+    unlinkFile(isTripExist.image);
+  }
+
+  return result;
+};
+
+export const TripServices = { createTripIntoDB, updateTripIntoDB };

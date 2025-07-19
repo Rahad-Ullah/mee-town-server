@@ -18,4 +18,19 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const TripController = { createTrip };
+// update trip
+const updateTrip = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const image = getSingleFilePath(req.files, 'image');
+  const paylaod = { ...req.body, image };
+  const result = await TripServices.updateTripIntoDB(id, paylaod);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Trip updated successfully',
+    data: result,
+  });
+})
+
+export const TripController = { createTrip, updateTrip };
