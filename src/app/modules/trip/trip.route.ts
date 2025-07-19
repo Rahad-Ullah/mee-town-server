@@ -29,4 +29,7 @@ router.patch(
 // get trip by user id
 router.get('/:id', auth(USER_ROLES.USER), TripController.getTripByUserId);
 
+// get my trips
+router.get('/', auth(USER_ROLES.USER), TripController.getMyTrips);
+
 export const TripRoutes = router;
