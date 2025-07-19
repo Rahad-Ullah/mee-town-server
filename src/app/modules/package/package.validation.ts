@@ -14,6 +14,17 @@ const createPackageSchema = z.object({
   }),
 });
 
-const updatePackageSchema = createPackageSchema.partial();
+const updatePackageSchema = z.object({
+  body: z.object({
+    unit: z.nativeEnum(PACKAGE_UNIT).optional(),
+    duration: z.number().positive().min(1).optional(),
+    unitPrice: z.number().positive().min(1).optional(),
+    price: z.number().positive().min(1).optional(),
+    discount: z.number().min(0).optional(),
+    totalPrice: z.number().positive().min(1).optional(),
+    tag: z.string().trim().optional().optional(),
+    isDeleted: z.boolean().optional(),
+  }),
+});
 
 export const PackageValidations = { createPackageSchema, updatePackageSchema };
