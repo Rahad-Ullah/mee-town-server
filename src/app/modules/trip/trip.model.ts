@@ -24,7 +24,7 @@ const tripSchema = new Schema<ITrip, TripModel>(
     },
     airlinesType: {
       type: String,
-      required: true,
+      required: false,
     },
     accommodation: {
       type: String,
