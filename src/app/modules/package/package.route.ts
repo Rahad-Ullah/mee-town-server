@@ -27,4 +27,10 @@ router.delete(
   PackageController.deletePackage
 );
 
+router.get(
+  '/',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
+  PackageController.getAllPackages
+);
+
 export const PackageRoutes = router;

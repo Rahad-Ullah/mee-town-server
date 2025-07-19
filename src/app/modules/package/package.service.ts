@@ -41,4 +41,10 @@ const deletePackageIntoDB = async (id: string): Promise<IPackage | null> => {
   return result;
 };
 
-export const PackageServices = {createPackageIntoDB, updatePackageIntoDB, deletePackageIntoDB};
+// ---------------- get all packages ----------------
+const getAllPackagesFromDB = async (): Promise<IPackage[]> => {
+  const result = await Package.find({ isDeleted: false });
+  return result;
+};
+
+export const PackageServices = {createPackageIntoDB, updatePackageIntoDB, deletePackageIntoDB, getAllPackagesFromDB};
