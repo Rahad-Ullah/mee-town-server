@@ -26,10 +26,13 @@ router.patch(
   TripController.updateTrip
 );
 
+// get my trips
+router.get('/my-trips', auth(USER_ROLES.USER), TripController.getMyTrips);
+
 // get trip by user id
 router.get('/:id', auth(USER_ROLES.USER), TripController.getTripByUserId);
 
-// get my trips
-router.get('/', auth(USER_ROLES.USER), TripController.getMyTrips);
+// get all trips
+router.get('/', TripController.getAllTrips);
 
 export const TripRoutes = router;
