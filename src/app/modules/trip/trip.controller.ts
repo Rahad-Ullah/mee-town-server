@@ -3,6 +3,7 @@ import { TripServices } from './trip.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { getSingleFilePath } from '../../../shared/getFilePath';
+import { get } from 'mongoose';
 
 // create trip
 const createTrip = catchAsync(async (req: Request, res: Response) => {
@@ -31,7 +32,7 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
     message: 'Trip updated successfully',
     data: result,
   });
-})
+});
 
 // get trip by user id
 const getTripByUserId = catchAsync(async (req: Request, res: Response) => {
@@ -44,7 +45,7 @@ const getTripByUserId = catchAsync(async (req: Request, res: Response) => {
     message: 'Trip retrieved successfully',
     data: result,
   });
-})
+});
 
 // get trip by user id
 const getMyTrips = catchAsync(async (req: Request, res: Response) => {
@@ -57,7 +58,7 @@ const getMyTrips = catchAsync(async (req: Request, res: Response) => {
     message: 'Trip retrieved successfully',
     data: result,
   });
-})
+});
 
 // get all trips
 const getAllTrips = catchAsync(async (req: Request, res: Response) => {
@@ -69,6 +70,25 @@ const getAllTrips = catchAsync(async (req: Request, res: Response) => {
     message: 'Trips retrieved successfully',
     data: result,
   });
-})
+});
 
-export const TripController = { createTrip, updateTrip, getTripByUserId, getMyTrips, getAllTrips };
+// get all matched trips
+const getAllMatchedTrips = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripServices.getAllMatchedTrips(req.query);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Matched trips retrieved successfully',
+    data: result,
+  });
+});
+
+export const TripController = {
+  createTrip,
+  updateTrip,
+  getTripByUserId,
+  getMyTrips,
+  getAllTrips,
+  getAllMatchedTrips,
+};

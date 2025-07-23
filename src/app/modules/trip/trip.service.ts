@@ -57,9 +57,68 @@ const getAllTrips = async (query: Record<string, unknown>) => {
   return { data, pagination };
 };
 
+// --------------- get all matched trips ----------------
+const getAllMatchedTrips = async (query: Record<string, unknown>) => {
+  const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const aggregationPipeline: any[] = [
+    { $match: { isDeleted: false, date: { $gte: todayDayStart } } },
+    {
+      $group: {
+        _id: { place: '$place', date: '$date' },
+        trips: { $push: '$$ROOT' },
+        matchCount: { $sum: 1 },
+        place: { $first: '$place' },
+        date: { $first: '$date' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        // place: 1,
+        // date: 1,
+        // trips: 1,
+        // matchCount: 1,
+      },
+    },
+    { $sort: { matchCount: -1 as 1 | -1 } },
+    { $skip: skip },
+    { $limit: limit },
+  ];
+
+  const result = await Trip.aggregate(aggregationPipeline);
+
+  // Get total count for pagination (count groups)
+  const countPipeline: any[] = [
+    { $match: { isDeleted: false, date: { $gte: todayDayStart } } },
+    {
+      $group: {
+        _id: { place: '$place', date: '$date' },
+      },
+    },
+    { $count: 'total' },
+  ];
+  const totalCountResult = await Trip.aggregate(countPipeline);
+  const total = totalCountResult[0]?.total || 0;
+
+  return {
+    data: result,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
+
 export const TripServices = {
   createTripIntoDB,
   updateTripIntoDB,
   getTripByUserId,
   getAllTrips,
+  getAllMatchedTrips,
 };
