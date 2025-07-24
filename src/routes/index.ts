@@ -10,6 +10,7 @@ import { GalleryRoutes } from '../app/modules/gallery/gallery.route';
 import { FaqRoutes } from '../app/modules/faq/faq.route';
 import { PackageRoutes } from '../app/modules/package/package.route';
 import { TripRoutes } from '../app/modules/trip/trip.route';
+import { ChatRoutes } from '../app/modules/chat/chat.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -56,6 +57,10 @@ const apiRoutes = [
   {
     path: '/trips',
     route: TripRoutes,
+  },
+  {
+    path: '/chats',
+    route: ChatRoutes,
   },
 ];
 
