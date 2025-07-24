@@ -56,13 +56,13 @@ const loginUserFromDB = async (payload: ILoginData) => {
   }
 
   //create token
-  const createToken = jwtHelper.createToken(
+  const accessToken = jwtHelper.createToken(
     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
     config.jwt.jwt_secret as Secret,
     config.jwt.jwt_expire_in as string
   );
 
-  return { createToken };
+  return { accessToken, role: isExistUser.role };
 };
 
 // ------------------ forgot password service ------------ ----------

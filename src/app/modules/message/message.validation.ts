@@ -4,7 +4,6 @@ import { z } from 'zod';
 const createMessageSchema = z.object({
   body: z.object({
     chat: z.string().nonempty(),
-    sender: z.string().nonempty(),
     text: z.string().optional(),
     image: z.string().optional(),
   }),
