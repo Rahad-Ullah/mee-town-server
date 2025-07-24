@@ -16,4 +16,6 @@ router.post(
 
 router.delete('/:id', auth(USER_ROLES.USER), ChatController.deleteChat);
 
+router.get('/', auth(USER_ROLES.USER), ChatController.getMyChats);
+
 export const ChatRoutes = router;
