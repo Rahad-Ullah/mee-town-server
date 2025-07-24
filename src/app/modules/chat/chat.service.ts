@@ -20,4 +20,15 @@ export const createChatIntoDB = async (user: JwtPayload, payload: IChat) => {
   return result;
 };
 
-export const ChatServices = { createChatIntoDB };
+// ---------------- DELETE CHAT ----------------
+const deleteChatFromDB = async (chatId: string) => {
+  const isExist = await Chat.findById(chatId);
+  if (!isExist) {
+    throw new Error('Chat not found');
+  }
+
+  const result = await Chat.findByIdAndUpdate(chatId, { isDeleted: true }, { new: true });
+  return result;
+}
+
+export const ChatServices = { createChatIntoDB, deleteChatFromDB };

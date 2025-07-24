@@ -17,4 +17,18 @@ const createChat = catchAsync(
   }
 );
 
-export const ChatController = { createChat };
+// delete chat
+const deleteChat = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await ChatServices.deleteChatFromDB(req.params.id);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: 'Chat created successfully',
+      data: result,
+    });
+  }
+);
+
+export const ChatController = { createChat, deleteChat };

@@ -14,4 +14,6 @@ router.post(
   ChatController.createChat
 ); 
 
+router.delete('/:id', auth(USER_ROLES.USER), ChatController.deleteChat);
+
 export const ChatRoutes = router;
