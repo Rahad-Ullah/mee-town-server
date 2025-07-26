@@ -21,4 +21,15 @@ const getNotificationFromDB = catchAsync(
   }
 );
 
-export const NotificationController = { getNotificationFromDB };
+// read all notifications
+const readNotificationToDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await NotificationServices.readNotificationToDB(req.user);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'All Notifications Marked as Read Successfully',
+    data: result,
+  });
+});
+
+export const NotificationController = { getNotificationFromDB, readNotificationToDB };

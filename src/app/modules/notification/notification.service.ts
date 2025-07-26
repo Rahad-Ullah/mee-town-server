@@ -33,4 +33,19 @@ const getNotificationFromDB = async (
   };
 };
 
-export const NotificationServices = { getNotificationFromDB };
+// ----------------- mark all notifications as read -----------------
+const readNotificationToDB = async (user: JwtPayload): Promise<boolean> => {
+  await Notification.bulkWrite([
+    {
+      updateMany: {
+        filter: { receiver: user.id, isRead: false },
+        update: { $set: { read: true } },
+        upsert: false,
+      },
+    },
+  ]);
+
+  return true;
+};
+
+export const NotificationServices = { getNotificationFromDB, readNotificationToDB };

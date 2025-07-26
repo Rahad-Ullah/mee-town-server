@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/', auth(), NotificationController.getNotificationFromDB); 
 
+router.patch('/read', auth(), NotificationController.readNotificationToDB);
+
 export const NotificationRoutes = router;
