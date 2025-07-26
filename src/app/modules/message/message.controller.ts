@@ -2,11 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { MessageServices } from './message.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { getSingleFilePath } from '../../../shared/getFilePath';
 
 // ----------------- create message -------------------
 const createMessage = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const payload = { ...req.body, sender: req.user.id };
+    const image = getSingleFilePath(req.files, 'image');
+    const payload = { ...req.body, image, sender: req.user.id };
     const result = await MessageServices.createMessage(payload);
 
     sendResponse(res, {
