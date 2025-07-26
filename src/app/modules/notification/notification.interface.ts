@@ -6,9 +6,9 @@ export type INotification = {
   title: string;
   message: string;
   receiver: ObjectId;
-  referenceId?: string;
-  isRead: boolean;
-  createdAt: Date;
+  referenceId?: ObjectId | string;
+  isRead?: boolean;
+  createdAt?: Date;
 };
 
 export type NotificationModel = Model<INotification>;
