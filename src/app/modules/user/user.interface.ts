@@ -28,6 +28,8 @@ export type IUser = {
   status: USER_STATUS;
   verified: boolean;
   isDeleted?: boolean;
+  appId?: string;
+  firebaseToken?: string;
   authentication?: {
     isResetPassword: boolean;
     oneTimeCode: number;

@@ -110,6 +110,14 @@ const userSchema = new Schema<IUser, UserModal>(
       type: Boolean,
       default: false,
     },
+    appId: {
+      type: String,
+      required: false,
+    },
+    firebaseToken: {
+      type: String,
+      required: false,
+    },
     authentication: {
       type: {
         isResetPassword: {

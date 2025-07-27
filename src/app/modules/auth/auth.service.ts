@@ -16,7 +16,7 @@ import cryptoToken from '../../../util/cryptoToken';
 import generateOTP from '../../../util/generateOTP';
 import { ResetToken } from '../resetToken/resetToken.model';
 import { User } from '../user/user.model';
-import { USER_STATUS } from '../../../enums/user';
+import { USER_ROLES, USER_STATUS } from '../../../enums/user';
 
 // ------------------ login user service ------------ ----------
 const loginUserFromDB = async (payload: ILoginData) => {
@@ -35,7 +35,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
   }
 
   //check if user is deleted
-  if (isExistUser.isDeleted) {
+  if (!isExistUser || isExistUser.isDeleted) {
     throw new ApiError(
       StatusCodes.BAD_REQUEST,
       'Your account has been deleted.'
@@ -58,6 +58,48 @@ const loginUserFromDB = async (payload: ILoginData) => {
   //create token
   const accessToken = jwtHelper.createToken(
     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
+    config.jwt.jwt_secret as Secret,
+    config.jwt.jwt_expire_in as string
+  );
+
+  return { accessToken, role: isExistUser.role };
+};
+
+// ------------------ social login user service ------------ ----------
+const socialLoginFromDB = async (payload: ILoginData) => {
+  const { appId } = payload;
+  let isExistUser = await User.findOne({ appId });
+
+  if (isExistUser) {
+    //check if user is deleted
+    if (isExistUser?.isDeleted) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        'Your account has been deleted.'
+      );
+    }
+
+    //check user status
+    if (isExistUser?.status !== USER_STATUS.ACTIVE) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        'Your account has been deactivated. Please contact the admin'
+      );
+    }
+  }
+
+  // if user not exist, create new user
+  if (!isExistUser) {
+    isExistUser = await User.create({
+      appId,
+      role: USER_ROLES.USER, // default role
+      verified: true, // assuming social login users are verified
+    });
+  }
+
+  //create token
+  const accessToken = jwtHelper.createToken(
+    { id: isExistUser._id, role: isExistUser.role, appId: isExistUser.appId },
     config.jwt.jwt_secret as Secret,
     config.jwt.jwt_expire_in as string
   );
@@ -288,6 +330,7 @@ const changePasswordToDB = async (
 export const AuthService = {
   verifyEmailToDB,
   loginUserFromDB,
+  socialLoginFromDB,
   forgetPasswordToDB,
   resetPasswordToDB,
   changePasswordToDB,

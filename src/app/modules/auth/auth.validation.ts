@@ -16,6 +16,12 @@ const createLoginZodSchema = z.object({
     password: z.string({ required_error: 'Password is required' }),
   }),
 });
+// social login schema
+const createSocialLoginZodSchema = z.object({
+  body: z.object({
+    appId: z.string({ required_error: 'App ID is required' }),
+  }),
+});
 
 const createForgetPasswordZodSchema = z.object({
   body: z.object({
@@ -50,6 +56,7 @@ export const AuthValidation = {
   createVerifyEmailZodSchema,
   createForgetPasswordZodSchema,
   createLoginZodSchema,
+  createSocialLoginZodSchema,
   createResetPasswordZodSchema,
   createChangePasswordZodSchema,
 };

@@ -12,6 +12,13 @@ router.post(
   AuthController.loginUser
 );
 
+// social login
+router.post(
+  '/social-login',
+  validateRequest(AuthValidation.createSocialLoginZodSchema),
+  AuthController.socialLogin
+);
+
 router.post(
   '/forgot-password',
   validateRequest(AuthValidation.createForgetPasswordZodSchema),
