@@ -39,7 +39,7 @@ const readNotificationToDB = async (user: JwtPayload): Promise<boolean> => {
     {
       updateMany: {
         filter: { receiver: user.id, isRead: false },
-        update: { $set: { read: true } },
+        update: { $set: { isRead: true } },
         upsert: false,
       },
     },

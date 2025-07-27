@@ -99,8 +99,39 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
 
 // ---------------------------- get all users -----------------------------
 const getAllUsersFromDB = async (query: Record<string, any>) => {
+  const filter: Record<string, any> = { isDeleted: false };
+  // filter by user interest
+  if (query.interest) {
+    filter.interests = { $in: [query.interest] };
+  }
+
+  // filter by user age range
+  if (
+    query.minAge !== undefined &&
+    query.maxAge !== undefined &&
+    !isNaN(Number(query.minAge)) &&
+    !isNaN(Number(query.maxAge))
+  ) {
+    const currentDate = new Date();
+    const minBirthDate = new Date(
+      currentDate.getFullYear() - Number(query.minAge),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    ).toISOString();
+    const maxBirthDate = new Date(
+      currentDate.getFullYear() - Number(query.maxAge),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    ).toISOString();
+
+    filter.birthday = {
+      $lte: new Date(minBirthDate),
+      $gte: new Date(maxBirthDate),
+    };
+  }
+
   const userQuery = new QueryBuilder(
-    User.find({ isDeleted: false }).select('-authentication'),
+    User.find(filter).select('-authentication'),
     query
   )
     .paginate()

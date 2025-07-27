@@ -73,6 +73,7 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     birthday: {
       type: Date,
+      default: null,
     },
     bio: {
       type: String,
