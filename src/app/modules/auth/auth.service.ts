@@ -18,6 +18,8 @@ import generateOTP from '../../../util/generateOTP';
 import { ResetToken } from '../resetToken/resetToken.model';
 import { User } from '../user/user.model';
 import { USER_ROLES, USER_STATUS } from '../../../enums/user';
+import { smsHelper } from '../../../helpers/smsHelper';
+import { smsTemplate } from '../../../shared/smsTemplate';
 
 // ------------------ login user service ------------ ----------
 const loginUserFromDB = async (payload: ILoginData) => {
@@ -145,9 +147,9 @@ const phoneLoginFromDB = async (payload: ILoginData) => {
     otp: otp,
     phone: isExistUser.phone!,
   };
-  console.log(values);
-  // const createAccountTemplate = emailTemplate.createAccount(values);
-  // emailHelper.sendEmail(createAccountTemplate);
+
+  const loginOTPTemplate = smsTemplate.loginOtp(values);
+  smsHelper.sendSMS(loginOTPTemplate);
 
   //save to DB
   const authentication = {
