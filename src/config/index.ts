@@ -21,6 +21,11 @@ export default {
     host: process.env.EMAIL_HOST,
     pass: process.env.EMAIL_PASS,
   },
+  twilio: {
+    account_sid: process.env.TWILIO_ACCOUNT_SID,
+    auth_token: process.env.TWILIO_AUTH_TOKEN,
+    phone_number: process.env.TWILIO_PHONE_NUMBER,
+  },
   super_admin: {
     email: process.env.SUPER_ADMIN_EMAIL,
     password: process.env.SUPER_ADMIN_PASSWORD,
