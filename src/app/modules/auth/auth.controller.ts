@@ -41,6 +41,19 @@ const socialLogin = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
+// login with phone
+const phoneLogin = catchAsync(async (req: Request, res: Response) => {
+  const { ...payload } = req.body;
+  const result = await AuthService.phoneLoginFromDB(payload);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Please check your phone. We have sent you a one-time passcode (OTP).',
+    data: result,
+  });
+})
+
 const forgetPassword = catchAsync(async (req: Request, res: Response) => {
   const email = req.body.email;
   const result = await AuthService.forgetPasswordToDB(email);
@@ -83,6 +96,7 @@ export const AuthController = {
   verifyEmail,
   loginUser,
   socialLogin,
+  phoneLogin,
   forgetPassword,
   resetPassword,
   changePassword,

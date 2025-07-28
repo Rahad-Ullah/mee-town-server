@@ -19,6 +19,13 @@ router.post(
   AuthController.socialLogin
 );
 
+// phone login
+router.post(
+  '/phone-login',
+  validateRequest(AuthValidation.createPhoneLoginZodSchema),
+  AuthController.phoneLogin
+);
+
 router.post(
   '/forgot-password',
   validateRequest(AuthValidation.createForgetPasswordZodSchema),

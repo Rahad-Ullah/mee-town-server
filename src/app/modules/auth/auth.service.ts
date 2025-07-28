@@ -107,6 +107,67 @@ const socialLoginFromDB = async (payload: ILoginData) => {
   return { accessToken, role: isExistUser.role };
 };
 
+// ------------------ login with phone service ------------ ----------
+const phoneLoginFromDB = async (payload: ILoginData) => {
+  const { phone } = payload;
+  let isExistUser = await User.findOne({ phone });
+
+  if (isExistUser) {
+    //check if user is deleted
+    if (isExistUser?.isDeleted) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        'Your account has been deleted.'
+      );
+    }
+
+    //check user status
+    if (isExistUser?.status !== USER_STATUS.ACTIVE) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        'Your account has been deactivated. Please contact the admin'
+      );
+    }
+  }
+
+   // if user not exist, create new user
+  if (!isExistUser) {
+    isExistUser = await User.create({
+      phone,
+      role: USER_ROLES.USER, // default role
+    });
+  }
+
+  // //create token
+  // const accessToken = jwtHelper.createToken(
+  //   { id: isExistUser._id, role: isExistUser.role, appId: isExistUser.appId },
+  //   config.jwt.jwt_secret as Secret,
+  //   config.jwt.jwt_expire_in as string
+  // );
+
+    //send otp by phone
+    const otp = generateOTP();
+    const values = {
+      otp: otp,
+      phone: isExistUser.phone!,
+    };
+    console.log(values);
+    // const createAccountTemplate = emailTemplate.createAccount(values);
+    // emailHelper.sendEmail(createAccountTemplate);
+  
+    //save to DB
+    const authentication = {
+      oneTimeCode: otp,
+      expireAt: new Date(Date.now() + 3 * 60000),
+    };
+    await User.findOneAndUpdate(
+      { _id: isExistUser._id },
+      { $set: { authentication } }
+    );
+
+  return null;
+};
+
 // ------------------ forgot password service ------------ ----------
 const forgetPasswordToDB = async (email: string) => {
   const isExistUser = await User.isExistUserByEmail(email);
@@ -331,6 +392,7 @@ export const AuthService = {
   verifyEmailToDB,
   loginUserFromDB,
   socialLoginFromDB,
+  phoneLoginFromDB,
   forgetPasswordToDB,
   resetPasswordToDB,
   changePasswordToDB,

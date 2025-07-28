@@ -23,6 +23,13 @@ const createSocialLoginZodSchema = z.object({
   }),
 });
 
+// phone login schema
+const createPhoneLoginZodSchema = z.object({
+  body: z.object({
+    phone: z.string({ required_error: 'Phone number is required' }),
+  }),
+});
+
 const createForgetPasswordZodSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'Email is required' }),
@@ -57,6 +64,7 @@ export const AuthValidation = {
   createForgetPasswordZodSchema,
   createLoginZodSchema,
   createSocialLoginZodSchema,
+  createPhoneLoginZodSchema,
   createResetPasswordZodSchema,
   createChangePasswordZodSchema,
 };
