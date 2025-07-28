@@ -11,6 +11,7 @@ import {
   IChangePassword,
   ILoginData,
   IVerifyEmail,
+  IVerifyPhone,
 } from '../../../types/auth';
 import cryptoToken from '../../../util/cryptoToken';
 import generateOTP from '../../../util/generateOTP';
@@ -130,7 +131,7 @@ const phoneLoginFromDB = async (payload: ILoginData) => {
     }
   }
 
-   // if user not exist, create new user
+  // if user not exist, create new user
   if (!isExistUser) {
     isExistUser = await User.create({
       phone,
@@ -138,32 +139,25 @@ const phoneLoginFromDB = async (payload: ILoginData) => {
     });
   }
 
-  // //create token
-  // const accessToken = jwtHelper.createToken(
-  //   { id: isExistUser._id, role: isExistUser.role, appId: isExistUser.appId },
-  //   config.jwt.jwt_secret as Secret,
-  //   config.jwt.jwt_expire_in as string
-  // );
+  //send otp by phone
+  const otp = generateOTP();
+  const values = {
+    otp: otp,
+    phone: isExistUser.phone!,
+  };
+  console.log(values);
+  // const createAccountTemplate = emailTemplate.createAccount(values);
+  // emailHelper.sendEmail(createAccountTemplate);
 
-    //send otp by phone
-    const otp = generateOTP();
-    const values = {
-      otp: otp,
-      phone: isExistUser.phone!,
-    };
-    console.log(values);
-    // const createAccountTemplate = emailTemplate.createAccount(values);
-    // emailHelper.sendEmail(createAccountTemplate);
-  
-    //save to DB
-    const authentication = {
-      oneTimeCode: otp,
-      expireAt: new Date(Date.now() + 3 * 60000),
-    };
-    await User.findOneAndUpdate(
-      { _id: isExistUser._id },
-      { $set: { authentication } }
-    );
+  //save to DB
+  const authentication = {
+    oneTimeCode: otp,
+    expireAt: new Date(Date.now() + 3 * 60000),
+  };
+  await User.findOneAndUpdate(
+    { _id: isExistUser._id },
+    { $set: { authentication } }
+  );
 
   return null;
 };
@@ -270,6 +264,51 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
     data = createToken;
   }
   return { data, message };
+};
+
+// ------------------ verify otp for phone login ------------ ----------
+const verifyPhoneToDB = async (payload: IVerifyPhone) => {
+  const { phone, oneTimeCode } = payload;
+  const isExistUser = await User.findOne({ phone }).select('+authentication');
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  if (!oneTimeCode) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Please give the otp, check your phone we send a code'
+    );
+  }
+
+  // match otp
+  if (isExistUser.authentication?.oneTimeCode !== oneTimeCode) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'You provided wrong otp');
+  }
+
+  // check expire time
+  const date = new Date();
+  if (date > isExistUser.authentication?.expireAt) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Otp already expired, Please try again'
+    );
+  }
+
+  // update user verify and authentication status when otp verify successful
+  await User.findOneAndUpdate(
+    { _id: isExistUser._id },
+    { verified: true, authentication: { oneTimeCode: null, expireAt: null } }
+  );
+
+  //create token
+  const accessToken = jwtHelper.createToken(
+    { id: isExistUser._id, role: isExistUser.role, phone: isExistUser.phone },
+    config.jwt.jwt_secret as Secret,
+    config.jwt.jwt_expire_in as string
+  );
+
+  return { accessToken, role: isExistUser.role };
 };
 
 // ------------------ reset password service ------------ ----------
@@ -389,11 +428,12 @@ const changePasswordToDB = async (
 };
 
 export const AuthService = {
-  verifyEmailToDB,
   loginUserFromDB,
   socialLoginFromDB,
   phoneLoginFromDB,
   forgetPasswordToDB,
+  verifyEmailToDB,
+  verifyPhoneToDB,
   resetPasswordToDB,
   changePasswordToDB,
 };

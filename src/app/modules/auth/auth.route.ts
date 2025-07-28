@@ -38,6 +38,13 @@ router.post(
   AuthController.verifyEmail
 );
 
+// verify phone number
+router.post(
+  '/verify-phone',
+  validateRequest(AuthValidation.createVerifyPhoneZodSchema),
+  AuthController.verifyPhone
+);
+
 router.post(
   '/reset-password',
   validateRequest(AuthValidation.createResetPasswordZodSchema),

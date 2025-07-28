@@ -4,18 +4,6 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { AuthService } from './auth.service';
 
-const verifyEmail = catchAsync(async (req: Request, res: Response) => {
-  const { ...verifyData } = req.body;
-  const result = await AuthService.verifyEmailToDB(verifyData);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: result.message,
-    data: result.data,
-  });
-});
-
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { ...loginData } = req.body;
   const result = await AuthService.loginUserFromDB(loginData);
@@ -67,6 +55,31 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const verifyEmail = catchAsync(async (req: Request, res: Response) => {
+  const { ...verifyData } = req.body;
+  const result = await AuthService.verifyEmailToDB(verifyData);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: result.message,
+    data: result.data,
+  });
+});
+
+// verify phone number
+const verifyPhone = catchAsync(async (req: Request, res: Response) => {
+  const { ...verifyData } = req.body;
+  const result = await AuthService.verifyPhoneToDB(verifyData);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Phone verification and login successful.',
+    data: result,
+  });
+});
+
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const token = req.headers.authorization;
   const { ...resetData } = req.body;
@@ -94,6 +107,7 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
 
 export const AuthController = {
   verifyEmail,
+  verifyPhone,
   loginUser,
   socialLogin,
   phoneLogin,

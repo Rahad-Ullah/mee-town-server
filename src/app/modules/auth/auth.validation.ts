@@ -10,6 +10,16 @@ const createVerifyEmailZodSchema = z.object({
   }),
 });
 
+const createVerifyPhoneZodSchema = z.object({
+  body: z.object({
+    phone: z.string({ required_error: 'Phone is required' }),
+    oneTimeCode: z.number({
+      required_error: 'One time code is required',
+      invalid_type_error: 'One time code must be a number',
+    }),
+  }),
+});
+
 const createLoginZodSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'Email is required' }),
@@ -61,6 +71,7 @@ const createChangePasswordZodSchema = z.object({
 
 export const AuthValidation = {
   createVerifyEmailZodSchema,
+  createVerifyPhoneZodSchema,
   createForgetPasswordZodSchema,
   createLoginZodSchema,
   createSocialLoginZodSchema,
