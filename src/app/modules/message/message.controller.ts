@@ -32,7 +32,8 @@ const getChatMessages = catchAsync(
       success: true,
       statusCode: 200,
       message: 'Messages retrieved successfully',
-      data: result,
+      data: result.messages,
+      pagination: result.pagination,
     });
   }
 );

@@ -2,6 +2,8 @@ import { JwtPayload } from 'jsonwebtoken';
 import { IChat } from './chat.interface';
 import { Chat } from './chat.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { IMessage } from '../message/message.interface';
+import { Message } from '../message/message.model';
 
 // ---------------- create chat service ----------------
 export const createChatIntoDB = async (user: JwtPayload, payload: IChat) => {
@@ -44,7 +46,7 @@ const getMyChatsFromDB = async (
   const chats = await Chat.find({ participants: { $in: [user.id] } })
     .populate({
       path: 'participants',
-      select: 'name email image',
+      select: 'name email username image',
       match: {
         isDeleted: false,
         _id: { $ne: user.id }, // Exclude user.id in the populated participants
@@ -61,26 +63,33 @@ const getMyChatsFromDB = async (
     (chat: any) => chat?.participants?.length > 0
   );
 
-  // //Use Promise.all to get the last message for each chat
-  // const chatList: IChat[] = await Promise.all(
-  //   filteredChats?.map(async (chat: any) => {
-  //     const data = chat?.toObject();
+  //Use Promise.all to get the last message for each chat
+  const chatList: IChat[] = await Promise.all(
+    filteredChats?.map(async (chat: any) => {
+      const data = chat?.toObject();
 
-  //     const lastMessage: IMessage | null = await Message.findOne({
-  //       chatId: chat?._id,
-  //     })
-  //       .sort({ createdAt: -1 })
-  //       .select('text offer createdAt sender');
+      const lastMessage: IMessage | null = await Message.findOne({
+        chat: chat?._id,
+      })
+        .sort({ createdAt: -1 })
+        .select('text offer createdAt sender');
 
-  //     return {
-  //       ...data,
-  //       participants: data.participants[0],
-  //       lastMessage: lastMessage || null,
-  //     };
-  //   })
-  // );
+      // find unread messages count
+      const unreadCount = await Message.countDocuments({
+        chat: chat?._id,
+        seenBy: { $nin: [user.id] },
+      });
 
-  return filteredChats;
+      return {
+        ...data,
+        participants: data.participants,
+        unreadCount: unreadCount || 0,
+        lastMessage: lastMessage || null,
+      };
+    })
+  );
+
+  return chatList;
 };
 
 export const ChatServices = {
