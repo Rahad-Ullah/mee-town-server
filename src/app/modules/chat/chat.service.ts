@@ -46,7 +46,7 @@ const getMyChatsFromDB = async (
   const chats = await Chat.find({ participants: { $in: [user.id] } })
     .populate({
       path: 'participants',
-      select: 'name email username image',
+      select: 'name email username image isOnline',
       match: {
         isDeleted: false,
         _id: { $ne: user.id }, // Exclude user.id in the populated participants
@@ -72,7 +72,7 @@ const getMyChatsFromDB = async (
         chat: chat?._id,
       })
         .sort({ createdAt: -1 })
-        .select('text offer createdAt sender');
+        .select('text image createdAt sender');
 
       // find unread messages count
       const unreadCount = await Message.countDocuments({

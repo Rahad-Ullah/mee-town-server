@@ -241,7 +241,14 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
       { _id: isExistUser._id },
       { verified: true, authentication: { oneTimeCode: null, expireAt: null } }
     );
+    // create access token
+    const accessToken = jwtHelper.createToken(
+      { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
+      config.jwt.jwt_secret as Secret,
+      config.jwt.jwt_expire_in as string
+    );
     message = 'Email verify successfully';
+    data = { accessToken }
   } else {
     await User.findOneAndUpdate(
       { _id: isExistUser._id },
@@ -254,16 +261,16 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
       }
     );
 
-    //create token ;
-    const createToken = cryptoToken();
+    // reset token ;
+    const resetToken = cryptoToken();
     await ResetToken.create({
       user: isExistUser._id,
-      token: createToken,
+      token: resetToken,
       expireAt: new Date(Date.now() + 5 * 60000),
     });
     message =
       'Verification Successful: Please securely store and utilize this code for reset password';
-    data = createToken;
+    data = { resetToken };
   }
   return { data, message };
 };

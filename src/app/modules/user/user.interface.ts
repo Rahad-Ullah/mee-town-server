@@ -27,6 +27,7 @@ export type IUser = {
   visitedPlaces?: string[];
   status: USER_STATUS;
   verified: boolean;
+  isOnline?: boolean;
   isDeleted?: boolean;
   appId?: string;
   firebaseToken?: string;
