@@ -75,6 +75,13 @@ const updateProfileToDB = async (
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
 
+  // check if username already taken
+  if (payload.username) {
+    if (await User.isExistUserByUsername(payload.username)) {
+      throw new ApiError(StatusCodes.CONFLICT, 'Username already taken!');
+    }
+  }
+
   //unlink file here
   if (payload.image) {
     unlinkFile(isExistUser.image);
