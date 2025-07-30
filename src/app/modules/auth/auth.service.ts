@@ -65,7 +65,10 @@ const loginUserFromDB = async (payload: ILoginData) => {
     config.jwt.jwt_expire_in as string
   );
 
-  return { accessToken, role: isExistUser.role };
+  // check if user fullfilled
+  const isFullfilled = await User.isUserFullfilled(isExistUser);
+
+  return { accessToken, role: isExistUser.role, isFullfilled };
 };
 
 // ------------------ social login user service ------------ ----------
@@ -107,7 +110,10 @@ const socialLoginFromDB = async (payload: ILoginData) => {
     config.jwt.jwt_expire_in as string
   );
 
-  return { accessToken, role: isExistUser.role };
+  // check if user fullfilled
+  const isFullfilled = await User.isUserFullfilled(isExistUser);
+
+  return { accessToken, role: isExistUser.role, isFullfilled };
 };
 
 // ------------------ login with phone service ------------ ----------
@@ -206,7 +212,8 @@ const forgetPasswordToDB = async (email: string) => {
 
 // ------------------ verify otp service ------------ ----------
 const verifyEmailToDB = async (payload: IVerifyEmail) => {
-  const { email, oneTimeCode } = payload;
+  const { email, oneTimeCode: otp } = payload;
+  const oneTimeCode = Number(otp);
   const isExistUser = await User.findOne({ email }).select('+authentication');
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
@@ -248,7 +255,7 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
       config.jwt.jwt_expire_in as string
     );
     message = 'Email verify successfully';
-    data = { accessToken }
+    data = { accessToken };
   } else {
     await User.findOneAndUpdate(
       { _id: isExistUser._id },
@@ -277,7 +284,8 @@ const verifyEmailToDB = async (payload: IVerifyEmail) => {
 
 // ------------------ verify otp for phone login ------------ ----------
 const verifyPhoneToDB = async (payload: IVerifyPhone) => {
-  const { phone, oneTimeCode } = payload;
+  const { phone, oneTimeCode: otp } = payload;
+  const oneTimeCode = Number(otp);
   const isExistUser = await User.findOne({ phone }).select('+authentication');
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
@@ -317,7 +325,10 @@ const verifyPhoneToDB = async (payload: IVerifyPhone) => {
     config.jwt.jwt_expire_in as string
   );
 
-  return { accessToken, role: isExistUser.role };
+  // check if user fullfilled
+  const isFullfilled = await User.isUserFullfilled(isExistUser);
+
+  return { accessToken, role: isExistUser.role, isFullfilled };
 };
 
 // ------------------ reset password service ------------ ----------

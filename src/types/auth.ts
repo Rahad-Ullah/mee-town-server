@@ -1,11 +1,11 @@
 export type IVerifyEmail = {
   email: string;
-  oneTimeCode: number;
+  oneTimeCode: number | string;
 };
 
 export type IVerifyPhone = {
   phone: string;
-  oneTimeCode: number;
+  oneTimeCode: number | string;
 };
 
 export type ILoginData = {

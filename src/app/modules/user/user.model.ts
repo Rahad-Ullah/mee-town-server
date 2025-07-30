@@ -170,6 +170,21 @@ userSchema.statics.isExistUserByUsername = async (username: string) => {
   return isExist;
 };
 
+userSchema.statics.isUserFullfilled = async (user: Partial<IUser>) => {
+  const arr = [
+    user?.name,
+    user?.birthday,
+    user?.interests?.length,
+    user?.location,
+  ];
+  for (let item of arr) {
+    if (!item) {
+      return false;
+    }
+  }
+  return true;
+};
+
 //is match password
 userSchema.statics.isMatchPassword = async (
   password: string,

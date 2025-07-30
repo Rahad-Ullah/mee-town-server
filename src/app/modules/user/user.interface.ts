@@ -44,4 +44,5 @@ export type UserModal = {
   isExistUserByPhone(phone: string): any;
   isExistUserByUsername(username: string): any;
   isMatchPassword(password: string, hashPassword: string): boolean;
+  isUserFullfilled(user: Partial<IUser>): boolean;
 } & Model<IUser>;
