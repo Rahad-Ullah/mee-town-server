@@ -4,10 +4,9 @@ import { PaymentProvider, SubscriptionStatus } from './subscription.constants';
 // create subscription zod schema
 const createSubscriptionShcema = z.object({
   body: z.object({
-    user: z.string().min(1, 'User is required'),
     package: z.string().min(1, 'Package is required'),
-    purchaseDate: z.date({ required_error: 'Purchase date is required' }),
-    expiresDate: z.date({ required_error: 'Expires date is required' }),
+    purchaseDate: z.string({ required_error: 'Purchase date is required' }),
+    expiresDate: z.string({ required_error: 'Expires date is required' }),
     status: nativeEnum(SubscriptionStatus).default(SubscriptionStatus.ACTIVE),
     paymentProvider: nativeEnum(PaymentProvider, {
       message: 'Payment provider is required',
