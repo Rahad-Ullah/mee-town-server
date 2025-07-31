@@ -29,6 +29,7 @@ export type IUser = {
   verified: boolean;
   isOnline?: boolean;
   isDeleted?: boolean;
+  subscription?: string;
   appId?: string;
   firebaseToken?: string;
   authentication?: {

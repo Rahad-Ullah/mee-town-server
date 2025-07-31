@@ -51,7 +51,9 @@ const getUserProfileFromDB = async (
   user: JwtPayload
 ): Promise<Partial<IUser>> => {
   const { id } = user;
-  const isExistUser = await User.findById(id).select('-authentication');
+  const isExistUser = await User.findById(id)
+    .select('-authentication')
+    .populate('subscription');
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
@@ -96,7 +98,9 @@ const updateProfileToDB = async (
 
 // ---------------------------- get single user -----------------------------
 const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
-  const isExistUser = await User.findById(id).select('-authentication');
+  const isExistUser = await User.findById(id)
+    .select('-authentication')
+    .populate('subscription');
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
@@ -138,7 +142,7 @@ const getAllUsersFromDB = async (query: Record<string, any>) => {
   }
 
   const userQuery = new QueryBuilder(
-    User.find(filter).select('-authentication'),
+    User.find(filter).select('-authentication').populate('subscription'),
     query
   )
     .paginate()

@@ -114,6 +114,11 @@ const userSchema = new Schema<IUser, UserModal>(
       type: Boolean,
       default: false,
     },
+    subscription: {
+      type: Schema.Types.ObjectId,
+      ref: 'Subscription',
+      required: false,
+    },
     appId: {
       type: String,
       required: false,
