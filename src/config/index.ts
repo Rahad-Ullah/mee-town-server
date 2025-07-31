@@ -26,6 +26,12 @@ export default {
     auth_token: process.env.TWILIO_AUTH_TOKEN,
     phone_number: process.env.TWILIO_PHONE_NUMBER,
   },
+  apple: {
+    key_id: process.env.APPLE_KEY_ID,
+    issuer_id: process.env.APPLE_ISSUER_ID,
+    bundle_id: process.env.APPLE_BUNDLE_ID,
+    private_key_path: process.env.APPLE_PRIVATE_KEY_PATH,
+  },
   super_admin: {
     email: process.env.SUPER_ADMIN_EMAIL,
     password: process.env.SUPER_ADMIN_PASSWORD,
