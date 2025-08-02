@@ -3,13 +3,20 @@ import { TripServices } from './trip.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { getSingleFilePath } from '../../../shared/getFilePath';
-import { get } from 'mongoose';
 
 // create trip
 const createTrip = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
-  const paylaod = { ...req.body, user: req.user?.id, image };
-  const result = await TripServices.createTripIntoDB(paylaod);
+  const payload = { ...req.body, user: req.user?.id, image };
+
+  if (payload.place) {
+    // Split by one or more spaces using regex and add to the payload
+    const [countryCode, place] = payload.place.trim().split(/\s+/);
+    payload.countryCode = countryCode;
+    payload.place = place;
+  }
+
+  const result = await TripServices.createTripIntoDB(payload);
 
   sendResponse(res, {
     statusCode: 200,
@@ -23,8 +30,8 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
 const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const image = getSingleFilePath(req.files, 'image');
-  const paylaod = { ...req.body, image };
-  const result = await TripServices.updateTripIntoDB(id, paylaod);
+  const payload = { ...req.body, image };
+  const result = await TripServices.updateTripIntoDB(id, payload);
 
   sendResponse(res, {
     statusCode: 200,
