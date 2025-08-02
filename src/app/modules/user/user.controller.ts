@@ -101,11 +101,24 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// toggle user status
+const toggleUserStatus = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.toggleUserStatusIntoDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'User status updated successfully.',
+    data: result,
+  });
+})
+
 export const UserController = {
   createUser,
   createAdmin,
   getUserProfile,
   updateProfile,
+  toggleUserStatus,
   deleteUser,
   getSingleUser,
   getAllUsers,

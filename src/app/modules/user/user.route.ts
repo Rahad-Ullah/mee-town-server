@@ -38,6 +38,9 @@ router.patch(
   UserController.updateProfile
 );
 
+// toggle user status
+router.patch('/toggle-status/:id', auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN), UserController.toggleUserStatus)
+
 // delete user
 router.delete('/:id', UserController.deleteUser);
 

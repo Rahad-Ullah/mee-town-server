@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { JwtPayload } from 'jsonwebtoken';
-import { USER_ROLES } from '../../../enums/user';
+import { USER_ROLES, USER_STATUS } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import { emailHelper } from '../../../helpers/emailHelper';
 import { emailTemplate } from '../../../shared/emailTemplate';
@@ -195,11 +195,26 @@ const createAdminToDB = async (payload: Partial<IUser>) => {
   return null;
 };
 
+// toggle admin status
+const toggleUserStatusIntoDB = async (id: string) => {
+  const isExistUser = await User.findById(id);
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  if (isExistUser.status === USER_STATUS.BLOCKED) {
+    return await User.findByIdAndUpdate(id, { status: USER_STATUS.ACTIVE }, { new: true });
+  } else if (isExistUser.status === USER_STATUS.ACTIVE) {
+    return await User.findByIdAndUpdate(id, { status: USER_STATUS.BLOCKED }, { new: true });
+  }
+};
+
 export const UserService = {
   createUserToDB,
   createAdminToDB,
   getUserProfileFromDB,
   updateProfileToDB,
+  toggleUserStatusIntoDB,
   deleteUserFromDB,
   getSingleUserFromDB,
   getAllUsersFromDB,
