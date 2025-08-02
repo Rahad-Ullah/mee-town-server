@@ -45,6 +45,10 @@ router.delete('/:id', UserController.deleteUser);
 router.get('/:id', UserController.getSingleUser);
 
 // get all users
-router.get('/', auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN), UserController.getAllUsers);
+router.get(
+  '/',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
+  UserController.getAllUsers
+);
 
 export const UserRoutes = router;

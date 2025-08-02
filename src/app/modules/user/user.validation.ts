@@ -19,9 +19,7 @@ const createUserZodSchema = z.object({
       .enum(Object.values(RELATIONSHIP_STATUS) as [string, ...string[]])
       .optional(),
     profession: z.string().optional(),
-    education: z.string().optional(),
     nationality: z.string().optional(),
-    height: z.number().optional(),
     birthday: z.coerce.date().optional(),
     bio: z.string().optional(),
     image: z.string().optional(),
@@ -33,6 +31,9 @@ const createUserZodSchema = z.object({
       .optional(),
     verified: z.boolean().optional(),
     isDeleted: z.boolean().optional(),
+    subscription: z.string().optional(),
+    appId: z.string().optional(),
+    firebaseToken: z.string().optional(),
   }),
 });
 
@@ -50,9 +51,7 @@ const updateUserZodSchema = z.object({
       .enum(Object.values(RELATIONSHIP_STATUS) as [string, ...string[]])
       .optional(),
     profession: z.string().optional(),
-    education: z.string().optional(),
     nationality: z.string().optional(),
-    height: z.number().optional(),
     birthday: z.coerce.date().optional(),
     bio: z.string().optional(),
     image: z.string().optional(),
@@ -64,6 +63,9 @@ const updateUserZodSchema = z.object({
       .optional(),
     verified: z.boolean().optional(),
     isDeleted: z.boolean().optional(),
+    subscription: z.string().optional(),
+    appId: z.string().optional(),
+    firebaseToken: z.string().optional(),
   }),
 });
 

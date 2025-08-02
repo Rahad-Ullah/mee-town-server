@@ -42,6 +42,18 @@ class QueryBuilder<T> {
     ];
     excludeFields.forEach(el => delete queryObj[el]);
 
+    // delete empty fields
+    Object.keys(queryObj).forEach(el => {
+      if (
+        queryObj[el] === '' ||
+        queryObj[el] === null ||
+        queryObj[el] === 'null' ||
+        queryObj[el] === undefined ||
+        queryObj[el] === 'undefined'
+      )
+        delete queryObj[el];
+    });
+
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
     return this;
   }

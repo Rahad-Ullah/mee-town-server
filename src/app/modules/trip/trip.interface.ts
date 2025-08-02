@@ -5,7 +5,8 @@ export type ITrip = {
   _id?: string;
   user: Types.ObjectId;
   place: string;
-  date: Date;
+  startDate: Date;
+  endDate: Date;
   vehicle: TRIP_VEHICLE;
   airlinesType: string;
   accommodation: TRIP_ACCOMMODATION;

@@ -62,14 +62,8 @@ const userSchema = new Schema<IUser, UserModal>(
     profession: {
       type: String,
     },
-    education: {
-      type: String,
-    },
     nationality: {
       type: String,
-    },
-    height: {
-      type: Number,
     },
     birthday: {
       type: Date,

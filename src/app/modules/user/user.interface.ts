@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import {
   RELATIONSHIP_STATUS,
   USER_ROLES,
@@ -16,9 +16,7 @@ export type IUser = {
   gender?: 'Male' | 'Female';
   relationshipStatus?: RELATIONSHIP_STATUS;
   profession?: string;
-  education?: string;
   nationality?: string;
-  height?: number;
   birthday?: Date;
   bio?: string;
   image?: string;
@@ -29,7 +27,7 @@ export type IUser = {
   verified: boolean;
   isOnline?: boolean;
   isDeleted?: boolean;
-  subscription?: string;
+  subscription?: ObjectId;
   appId?: string;
   firebaseToken?: string;
   authentication?: {
