@@ -5,11 +5,13 @@ export type ITrip = {
   _id?: string;
   user: Types.ObjectId;
   place: string;
+  countryCode: string;
   startDate: Date;
   endDate: Date;
   vehicle: TRIP_VEHICLE;
   airlinesType: string;
   accommodation: TRIP_ACCOMMODATION;
+  travelWith: string;
   image: string;
   isDeleted?: boolean;
 };

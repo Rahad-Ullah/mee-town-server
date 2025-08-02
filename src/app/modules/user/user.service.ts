@@ -112,14 +112,14 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
 const getAllUsersFromDB = async (query: Record<string, any>) => {
   const filter: Record<string, any> = { isDeleted: false };
   // filter by user interest
-  if (query.interest) {
+  if (query.interest && query.interest !== 'null') {
     filter.interests = { $in: [query.interest] };
   }
 
   // filter by user age range
   if (
-    query.minAge !== undefined &&
-    query.maxAge !== undefined &&
+    query.minAge &&
+    query.maxAge &&
     !isNaN(Number(query.minAge)) &&
     !isNaN(Number(query.maxAge))
   ) {

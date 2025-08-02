@@ -13,7 +13,15 @@ const tripSchema = new Schema<ITrip, TripModel>(
       type: String,
       required: true,
     },
-    date: {
+    countryCode: {
+      type: String,
+      required: true,
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
       type: Date,
       required: true,
     },
@@ -29,6 +37,10 @@ const tripSchema = new Schema<ITrip, TripModel>(
     accommodation: {
       type: String,
       enum: Object.values(TRIP_ACCOMMODATION),
+      required: true,
+    },
+    travelWith: {
+      type: String,
       required: true,
     },
     image: {
