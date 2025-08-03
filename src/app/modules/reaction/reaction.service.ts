@@ -26,7 +26,7 @@ const getSingleReactionFromDB = async (userId: string, reactorId: string) => {
 
 // --------------------- get my reactions ---------------------
 const getMyReactionsFromDB = async (userId: string) => {
-  const result = await Reaction.find({ reactor: userId });
+  const result = await Reaction.find({ reactor: userId }).populate('user');
   return result;
 };
 

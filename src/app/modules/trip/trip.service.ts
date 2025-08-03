@@ -197,6 +197,50 @@ const getPopularMatchedTrips = async () => {
   };
 };
 
+// -------------- get my matched trips ----------------
+const getMyMatchedTrips = async (userId: string) => {
+  const myTrips = await getTripByUserId(userId);
+  const allMatchedTrips = (await getAllMatchedTrips({})).data;
+
+  // filter matched trips that are in my trips by place, vehicle and startDate
+  const myMatchedTrips = allMatchedTrips.filter((trip) => {
+    return myTrips.some((myTrip) => {
+      const myTripStartDateStart = new Date(myTrip.startDate).setHours(0, 0, 0, 0) as any
+      const myTripStartDateEnd = new Date(myTrip.endDate).setHours(23, 59, 59, 999) as any
+
+      const isTripStartDateUnderMyTripStartDate = new Date(trip.startDate) >= myTripStartDateStart && new Date(trip.startDate) <= myTripStartDateEnd
+
+      return (
+        myTrip.place === trip.place &&
+        myTrip.vehicle === trip.vehicle &&
+        isTripStartDateUnderMyTripStartDate
+      );
+    });
+  })
+  // calculate common days and add to the result
+  .map((trip) => {
+    return myTrips.map((myTrip) => {
+      const tripStartDate = new Date(trip.startDate).setHours(0, 0, 0, 0) as any
+      const tripEndDate = new Date(trip.endDate).setHours(23, 59, 59, 999) as any
+      const myTripEndDate = new Date(myTrip.endDate).setHours(23, 59, 59, 999) as any
+      let commonDays = 0
+
+      if (tripEndDate <= myTripEndDate){
+        commonDays = Math.round(Math.abs((tripEndDate - tripStartDate) / (1000 * 60 * 60 * 24)))
+      } else if (myTripEndDate <= tripEndDate){
+        commonDays = Math.round(Math.abs((myTripEndDate - tripStartDate) / (1000 * 60 * 60 * 24)))
+      }
+
+      return {
+        ...trip,
+        commonDays,
+      }
+    })[0]
+  })
+
+  return myMatchedTrips
+}
+
 export const TripServices = {
   createTripIntoDB,
   updateTripIntoDB,
@@ -204,4 +248,5 @@ export const TripServices = {
   getAllTrips,
   getAllMatchedTrips,
   getPopularMatchedTrips,
+  getMyMatchedTrips,
 };

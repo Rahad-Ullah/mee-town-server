@@ -134,6 +134,17 @@ const getPopularMatchedTrips = catchAsync(
   }
 );
 
+// get my matched trips
+const getMyMatchedTrips = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripServices.getMyMatchedTrips(req.user.id);
+  return sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Matched trips retrieved successfully',
+    data: result,
+  });
+})
+
 export const TripController = {
   createTrip,
   updateTrip,
@@ -142,4 +153,5 @@ export const TripController = {
   getAllTrips,
   getAllMatchedTrips,
   getPopularMatchedTrips,
+  getMyMatchedTrips,
 };

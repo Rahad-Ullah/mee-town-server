@@ -35,6 +35,9 @@ router.get('/all-matched', auth(), TripController.getAllMatchedTrips);
 // get popular matched trips
 router.get('/popular-trips', auth(), TripController.getPopularMatchedTrips);
 
+// get my matched trips
+router.get('/my-matched', auth(USER_ROLES.USER), TripController.getMyMatchedTrips);
+
 // get trip by user id
 router.get('/:id', auth(USER_ROLES.USER), TripController.getTripByUserId);
 
