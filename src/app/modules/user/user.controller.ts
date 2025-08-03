@@ -36,11 +36,19 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   let image = getSingleFilePath(req.files, 'image');
 
-  const data = {
+  const payload = {
     image,
     ...req.body,
   };
-  const result = await UserService.updateProfileToDB(user, data);
+
+  if (payload.location) {
+    // Split by one or more spaces using regex and add to the payload
+    const [countryCode, location] = payload.location.trim().split(/\s+/);
+    payload.countryCode = countryCode;
+    payload.location = location;
+  }
+
+  const result = await UserService.updateProfileToDB(user, payload);
 
   sendResponse(res, {
     success: true,

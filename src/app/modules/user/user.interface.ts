@@ -13,6 +13,7 @@ export type IUser = {
   role: USER_ROLES;
   username?: string;
   location?: string;
+  countryCode?: string;
   gender?: 'Male' | 'Female';
   relationshipStatus?: RELATIONSHIP_STATUS;
   profession?: string;

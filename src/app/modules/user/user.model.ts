@@ -49,6 +49,10 @@ const userSchema = new Schema<IUser, UserModal>(
       type: String,
       default: '',
     },
+    countryCode: {
+      type: String,
+      default: '',
+    },
     gender: {
       type: String,
       enum: {
