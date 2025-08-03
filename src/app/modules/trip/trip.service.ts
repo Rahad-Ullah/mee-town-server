@@ -72,8 +72,12 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
     {
       $match: {
         isDeleted: false,
-        startDate: { $gte: todayDayStart },
-        endDate: { $gte: todayDayStart },
+        startDate: query.startDate
+          ? { $eq: new Date(query.startDate as string) }
+          : { $gte: todayDayStart },
+        endDate: query.endDate
+          ? { $eq: new Date(query.endDate as string) }
+          : { $gte: todayDayStart },
       },
     },
     {
@@ -114,8 +118,12 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
     {
       $match: {
         isDeleted: false,
-        startDate: { $gte: todayDayStart },
-        endDate: { $gte: todayDayStart },
+        startDate: query.startDate
+          ? { $eq: new Date(query.startDate as string) }
+          : { $gte: todayDayStart },
+        endDate: query.endDate
+          ? { $eq: new Date(query.endDate as string) }
+          : { $gte: todayDayStart },
       },
     },
     {
