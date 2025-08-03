@@ -31,6 +31,14 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, image };
+
+    if (payload.place) {
+      // Split by one or more spaces using regex and add to the payload
+      const [countryCode, place] = payload.place.trim().split(/\s+/);
+      payload.countryCode = countryCode;
+      payload.place = place;
+    }
+  
   const result = await TripServices.updateTripIntoDB(id, payload);
 
   sendResponse(res, {

@@ -16,9 +16,11 @@ const userSchema = new Schema<IUser, UserModal>(
     name: {
       type: String,
       required: false,
+      default: '',
     },
     phone: {
       type: String,
+      default: '',
     },
     email: {
       type: String,
@@ -41,9 +43,11 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     username: {
       type: String,
+      default: '',
     },
     location: {
       type: String,
+      default: '',
     },
     gender: {
       type: String,
@@ -61,16 +65,19 @@ const userSchema = new Schema<IUser, UserModal>(
     },
     profession: {
       type: String,
+      default: '',
     },
     nationality: {
       type: String,
+      default: '',
     },
     birthday: {
       type: Date,
-      default: null,
+      default: '',
     },
     bio: {
       type: String,
+      default: '',
     },
     image: {
       type: String,

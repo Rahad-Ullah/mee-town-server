@@ -41,7 +41,11 @@ const getAllTrips = async (query: Record<string, unknown>) => {
   const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
 
   const tripQuery = new QueryBuilder(
-    Trip.find({ isDeleted: false, date: { $gte: todayDayStart } }), // filter only trips that are today or later
+    Trip.find({
+      isDeleted: false,
+      startDate: { $gte: todayDayStart },
+      endDate: { $gte: todayDayStart },
+    }), // filter only trips that are today or later
     query
   )
     .search(['place', 'vehicle', 'accommodation'])
