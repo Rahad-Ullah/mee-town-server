@@ -152,10 +152,56 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
   };
 };
 
+// --------------- get popular matched trips ----------------
+const getPopularMatchedTrips = async () => {
+  const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
+
+  const aggregationPipeline: any[] = [
+    {
+      $match: {
+        isDeleted: false,
+        startDate: { $gte: todayDayStart },
+        endDate: { $gte: todayDayStart },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          place: '$place',
+          startDate: '$startDate',
+          endDate: '$endDate',
+          vehicle: '$vehicle',
+        },
+        trips: { $push: '$$ROOT' },
+        matchCount: { $sum: 1 },
+        place: { $first: '$place' },
+        countryCode: { $first: '$countryCode' },
+        vehicle: { $first: '$vehicle' },
+        startDate: { $first: '$startDate' },
+        endDate: { $first: '$endDate' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+      },
+    },
+    { $sort: { matchCount: -1 as 1 | -1 } },
+    { $limit: 5 },
+  ];
+
+  const result = await Trip.aggregate(aggregationPipeline);
+
+  return {
+    data: result,
+  };
+};
+
 export const TripServices = {
   createTripIntoDB,
   updateTripIntoDB,
   getTripByUserId,
   getAllTrips,
   getAllMatchedTrips,
+  getPopularMatchedTrips,
 };

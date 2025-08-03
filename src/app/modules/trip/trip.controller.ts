@@ -3,6 +3,7 @@ import { TripServices } from './trip.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { getSingleFilePath } from '../../../shared/getFilePath';
+import { popularTripsCache } from '../../../DB/cache';
 
 // create trip
 const createTrip = catchAsync(async (req: Request, res: Response) => {
@@ -32,13 +33,13 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, image };
 
-    if (payload.place) {
-      // Split by one or more spaces using regex and add to the payload
-      const [countryCode, place] = payload.place.trim().split(/\s+/);
-      payload.countryCode = countryCode;
-      payload.place = place;
-    }
-  
+  if (payload.place) {
+    // Split by one or more spaces using regex and add to the payload
+    const [countryCode, place] = payload.place.trim().split(/\s+/);
+    payload.countryCode = countryCode;
+    payload.place = place;
+  }
+
   const result = await TripServices.updateTripIntoDB(id, payload);
 
   sendResponse(res, {
@@ -100,6 +101,39 @@ const getAllMatchedTrips = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get popular matched trips
+const getPopularMatchedTrips = catchAsync(
+  async (req: Request, res: Response) => {
+    const now = Date.now();
+    const cacheDuration = 2 * 60 * 1000; // 2 minutes in milliseconds
+
+    // Check if cache is fresh
+    if (
+      popularTripsCache.data &&
+      now - popularTripsCache.lastFetched < cacheDuration
+    ) {
+      return sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Matched trips retrieved from cache',
+        data: popularTripsCache.data,
+      });
+    }
+
+    // Fetch fresh data and update cache
+    const result = await TripServices.getPopularMatchedTrips();
+    popularTripsCache.data = result?.data;
+    popularTripsCache.lastFetched = now;
+
+    return sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Matched trips retrieved successfully',
+      data: result?.data,
+    });
+  }
+);
+
 export const TripController = {
   createTrip,
   updateTrip,
@@ -107,4 +141,5 @@ export const TripController = {
   getMyTrips,
   getAllTrips,
   getAllMatchedTrips,
+  getPopularMatchedTrips,
 };
