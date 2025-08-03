@@ -69,14 +69,28 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
   const skip = (page - 1) * limit;
 
   const aggregationPipeline: any[] = [
-    { $match: { isDeleted: false, date: { $gte: todayDayStart } } },
+    {
+      $match: {
+        isDeleted: false,
+        startDate: { $gte: todayDayStart },
+        endDate: { $gte: todayDayStart },
+      },
+    },
     {
       $group: {
-        _id: { place: '$place', date: '$date' },
+        _id: {
+          place: '$place',
+          startDate: '$startDate',
+          endDate: '$endDate',
+          vehicle: '$vehicle',
+        },
         trips: { $push: '$$ROOT' },
         matchCount: { $sum: 1 },
         place: { $first: '$place' },
-        date: { $first: '$date' },
+        countryCode: { $first: '$countryCode' },
+        vehicle: { $first: '$vehicle' },
+        startDate: { $first: '$startDate' },
+        endDate: { $first: '$endDate' },
       },
     },
     {
@@ -97,10 +111,21 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
 
   // Get total count for pagination (count groups)
   const countPipeline: any[] = [
-    { $match: { isDeleted: false, date: { $gte: todayDayStart } } },
+    {
+      $match: {
+        isDeleted: false,
+        startDate: { $gte: todayDayStart },
+        endDate: { $gte: todayDayStart },
+      },
+    },
     {
       $group: {
-        _id: { place: '$place', date: '$date' },
+        _id: {
+          place: '$place',
+          startDate: '$startDate',
+          endDate: '$endDate',
+          vehicle: '$vehicle',
+        },
       },
     },
     { $count: 'total' },
@@ -114,7 +139,7 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
       page,
       limit,
       total,
-      totalPages: Math.ceil(total / limit),
+      totalPage: Math.ceil(total / limit),
     },
   };
 };

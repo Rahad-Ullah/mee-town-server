@@ -95,7 +95,8 @@ const getAllMatchedTrips = catchAsync(async (req: Request, res: Response) => {
     statusCode: 200,
     success: true,
     message: 'Matched trips retrieved successfully',
-    data: result,
+    data: result?.data,
+    pagination: result?.pagination,
   });
 });
 
