@@ -14,4 +14,7 @@ router.post(
   ReportController.createReport
 ); 
 
+// toggle block/ unblock user
+router.patch('/:id', auth(USER_ROLES.USER), ReportController.toggleBlockUser);
+
 export const ReportRoutes = router;

@@ -21,7 +21,6 @@ const reportSchema = new Schema<IReport, ReportModel>({
   reason: {
     type: String,
     required: false,
-    default: '',
   },
 });
 

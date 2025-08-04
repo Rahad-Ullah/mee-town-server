@@ -21,4 +21,17 @@ const createReport = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const ReportController = { createReport };
+// toggle block/ unblock user
+const toggleBlockUser = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await ReportServices.toggleBlockUserIntoDB(req.params.id, req.user.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Report updated successfully',
+    data: result,
+  });
+})
+
+export const ReportController = { createReport, toggleBlockUser };

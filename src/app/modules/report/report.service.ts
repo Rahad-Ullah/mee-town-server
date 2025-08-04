@@ -13,7 +13,10 @@ const createReportIntoDB = async (payload: IReport) => {
   });
 
   if (isAlreadyBlocked) {
-      throw new ApiError(StatusCodes.BAD_REQUEST, 'You have already blocked this user')
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'You have already blocked this user'
+    );
   }
 
   const result = await Report.create(payload);
@@ -21,4 +24,27 @@ const createReportIntoDB = async (payload: IReport) => {
   return result;
 };
 
-export const ReportServices = { createReportIntoDB };
+// toggle block/ unblock user
+const toggleBlockUserIntoDB = async (user: string, reporter: string) => {
+  const existingReport = await Report.findOne({
+    reporter,
+    user,
+    type: ReportType.BLOCK,
+  });
+  // delete block report if exist
+  if (existingReport) {
+    await Report.findByIdAndDelete(existingReport._id);
+    return { message: 'User unblocked successfully' };
+  }
+
+  // create block report if not exist
+  await Report.create({
+    reporter,
+    user,
+    type: ReportType.BLOCK,
+  });
+
+  return { message: 'User blocked successfully' };
+};
+
+export const ReportServices = { createReportIntoDB, toggleBlockUserIntoDB };
