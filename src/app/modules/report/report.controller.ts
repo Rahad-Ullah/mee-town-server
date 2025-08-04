@@ -3,11 +3,13 @@ import { ReportServices } from './report.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { StatusCodes } from 'http-status-codes';
+import { ReportType } from './report.constants';
 
 // create report controller
 const createReport = catchAsync(async (req: Request, res: Response) => {
   const payload = {
     reporter: req.user.id,
+    type: ReportType.REPORT,
     ...req.body,
   };
 

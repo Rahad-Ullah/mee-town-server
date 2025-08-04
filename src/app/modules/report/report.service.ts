@@ -71,7 +71,9 @@ const getUserBlockStatus = async (user: string, currentUser: string) => {
 // -------------- get all reports -----------------
 const getAllReports = async (query: Record<string, any>) => {
   const reportQuery = new QueryBuilder(
-    Report.find({ type: ReportType.REPORT }).sort('-createdAt'),
+    Report.find({ type: ReportType.REPORT })
+      .sort('-createdAt')
+      .populate('user reporter'),
     query
   ).paginate();
 
