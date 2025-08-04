@@ -3,9 +3,11 @@ import { ReportType } from './report.constants';
 
 // create report validation schema
 export const createReportSchema = z.object({
-  user: z.string().min(1, 'User is required'),
-  type: z.nativeEnum(ReportType),
-  reason: z.string().optional(),
+  body: z.object({
+    user: z.string().nonempty('User cannot be empty'),
+    type: z.nativeEnum(ReportType),
+    reason: z.string().optional(),
+  }),
 });
 
 export const ReportValidations = { createReportSchema };
