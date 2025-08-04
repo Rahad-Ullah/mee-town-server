@@ -39,7 +39,11 @@ router.get('/popular-trips', auth(), TripController.getPopularMatchedTrips);
 router.get('/my-matched', auth(USER_ROLES.USER), TripController.getMyMatchedTrips);
 
 // get trip by user id
-router.get('/:id', auth(USER_ROLES.USER), TripController.getTripByUserId);
+router.get(
+  '/:id',
+  auth(USER_ROLES.USER, USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  TripController.getTripByUserId
+);
 
 // get all trips
 router.get('/', auth(), TripController.getAllTrips);
