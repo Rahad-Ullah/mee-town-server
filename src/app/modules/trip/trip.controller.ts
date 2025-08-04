@@ -136,7 +136,7 @@ const getPopularMatchedTrips = catchAsync(
 
 // get my matched trips
 const getMyMatchedTrips = catchAsync(async (req: Request, res: Response) => {
-  const result = await TripServices.getMyMatchedTrips(req.user.id);
+  const result = await TripServices.getMyMatchedTrips(req.user.id, req.query);
   return sendResponse(res, {
     statusCode: 200,
     success: true,
