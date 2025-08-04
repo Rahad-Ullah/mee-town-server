@@ -3,6 +3,7 @@ import ApiError from '../../../errors/ApiError';
 import { ReportType } from './report.constants';
 import { IReport } from './report.interface';
 import { Report } from './report.model';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // ------------- create report -------------
 const createReportIntoDB = async (payload: IReport) => {
@@ -24,7 +25,7 @@ const createReportIntoDB = async (payload: IReport) => {
   return result;
 };
 
-// toggle block/ unblock user
+// -------------- toggle block/ unblock user ---------------
 const toggleBlockUserIntoDB = async (user: string, currentUser: string) => {
   const existingReport = await Report.findOne({
     reporter: currentUser,
@@ -47,7 +48,7 @@ const toggleBlockUserIntoDB = async (user: string, currentUser: string) => {
   return { message: 'User blocked successfully' };
 };
 
-// get user block status
+// -------------- get user block status -----------------
 const getUserBlockStatus = async (user: string, currentUser: string) => {
   const isHeBlocked = await Report.findOne({
     reporter: currentUser,
@@ -67,8 +68,24 @@ const getUserBlockStatus = async (user: string, currentUser: string) => {
   };
 };
 
+// -------------- get all reports -----------------
+const getAllReports = async (query: Record<string, any>) => {
+  const reportQuery = new QueryBuilder(
+    Report.find({ type: ReportType.REPORT }).sort('-createdAt'),
+    query
+  ).paginate();
+
+  const [reports, pagination] = await Promise.all([
+    reportQuery.modelQuery.lean(),
+    reportQuery.getPaginationInfo(),
+  ]);
+
+  return { reports, pagination };
+};
+
 export const ReportServices = {
   createReportIntoDB,
   toggleBlockUserIntoDB,
   getUserBlockStatus,
+  getAllReports,
 };

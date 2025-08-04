@@ -46,4 +46,16 @@ const getUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
-export const ReportController = { createReport, toggleBlockUser, getUserBlockStatus };
+// get all reports
+const getAllReports = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReportServices.getAllReports(req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Reports retrieved successfully',
+    data: result,
+  });
+})
+
+export const ReportController = { createReport, toggleBlockUser, getUserBlockStatus, getAllReports };

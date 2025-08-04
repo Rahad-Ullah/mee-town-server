@@ -1,5 +1,5 @@
 import { Model, ObjectId } from 'mongoose';
-import { ReportType } from './report.constants';
+import { ReportStatus, ReportType } from './report.constants';
 
 export type IReport = {
   _id?: string;
@@ -7,6 +7,7 @@ export type IReport = {
   reporter: ObjectId;
   reason?: string;
   type: ReportType;
+  status: ReportStatus;
 };
 
 export type ReportModel = Model<IReport>;
