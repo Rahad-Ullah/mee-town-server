@@ -3,7 +3,6 @@ import { PostServices } from './post.service';
 import catchAsync from '../../../shared/catchAsync';
 import { getSingleFilePath } from '../../../shared/getFilePath';
 import sendResponse from '../../../shared/sendResponse';
-import { get } from 'mongoose';
 
 // create post
 const createPost = catchAsync(async (req: Request, res: Response) => {
@@ -50,7 +49,7 @@ const deletePost = catchAsync(async (req: Request, res: Response) => {
 
 // get my posts
 const getMyPosts = catchAsync(async (req: Request, res: Response) => {
-  const result = await PostServices.getMyPostsFromDB(req.user);
+  const result = await PostServices.getPostsByUserIdFromDB(req.user.id);
 
   sendResponse(res, {
     statusCode: 200,
@@ -60,7 +59,19 @@ const getMyPosts = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// get alll posts
+// get posts by user id
+const getPostsByUserId = catchAsync(async (req: Request, res: Response) => {
+  const result = await PostServices.getPostsByUserIdFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Posts retrieved successfully',
+    data: result,
+  });
+});
+
+// get all posts
 const getAllPosts = catchAsync(async (req: Request, res: Response) => {
   const result = await PostServices.getAllPostsFromDB(req.query);
 
@@ -90,5 +101,6 @@ export const PostController = {
   deletePost,
   getMyPosts,
   getAllPosts,
+  getPostsByUserId,
   getMyLikedPosts,
 };

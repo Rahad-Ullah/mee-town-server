@@ -34,6 +34,9 @@ router.get('/my-posts', auth(USER_ROLES.USER), PostController.getMyPosts);
 // get my liked posts
 router.get('/my-liked-posts', auth(USER_ROLES.USER), PostController.getMyLikedPosts);
 
+// get post by user id
+router.get('/:id', auth(USER_ROLES.USER, USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PostController.getPostsByUserId);
+
 // get all posts
 router.get('/', auth(USER_ROLES.USER, USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PostController.getAllPosts);
 
