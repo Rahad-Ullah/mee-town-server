@@ -25,9 +25,9 @@ const createReportIntoDB = async (payload: IReport) => {
 };
 
 // toggle block/ unblock user
-const toggleBlockUserIntoDB = async (user: string, reporter: string) => {
+const toggleBlockUserIntoDB = async (user: string, currentUser: string) => {
   const existingReport = await Report.findOne({
-    reporter,
+    reporter: currentUser,
     user,
     type: ReportType.BLOCK,
   });
@@ -39,7 +39,7 @@ const toggleBlockUserIntoDB = async (user: string, reporter: string) => {
 
   // create block report if not exist
   await Report.create({
-    reporter,
+    reporter: currentUser,
     user,
     type: ReportType.BLOCK,
   });
@@ -47,4 +47,28 @@ const toggleBlockUserIntoDB = async (user: string, reporter: string) => {
   return { message: 'User blocked successfully' };
 };
 
-export const ReportServices = { createReportIntoDB, toggleBlockUserIntoDB };
+// get user block status
+const getUserBlockStatus = async (user: string, currentUser: string) => {
+  const isHeBlocked = await Report.findOne({
+    reporter: currentUser,
+    user,
+    type: ReportType.BLOCK,
+  });
+
+  const amIBlocked = await Report.findOne({
+    reporter: user,
+    user: currentUser,
+    type: ReportType.BLOCK,
+  });
+
+  return {
+    isHeBlocked: !!isHeBlocked,
+    amIBlocked: !!amIBlocked,
+  };
+};
+
+export const ReportServices = {
+  createReportIntoDB,
+  toggleBlockUserIntoDB,
+  getUserBlockStatus,
+};

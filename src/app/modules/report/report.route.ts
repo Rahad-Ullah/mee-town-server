@@ -7,6 +7,7 @@ import { ReportValidations } from './report.validation';
 
 const router = express.Router();
 
+// create report
 router.post(
   '/',
   auth(USER_ROLES.USER),
@@ -16,5 +17,8 @@ router.post(
 
 // toggle block/ unblock user
 router.patch('/:id', auth(USER_ROLES.USER), ReportController.toggleBlockUser);
+
+// get user block status
+router.get('/user-block-status/:id', auth(USER_ROLES.USER), ReportController.getUserBlockStatus);
 
 export const ReportRoutes = router;
