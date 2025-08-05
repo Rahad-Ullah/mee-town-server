@@ -217,7 +217,8 @@ const getMyMatchedTrips = async (
   userId: string,
   query: Record<string, unknown>
 ) => {
-  const myTrips = await getTripByUserId(userId);
+  const myTrips = await Trip.find({ user: userId, isDeleted: false });
+  console.log(myTrips);
   const allMatchedTrips = (await getAllMatchedTrips(query)).data;
 
   // filter matched trips that are in my trips by place, vehicle and startDate

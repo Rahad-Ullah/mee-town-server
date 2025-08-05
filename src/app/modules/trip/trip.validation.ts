@@ -11,9 +11,9 @@ const createTripSchema = z.object({
         today.setHours(0, 0, 0, 0);
         const inputDate = new Date(date);
         inputDate.setHours(0, 0, 0, 0);
-        return inputDate >= today;
+        return inputDate > today;
       },
-      { message: 'Date cannot be in the past' }
+      { message: 'Date must be at tomorrow or later' }
     ),
     endDate: z.coerce.date().refine(
       date => {
@@ -21,9 +21,9 @@ const createTripSchema = z.object({
         today.setHours(0, 0, 0, 0);
         const inputDate = new Date(date);
         inputDate.setHours(0, 0, 0, 0);
-        return inputDate >= today;
+        return inputDate > today;
       },
-      { message: 'Date cannot be in the past' }
+      { message: 'Date must be at tomorrow or later' }
     ),
     vehicle: z.nativeEnum(TRIP_VEHICLE),
     airlinesType: z.string().optional(),
