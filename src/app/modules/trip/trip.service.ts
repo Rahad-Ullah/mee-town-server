@@ -31,9 +31,22 @@ const updateTripIntoDB = async (id: string, payload: Partial<ITrip>) => {
 };
 
 // --------------- get trip by user id ----------------
-const getTripByUserId = async (userId: string): Promise<ITrip[]> => {
-  const result = await Trip.find({ user: userId, isDeleted: false });
-  return result;
+const getTripByUserId = async (userId: string) => {
+  const today = new Date();
+
+  const pastTrips = await Trip.find({
+    user: userId,
+    isDeleted: false,
+    startDate: { $lt: today },
+  });
+
+  const upcomingTrips = await Trip.find({
+    user: userId,
+    isDeleted: false,
+    startDate: { $gte: today },
+  });
+
+  return { pastTrips, upcomingTrips };
 };
 
 // --------------- get all trips ----------------
