@@ -60,4 +60,16 @@ const getAllReports = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
-export const ReportController = { createReport, toggleBlockUser, getUserBlockStatus, getAllReports };
+// update report
+const updateReport = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReportServices.updateReportIntoDB(req.params.id, req.body.status);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Report updated successfully',
+    data: result,
+  });
+})
+
+export const ReportController = { createReport, toggleBlockUser, getUserBlockStatus, getAllReports, updateReport };

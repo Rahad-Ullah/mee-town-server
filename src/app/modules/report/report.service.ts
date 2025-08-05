@@ -85,9 +85,20 @@ const getAllReports = async (query: Record<string, any>) => {
   return { reports, pagination };
 };
 
+// -------------- update report status -----------------
+const updateReportIntoDB = async (id: string, status: string) => {
+  // check if the report is exist
+  const existingReport = await Report.findById(id);
+  if (!existingReport) throw new ApiError(StatusCodes.BAD_REQUEST, 'Report not found')
+  
+  const result = await Report.findByIdAndUpdate(id, { status }, {new: true});
+  return result;
+}
+
 export const ReportServices = {
   createReportIntoDB,
   toggleBlockUserIntoDB,
   getUserBlockStatus,
   getAllReports,
+  updateReportIntoDB,
 };

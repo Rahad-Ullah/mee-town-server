@@ -24,4 +24,7 @@ router.get('/user-block-status/:id', auth(USER_ROLES.USER), ReportController.get
 // get all reports
 router.get('/', auth(USER_ROLES.ADMIN), ReportController.getAllReports);
 
+// update report
+router.patch('/update-status/:id', auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), validateRequest(ReportValidations.updateReportSchema), ReportController.updateReport);
+
 export const ReportRoutes = router;
