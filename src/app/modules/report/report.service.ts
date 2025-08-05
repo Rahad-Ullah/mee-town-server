@@ -4,6 +4,10 @@ import { ReportType } from './report.constants';
 import { IReport } from './report.interface';
 import { Report } from './report.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { sendNotifications } from '../../../helpers/notificationHelper';
+import { User } from '../user/user.model';
+import { USER_ROLES, USER_STATUS } from '../../../enums/user';
+import { ObjectId, Schema } from 'mongoose';
 
 // ------------- create report -------------
 const createReportIntoDB = async (payload: IReport) => {
@@ -21,6 +25,25 @@ const createReportIntoDB = async (payload: IReport) => {
   }
 
   const result = await Report.create(payload);
+
+  //  send notification to the admins
+  const admins = await User.find({
+    role: { $in: [USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN] },
+    isDeleted: false,
+    status: USER_STATUS.ACTIVE,
+  }).lean();
+
+  await Promise.all(
+    admins.map(admin =>
+      sendNotifications({
+        type: 'report',
+        receiver: admin._id,
+        title: 'New Report',
+        message: `New report from a user`,
+        referenceId: payload.user.toString(),
+      })
+    )
+  );
 
   return result;
 };
