@@ -11,7 +11,7 @@ const getNotificationFromDB = async (
   query: FilterQuery<any>
 ): Promise<Object> => {
   const notificationQuery = new QueryBuilder(
-    Notification.find({ receiver: user.id }),
+    Notification.find({ receiver: user.id }).sort('-createdAt'),
     query
   ).paginate();
 

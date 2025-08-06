@@ -22,7 +22,11 @@ router.patch('/:id', auth(USER_ROLES.USER), ReportController.toggleBlockUser);
 router.get('/user-block-status/:id', auth(USER_ROLES.USER), ReportController.getUserBlockStatus);
 
 // get all reports
-router.get('/', auth(USER_ROLES.ADMIN), ReportController.getAllReports);
+router.get(
+  '/',
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
+  ReportController.getAllReports
+);
 
 // update report
 router.patch('/update-status/:id', auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), validateRequest(ReportValidations.updateReportSchema), ReportController.updateReport);
