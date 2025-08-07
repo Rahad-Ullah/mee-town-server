@@ -21,10 +21,9 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>({
     type: Date,
     required: true,
   },
-  status: {
-    type: String,
-    enum: Object.values(SubscriptionStatus),
-    default: SubscriptionStatus.ACTIVE,
+  amount: {
+    type: Number,
+    required: true,
   },
   paymentProvider: {
     type: String,
@@ -34,6 +33,11 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>({
   transactionId: {
     type: String,
     required: true,
+  },
+  status: {
+    type: String,
+    enum: Object.values(SubscriptionStatus),
+    default: SubscriptionStatus.ACTIVE,
   },
 });
 

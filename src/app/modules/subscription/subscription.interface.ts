@@ -7,9 +7,10 @@ export type ISubscription = {
   package: ObjectId;
   purchaseDate: Date;
   expiresDate: Date;
-  status: SubscriptionStatus;
+  amount: number;
   paymentProvider: PaymentProvider;
   transactionId: string;
+  status: SubscriptionStatus;
 };
 
 export type SubscriptionModel = Model<ISubscription>;
