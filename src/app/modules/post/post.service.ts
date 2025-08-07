@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
-import { IPost, PostModel } from './post.interface';
+import { IPost } from './post.interface';
 import { Post } from './post.model';
 import unlinkFile from '../../../shared/unlinkFile';
 import QueryBuilder from '../../builder/QueryBuilder';
@@ -77,7 +77,13 @@ const getPostsByUserIdFromDB = async (userId: any) => {
 
 // --------------- get all posts ---------------
 const getAllPostsFromDB = async (query: Record<string, any>) => {
-  const postQuery = new QueryBuilder(Post.find({ isDeleted: false }), query)
+  const postQuery = new QueryBuilder(
+    Post.find({ isDeleted: false }).populate(
+      'user',
+      'name username image location'
+    ),
+    query
+  )
     .paginate()
     .filter()
     .search(['place', 'title', 'message'])
@@ -87,7 +93,24 @@ const getAllPostsFromDB = async (query: Record<string, any>) => {
     postQuery.modelQuery.lean(),
     postQuery.getPaginationInfo(),
   ]);
-  return { posts, pagination };
+
+  // get post reactions of each post
+  const postsWithReactions = await Promise.all(
+    posts.map(async post => {
+      const reactions = await PostReaction.find({
+        post: post._id,
+        isLike: true,
+      })
+        .populate('reactor', 'name username image')
+        .select('reactor');
+      return {
+        ...post,
+        reactions: reactions.map(reaction => reaction.reactor),
+      };
+    })
+  );
+
+  return { posts: postsWithReactions, pagination };
 };
 
 // --------------- get my liked posts ---------------
