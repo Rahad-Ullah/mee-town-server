@@ -14,4 +14,16 @@ const getAnalyticsOverview = async (req: Request, res: Response) => {
   });
 };
 
-export const AnalyticsController = { getAnalyticsOverview };
+// get monthly user growth
+const getMonthlyUserGrowth = async (req: Request, res: Response) => {
+  const result = await AnalyticsServices.getMonthlyUserGrowth();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Monthly user growth fetched successfully',
+    data: result,
+  });
+}
+
+export const AnalyticsController = { getAnalyticsOverview, getMonthlyUserGrowth };

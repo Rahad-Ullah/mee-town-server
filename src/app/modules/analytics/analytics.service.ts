@@ -37,4 +37,36 @@ const getAnalyticsOverview = async () => {
   };
 };
 
-export const AnalyticsServices = { getAnalyticsOverview };
+// ---------------- get monthly user growth ---------------
+const getMonthlyUserGrowth = async () => {
+  const result = await User.aggregate([
+    {
+      $group: {
+        _id: { $month: "$createdAt" },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+
+  
+  // Map month number (1-12) to name
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  const formattedResult = monthNames.map((name, index) => {
+    const monthData = result.find((item) => item._id === index + 1); // Mongo month is 1-based
+    return {
+      month: name,
+      count: monthData ? monthData.count : 0,
+    };
+  });
+
+  return formattedResult;
+  }
+
+export const AnalyticsServices = { getAnalyticsOverview, getMonthlyUserGrowth };
