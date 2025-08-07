@@ -69,4 +69,38 @@ const getMonthlyUserGrowth = async () => {
   return formattedResult;
   }
 
-export const AnalyticsServices = { getAnalyticsOverview, getMonthlyUserGrowth };
+// ---------------- get monthly revenue growth ---------------
+const getMonthlyRevenueGrowth = async () => {
+  // Step 1: MongoDB aggregation
+  const result = await Subscription.aggregate([
+    {
+      $group: {
+        _id: { $month: "$createdAt" },
+        amount: { $sum: "$amount" },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+
+  // Step 2: All 12 month names
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  // Step 3: Merge with full 12 months
+  const finalResult = monthNames.map((name, index) => {
+    const monthData = result.find((item) => item._id === index + 1);
+    return {
+      month: name,
+      amount: monthData ? monthData.amount : 0,
+    };
+  });
+
+  return finalResult;
+};
+
+
+export const AnalyticsServices = { getAnalyticsOverview, getMonthlyUserGrowth, getMonthlyRevenueGrowth };

@@ -26,4 +26,16 @@ const getMonthlyUserGrowth = async (req: Request, res: Response) => {
   });
 }
 
-export const AnalyticsController = { getAnalyticsOverview, getMonthlyUserGrowth };
+// get monthly revenue growth
+const getMonthlyRevenueGrowth = async (req: Request, res: Response) => {
+  const result = await AnalyticsServices.getMonthlyRevenueGrowth();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Monthly revenue growth fetched successfully',
+    data: result,
+  });
+}
+
+export const AnalyticsController = { getAnalyticsOverview, getMonthlyUserGrowth, getMonthlyRevenueGrowth };
