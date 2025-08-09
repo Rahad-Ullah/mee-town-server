@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder';
 import { Package } from '../package/package.model';
 import { User } from '../user/user.model';
 import { ISubscription } from './subscription.interface';
@@ -39,7 +40,33 @@ const createSubscriptionIntoDB = async (payload: ISubscription) => {
 // update subscription
 
 // get all subscriptions
+const getAllSubscriptions = async (query: Record<string, any>) => {
+  const subscriptionQuery = new QueryBuilder(
+    Subscription.find().populate([
+      {
+        path: 'user',
+        select: 'name username email phone image',
+      },
+      {
+        path: 'package',
+        select: 'tag unit discount totalPrice',
+      },
+    ]),
+    query
+  )
+    .paginate()
+    .sort();
+
+  const [subscriptions, pagination] = await Promise.all([
+    subscriptionQuery.modelQuery.lean(),
+    subscriptionQuery.getPaginationInfo(),
+  ]);
+  return { subscriptions, pagination };
+};
 
 // get subscription by id
 
-export const SubscriptionServices = { createSubscriptionIntoDB };
+export const SubscriptionServices = {
+  createSubscriptionIntoDB,
+  getAllSubscriptions,
+};
