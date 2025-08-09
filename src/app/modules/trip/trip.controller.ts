@@ -12,9 +12,9 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
 
   if (payload.place) {
     // Split by one or more spaces using regex and add to the payload
-    const [countryCode, place] = payload.place.trim().split(/\s+/);
+    const [countryCode, ...placeParts] = payload.place.trim().split(/\s+/);
     payload.countryCode = countryCode;
-    payload.place = place;
+    payload.place = placeParts.join(' ');
   }
 
   const result = await TripServices.createTripIntoDB(payload);
@@ -35,9 +35,9 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
 
   if (payload.place) {
     // Split by one or more spaces using regex and add to the payload
-    const [countryCode, place] = payload.place.trim().split(/\s+/);
+    const [countryCode, ...placeParts] = payload.place.trim().split(/\s+/);
     payload.countryCode = countryCode;
-    payload.place = place;
+    payload.place = placeParts.join(' ');
   }
 
   const result = await TripServices.updateTripIntoDB(id, payload);
@@ -143,7 +143,7 @@ const getMyMatchedTrips = catchAsync(async (req: Request, res: Response) => {
     message: 'Matched trips retrieved successfully',
     data: result,
   });
-})
+});
 
 export const TripController = {
   createTrip,

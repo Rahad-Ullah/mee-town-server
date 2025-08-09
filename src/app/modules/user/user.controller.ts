@@ -43,9 +43,9 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
   if (payload.location) {
     // Split by one or more spaces using regex and add to the payload
-    const [countryCode, location] = payload.location.trim().split(/\s+/);
+    const [countryCode, ...placeParts] = payload.place.trim().split(/\s+/);
     payload.countryCode = countryCode;
-    payload.location = location;
+    payload.place = placeParts.join(' ');
   }
 
   const result = await UserService.updateProfileToDB(user, payload);
