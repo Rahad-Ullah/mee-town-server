@@ -9,6 +9,9 @@ import generateOTP from '../../../util/generateOTP';
 import { IUser } from './user.interface';
 import { User } from './user.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { ISubscription } from '../subscription/subscription.interface';
+import { Subscription } from '../subscription/subscription.model';
+import { SubscriptionStatus } from '../subscription/subscription.constants';
 
 // ------------------ create user service ------------ ----------
 const createUserToDB = async (payload: Partial<IUser>) => {
@@ -51,9 +54,11 @@ const getUserProfileFromDB = async (
   user: JwtPayload
 ): Promise<Partial<IUser>> => {
   const { id } = user;
-  const isExistUser = await User.findById(id)
+  const isExistUser: any = await User.findById(id)
     .select('-authentication')
-    .populate('subscription');
+    .populate({
+      path: 'subscription',
+    });
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
@@ -62,6 +67,16 @@ const getUserProfileFromDB = async (
   }
   if (isExistUser.status === 'Blocked') {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'User is blocked!');
+  }
+
+  // check if the subscription is expired
+  if (isExistUser?.subscription) {
+    const subscription = isExistUser.subscription as ISubscription;
+    if (new Date(subscription.expiresDate) < new Date()) {
+      await Subscription.findByIdAndUpdate(subscription._id, {
+        status: SubscriptionStatus.EXPIRED,
+      });
+    }
   }
 
   return isExistUser;

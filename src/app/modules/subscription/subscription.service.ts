@@ -37,8 +37,6 @@ const createSubscriptionIntoDB = async (payload: ISubscription) => {
   return result;
 };
 
-// update subscription
-
 // get all subscriptions
 const getAllSubscriptions = async (query: Record<string, any>) => {
    let filter: Record<string, any> = {};
