@@ -77,9 +77,23 @@ const getAllSubscriptions = async (query: Record<string, any>) => {
   return { subscriptions, pagination };
 };
 
-// get subscription by id
+// get subscription by user id
+const getSubscriptionByUserId = async (userId: string) => {
+  const result = await Subscription.findOne({ user: userId }).populate([
+    {
+      path: 'user',
+      select: 'name username email phone image',
+    },
+    {
+      path: 'package',
+      select: 'tag unit discount totalPrice',
+    },
+  ]);
+  return result;
+}
 
 export const SubscriptionServices = {
   createSubscriptionIntoDB,
   getAllSubscriptions,
+  getSubscriptionByUserId,
 };

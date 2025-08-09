@@ -35,4 +35,31 @@ export const getAllSubscriptions = catchAsync(
   }
 );
 
-export const SubscriptionController = { createSubscription, getAllSubscriptions };
+// get by user id
+export const getSubscriptionByUserId = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await SubscriptionServices.getSubscriptionByUserId(req.params.id);
+    sendResponse(res, {
+      success: true,
+      statusCode: StatusCodes.OK,
+      message: 'Subscription fetched successfully',
+      data: result,
+    });
+  }
+);
+
+// get my subscriptions
+export const getMySubscriptions = catchAsync(
+  async (req: Request, res: Response) => {
+    console.log(req.user.id);
+    const result = await SubscriptionServices.getSubscriptionByUserId(req.user.id);
+    sendResponse(res, {
+      success: true,
+      statusCode: StatusCodes.OK,
+      message: 'Subscriptions fetched successfully',
+      data: result,
+    });
+  }
+);
+
+export const SubscriptionController = { createSubscription, getAllSubscriptions, getSubscriptionByUserId, getMySubscriptions };
