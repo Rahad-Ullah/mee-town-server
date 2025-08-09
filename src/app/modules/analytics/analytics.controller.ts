@@ -28,7 +28,7 @@ const getMonthlyUserGrowth = async (req: Request, res: Response) => {
 
 // get monthly revenue growth
 const getMonthlyRevenueGrowth = async (req: Request, res: Response) => {
-  const result = await AnalyticsServices.getMonthlyRevenueGrowth();
+  const result = await AnalyticsServices.getMonthlyRevenueGrowth(req.query);
 
   sendResponse(res, {
     statusCode: 200,

@@ -70,13 +70,27 @@ const getMonthlyUserGrowth = async () => {
   }
 
 // ---------------- get monthly revenue growth ---------------
-const getMonthlyRevenueGrowth = async () => {
+const getMonthlyRevenueGrowth = async (query: Record<string, any>) => {
+  const year = parseInt(query?.year || new Date().getFullYear().toString());
+
+  const matchStage = year
+    ? {
+        createdAt: {
+          $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+          $lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+        },
+      }
+    : {};
+
   // Step 1: MongoDB aggregation
   const result = await Subscription.aggregate([
     {
+      $match: { matchStage },
+    },
+    {
       $group: {
-        _id: { $month: "$createdAt" },
-        amount: { $sum: "$amount" },
+        _id: { $month: '$createdAt' },
+        amount: { $sum: '$amount' },
       },
     },
     {
@@ -86,13 +100,23 @@ const getMonthlyRevenueGrowth = async () => {
 
   // Step 2: All 12 month names
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 
   // Step 3: Merge with full 12 months
   const finalResult = monthNames.map((name, index) => {
-    const monthData = result.find((item) => item._id === index + 1);
+    const monthData = result.find(item => item._id === index + 1);
     return {
       month: name,
       amount: monthData ? monthData.amount : 0,
