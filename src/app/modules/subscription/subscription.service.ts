@@ -41,26 +41,39 @@ const createSubscriptionIntoDB = async (payload: ISubscription) => {
 
 // get all subscriptions
 const getAllSubscriptions = async (query: Record<string, any>) => {
-  const subscriptionQuery = new QueryBuilder(
-    Subscription.find().populate([
-      {
-        path: 'user',
-        select: 'name username email phone image',
-      },
-      {
-        path: 'package',
-        select: 'tag unit discount totalPrice',
-      },
-    ]),
-    query
-  )
-    .paginate()
-    .sort();
+   let filter: Record<string, any> = {};
 
-  const [subscriptions, pagination] = await Promise.all([
-    subscriptionQuery.modelQuery.lean(),
-    subscriptionQuery.getPaginationInfo(),
-  ]);
+   if (query.searchTerm) {
+     // First find all matching users
+     const matchedUsers = await User.find({
+       name: { $regex: query.searchTerm, $options: 'i' },
+     }).select('_id');
+
+     filter.user = { $in: matchedUsers.map(u => u._id.toString()) };
+   }
+
+   const subscriptionQuery = new QueryBuilder(
+     Subscription.find(filter).populate([
+       {
+         path: 'user',
+         select: 'name username email phone image',
+       },
+       {
+         path: 'package',
+         select: 'tag unit discount totalPrice',
+       },
+     ]),
+     query
+   )
+     .paginate()
+     .filter()
+     .sort();
+
+   const [subscriptions, pagination] = await Promise.all([
+     subscriptionQuery.modelQuery.lean(),
+     subscriptionQuery.getPaginationInfo(),
+   ]);
+
   return { subscriptions, pagination };
 };
 
