@@ -94,6 +94,34 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
         place: query.place ? { $eq: query.place } : { $exists: true },
       },
     },
+    // ✅ ADD THIS STAGE (populate user)
+    {
+      $lookup: {
+        from: 'users', // MongoDB collection name
+        localField: 'user', // field in Trip
+        foreignField: '_id', // field in User
+        as: 'user',
+        pipeline: [
+          {
+            $project: {
+              name: 1,
+              image: 1,
+              gender: 1,
+              countryCode: 1,
+            },
+          },
+        ],
+      },
+    },
+
+    // ✅ ADD THIS STAGE (convert user array to object)
+    {
+      $unwind: {
+        path: '$user',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
     {
       $group: {
         _id: {
@@ -179,6 +207,35 @@ const getPopularMatchedTrips = async () => {
         endDate: { $gte: todayDayStart },
       },
     },
+
+    // ✅ ADD THIS STAGE (populate user)
+    {
+      $lookup: {
+        from: 'users', // MongoDB collection name
+        localField: 'user', // field in Trip
+        foreignField: '_id', // field in User
+        as: 'user',
+        pipeline: [
+          {
+            $project: {
+              name: 1,
+              image: 1,
+              gender: 1,
+              countryCode: 1,
+            },
+          },
+        ],
+      },
+    },
+
+    // ✅ ADD THIS STAGE (convert user array to object)
+    {
+      $unwind: {
+        path: '$user',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
     {
       $group: {
         _id: {
@@ -218,7 +275,6 @@ const getMyMatchedTrips = async (
   query: Record<string, unknown>
 ) => {
   const myTrips = await Trip.find({ user: userId, isDeleted: false });
-  console.log(myTrips);
   const allMatchedTrips = (await getAllMatchedTrips(query)).data;
 
   // filter matched trips that are in my trips by place, vehicle and startDate
