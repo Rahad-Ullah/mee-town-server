@@ -1,7 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken';
 import { timeAgo } from '../../../shared/timeAgo';
 import QueryBuilder from '../../builder/QueryBuilder';
-import { NotificationModel } from './notification.interface';
 import { FilterQuery } from 'mongoose';
 import { Notification } from './notification.model';
 
@@ -18,7 +17,7 @@ const getNotificationFromDB = async (
   const [notifications, pagination, unreadCount] = await Promise.all([
     notificationQuery.modelQuery.lean().exec(),
     notificationQuery.getPaginationInfo(),
-    Notification.countDocuments({ receiver: user.id, read: false }),
+    Notification.countDocuments({ receiver: user.id, isRead: false }),
   ]);
 
   return {
