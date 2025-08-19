@@ -7,3 +7,6 @@ yarn.lock
 
 /winston
 /uploads
+
+# code editor
+.vscode
