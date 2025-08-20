@@ -86,10 +86,10 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
       $match: {
         isDeleted: false,
         startDate: query.startDate
-          ? { $eq: new Date(query.startDate as string) }
+          ? { $gte: new Date(query.startDate as string) }
           : { $gte: todayDayStart },
         endDate: query.endDate
-          ? { $eq: new Date(query.endDate as string) }
+          ? { $lte: new Date(query.endDate as string) }
           : { $gte: todayDayStart },
         place: query.place ? { $eq: query.place } : { $exists: true },
       },
@@ -161,10 +161,10 @@ const getAllMatchedTrips = async (query: Record<string, unknown>) => {
       $match: {
         isDeleted: false,
         startDate: query.startDate
-          ? { $eq: new Date(query.startDate as string) }
+          ? { $gte: new Date(query.startDate as string) }
           : { $gte: todayDayStart },
         endDate: query.endDate
-          ? { $eq: new Date(query.endDate as string) }
+          ? { $lte: new Date(query.endDate as string) }
           : { $gte: todayDayStart },
         place: query.place ? { $eq: query.place } : { $exists: true },
       },
@@ -240,17 +240,17 @@ const getPopularMatchedTrips = async () => {
       $group: {
         _id: {
           place: '$place',
-          startDate: '$startDate',
-          endDate: '$endDate',
-          vehicle: '$vehicle',
+          // startDate: '$startDate',
+          // endDate: '$endDate',
+          // vehicle: '$vehicle',
         },
         trips: { $push: '$$ROOT' },
         matchCount: { $sum: 1 },
         place: { $first: '$place' },
         countryCode: { $first: '$countryCode' },
-        vehicle: { $first: '$vehicle' },
-        startDate: { $first: '$startDate' },
-        endDate: { $first: '$endDate' },
+        // vehicle: { $first: '$vehicle' },
+        // startDate: { $first: '$startDate' },
+        // endDate: { $first: '$endDate' },
       },
     },
     {
