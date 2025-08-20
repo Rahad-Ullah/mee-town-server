@@ -248,9 +248,9 @@ const getPopularMatchedTrips = async () => {
         matchCount: { $sum: 1 },
         place: { $first: '$place' },
         countryCode: { $first: '$countryCode' },
-        // vehicle: { $first: '$vehicle' },
-        // startDate: { $first: '$startDate' },
-        // endDate: { $first: '$endDate' },
+        vehicle: { $first: '$vehicle' },
+        startDate: { $first: '$startDate' },
+        endDate: { $first: '$endDate' },
       },
     },
     {
