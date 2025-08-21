@@ -48,8 +48,8 @@ Ensure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repository.git
-   cd your-repository
+   git clone https://github.com/Rahad-Ullah/mee-town-server.git
+   cd mee-town-server
    ```
 
 2. **Install dependencies:**
