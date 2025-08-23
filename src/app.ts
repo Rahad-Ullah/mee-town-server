@@ -17,6 +17,7 @@ app.use(
     origin: [
       'http://10.10.7.102:3000',
       'https://mee-town-dashboard.vercel.app',
+      'http://146.190.126.8:3000',
     ],
     credentials: true,
   })
