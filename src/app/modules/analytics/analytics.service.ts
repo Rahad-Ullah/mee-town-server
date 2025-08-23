@@ -73,17 +73,6 @@ const getMonthlyUserGrowth = async () => {
 const getMonthlyRevenueGrowth = async (query: Record<string, any>) => {
   const year = parseInt(query?.year || new Date().getFullYear().toString());
 
-  console.log(year);
-
-  const matchStage = year
-    ? {
-        createdAt: {
-          $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-          $lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
-        },
-      }
-    : {};
-
   // Step 1: MongoDB aggregation
   const result = await Subscription.aggregate([
     {
@@ -130,7 +119,6 @@ const getMonthlyRevenueGrowth = async (query: Record<string, any>) => {
     };
   });
 
-  console.log(finalResult);
   return finalResult;
 };
 

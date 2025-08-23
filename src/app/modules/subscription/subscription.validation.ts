@@ -5,7 +5,6 @@ import { PaymentProvider, SubscriptionStatus } from './subscription.constants';
 const createSubscriptionShcema = z.object({
   body: z.object({
     package: z.string().min(1, 'Package is required'),
-    purchaseDate: z.string({ required_error: 'Purchase date is required' }),
     expiresDate: z.string({ required_error: 'Expires date is required' }),
     paymentProvider: nativeEnum(PaymentProvider, {
       message: 'Payment provider is required',

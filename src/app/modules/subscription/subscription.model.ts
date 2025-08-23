@@ -39,6 +39,8 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>({
     enum: Object.values(SubscriptionStatus),
     default: SubscriptionStatus.ACTIVE,
   },
+}, {
+  timestamps: true,
 });
 
 export const Subscription = model<ISubscription, SubscriptionModel>(

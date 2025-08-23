@@ -7,7 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 // create subscription
 export const createSubscription = catchAsync(
   async (req: Request, res: Response) => {
-    const payload = { ...req.body, user: req.user.id };
+    const payload = { ...req.body, user: req.user.id, purchaseDate: new Date() };
 
     const result = await SubscriptionServices.createSubscriptionIntoDB(payload);
 
