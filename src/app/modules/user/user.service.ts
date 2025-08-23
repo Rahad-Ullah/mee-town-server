@@ -12,6 +12,8 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import { ISubscription } from '../subscription/subscription.interface';
 import { Subscription } from '../subscription/subscription.model';
 import { SubscriptionStatus } from '../subscription/subscription.constants';
+import { TripServices } from '../trip/trip.service';
+import { ITrip } from '../trip/trip.interface';
 
 // ------------------ create user service ------------ ----------
 const createUserToDB = async (payload: Partial<IUser>) => {
@@ -112,7 +114,7 @@ const updateProfileToDB = async (
 };
 
 // ---------------------------- get single user -----------------------------
-const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
+const getSingleUserFromDB = async (id: string, userId: string) => {
   const isExistUser = await User.findById(id)
     .select('-authentication')
     .populate('subscription');
@@ -120,7 +122,22 @@ const getSingleUserFromDB = async (id: string): Promise<Partial<IUser>> => {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
 
-  return isExistUser;
+  // get all matched trips
+  const allMatchedTrips = (await TripServices.getAllMatchedTrips({})).data;
+
+  // array of both user ids
+  const userIds = [id, userId];
+
+  // find the first matched group that contains both user ids
+  const firstMatchedGroup = allMatchedTrips.find(item => {
+    // Collect all userIds from this group's trips
+    const tripUserIds = item.trips.map((trip: ITrip) => trip.user._id.toString());
+
+    // Check if every target userId is included
+    return userIds.every(id => tripUserIds.includes(id));
+  });
+
+  return { ...isExistUser.toObject(), isMatchedWithMe: !!firstMatchedGroup };
 };
 
 // ---------------------------- get all users -----------------------------

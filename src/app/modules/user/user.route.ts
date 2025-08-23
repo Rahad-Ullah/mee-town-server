@@ -61,7 +61,7 @@ router.delete(
 );
 
 // get single user
-router.get('/:id', UserController.getSingleUser);
+router.get('/:id', auth(), UserController.getSingleUser);
 
 // get all users
 router.get(

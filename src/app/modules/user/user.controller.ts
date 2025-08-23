@@ -86,7 +86,8 @@ const deleteByEmailPassword = catchAsync(async (req: Request, res: Response) => 
 // get user profile
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await UserService.getSingleUserFromDB(id);
+  const userId = req.user?.id;
+  const result = await UserService.getSingleUserFromDB(id, userId);
 
   sendResponse(res, {
     success: true,
