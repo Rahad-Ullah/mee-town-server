@@ -192,6 +192,22 @@ const deleteUserFromDB = async (id: string): Promise<Partial<IUser> | null> => {
   return result;
 };
 
+// ---------------- delete by email-password -----------------------
+const deleteByEmailPassword = async (payload: { email: string; password: string }): Promise<Partial<IUser> | null> => {
+  // check if the user exists
+  const existingUser = await User.findOne({ email: payload.email }).select('+password');
+  if (!existingUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+  // check if the password is correct
+  if (!await User.isMatchPassword(payload.password, existingUser.password!)) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Incorrect password!');
+  }
+
+  const result = await User.findByIdAndUpdate(existingUser._id, { isDeleted: true }, { new: true });
+  return result;
+};
+
 // ------------------ create admin service ------------ ----------
 const createAdminToDB = async (payload: Partial<IUser>) => {
   // check the payload is empty or not
@@ -231,6 +247,7 @@ export const UserService = {
   updateProfileToDB,
   toggleUserStatusIntoDB,
   deleteUserFromDB,
+  deleteByEmailPassword,
   getSingleUserFromDB,
   getAllUsersFromDB,
 };

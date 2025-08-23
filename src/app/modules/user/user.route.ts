@@ -5,6 +5,7 @@ import fileUploadHandler from '../../middlewares/fileUploadHandler';
 import validateRequest from '../../middlewares/validateRequest';
 import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
+import { AuthValidation } from '../auth/auth.validation';
 const router = express.Router();
 
 // create user
@@ -39,10 +40,25 @@ router.patch(
 );
 
 // toggle user status
-router.patch('/toggle-status/:id', auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN), UserController.toggleUserStatus)
+router.patch(
+  '/toggle-status/:id',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  UserController.toggleUserStatus
+);
 
-// delete user
-router.delete('/:id', UserController.deleteUser);
+// delete by email-password
+router.delete(
+  '/delete-account',
+  validateRequest(AuthValidation.createLoginZodSchema),
+  UserController.deleteByEmailPassword
+);
+
+// delete user by id
+router.delete(
+  '/:id',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  UserController.deleteUser
+);
 
 // get single user
 router.get('/:id', UserController.getSingleUser);

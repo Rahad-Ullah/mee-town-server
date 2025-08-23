@@ -71,6 +71,18 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete by email-password
+const deleteByEmailPassword = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.deleteByEmailPassword(req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'User deleted successfully',
+    data: result,
+  });
+})
+
 // get user profile
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -128,6 +140,7 @@ export const UserController = {
   updateProfile,
   toggleUserStatus,
   deleteUser,
+  deleteByEmailPassword,
   getSingleUser,
   getAllUsers,
 };
