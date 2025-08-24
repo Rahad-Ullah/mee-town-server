@@ -18,4 +18,6 @@ router.delete('/:id', auth(USER_ROLES.USER), ChatController.deleteChat);
 
 router.get('/', auth(USER_ROLES.USER), ChatController.getMyChats);
 
+router.get('/online', auth(USER_ROLES.USER), ChatController.getOnlineChats);
+
 export const ChatRoutes = router;

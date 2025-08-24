@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ChatServices } from './chat.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { StatusCodes } from 'http-status-codes';
 
 // create chat
 const createChat = catchAsync(
@@ -45,4 +46,23 @@ const getMyChats = catchAsync(
   }
 );
 
-export const ChatController = { createChat, deleteChat, getMyChats };
+// get online chats
+const getOnlineChats = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await ChatServices.getOnlineChatsFromDB(req.user, req.query);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: StatusCodes.OK,
+      message: 'Online chats retrieved successfully',
+      data: result,
+    });
+  }
+);
+
+export const ChatController = {
+  createChat,
+  deleteChat,
+  getMyChats,
+  getOnlineChats,
+};

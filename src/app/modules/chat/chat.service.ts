@@ -90,16 +90,27 @@ const getMyChatsFromDB = async (
     })
   );
 
+  return chatList;
+};
+
+// ---------------- get online chats ----------------
+const getOnlineChatsFromDB = async (
+  user: JwtPayload,
+  query: Record<string, any>
+) => {
+  const myChats = await getMyChatsFromDB(user, query);
+
   // get only online chats
-  const onlineChats = chatList.filter(
+  const onlineChats = myChats.filter(
     chat => chat.participants.some((p: IUser) => p.isOnline) // check if any participant is online
   );
 
-  return { chats: chatList, onlineChats };
+  return onlineChats;
 };
 
 export const ChatServices = {
   createChatIntoDB,
   deleteChatFromDB,
   getMyChatsFromDB,
+  getOnlineChatsFromDB,
 };
