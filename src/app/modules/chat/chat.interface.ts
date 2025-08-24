@@ -1,8 +1,8 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type IChat = {
-  _id?: string;
-  participants: string[];
+  _id?: Types.ObjectId;
+  participants: Types.ObjectId[];
   isDeleted: boolean;
 };
 

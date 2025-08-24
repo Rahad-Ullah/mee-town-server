@@ -4,6 +4,7 @@ import { Chat } from './chat.model';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { IMessage } from '../message/message.interface';
 import { Message } from '../message/message.model';
+import { IUser } from '../user/user.interface';
 
 // ---------------- create chat service ----------------
 export const createChatIntoDB = async (user: JwtPayload, payload: IChat) => {
@@ -64,7 +65,7 @@ const getMyChatsFromDB = async (
   );
 
   //Use Promise.all to get the last message for each chat
-  const chatList: IChat[] = await Promise.all(
+  const chatList = await Promise.all(
     filteredChats?.map(async (chat: any) => {
       const data = chat?.toObject();
 
@@ -89,7 +90,12 @@ const getMyChatsFromDB = async (
     })
   );
 
-  return chatList;
+  // get only online chats
+  const onlineChats = chatList.filter(
+    chat => chat.participants.some((p: IUser) => p.isOnline) // check if any participant is online
+  );
+
+  return { chats: chatList, onlineChats };
 };
 
 export const ChatServices = {
