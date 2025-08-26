@@ -1,6 +1,5 @@
 import { model, Schema } from 'mongoose';
 import { IPostReaction, PostReactionModel } from './postReaction.interface';
-import { Post } from '../post/post.model';
 
 const postReactionSchema = new Schema<IPostReaction, PostReactionModel>(
   {

@@ -7,9 +7,11 @@ const createPostReactionZodSchema = z.object({
         required_error: 'Post ID is required',
       })
       .nonempty('Post ID cannot be empty'),
-    isLike: z.boolean({
-      required_error: 'Reaction type is required',
-    }),
+    isLike: z
+      .boolean({
+        required_error: 'Reaction type is required',
+      })
+      .nullable(),
   }),
 });
 

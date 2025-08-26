@@ -102,20 +102,28 @@ const getAllPostsFromDB = async (
     posts.map(async post => {
       const reactions = await PostReaction.find({
         post: post._id,
-        isLike: true,
+        isLike: { $ne: null },
       })
         .populate('reactor', 'name username image')
-        .select('reactor')
         .lean();
 
-      const mappedReactions = reactions.map(reaction => reaction.reactor);
+      const likedReactions = reactions
+        .filter(r => r.isLike === true)
+        .map(r => r.reactor);
+
+      const myReaction = reactions.find(
+        r => r.reactor._id.toString() === userId.toString()
+      );
 
       return {
         ...post,
-        reactions: mappedReactions,
-        isLiked: mappedReactions.some(
-          r => r._id.toString() === userId.toString()
-        ), // flag for if the current user liked the post
+        likes: likedReactions,
+        hasLiked:
+          myReaction?.isLike === true
+            ? true
+            : myReaction?.isLike === false
+            ? false
+            : null, // flag for if the current user liked the post
       };
     })
   );
