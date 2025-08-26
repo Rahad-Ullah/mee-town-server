@@ -76,7 +76,10 @@ const getPostsByUserIdFromDB = async (userId: any) => {
 };
 
 // --------------- get all posts ---------------
-const getAllPostsFromDB = async (query: Record<string, any>) => {
+const getAllPostsFromDB = async (
+  userId: string,
+  query: Record<string, any>
+) => {
   const postQuery = new QueryBuilder(
     Post.find({ isDeleted: false }).populate(
       'user',
@@ -102,10 +105,17 @@ const getAllPostsFromDB = async (query: Record<string, any>) => {
         isLike: true,
       })
         .populate('reactor', 'name username image')
-        .select('reactor');
+        .select('reactor')
+        .lean();
+
+      const mappedReactions = reactions.map(reaction => reaction.reactor);
+
       return {
         ...post,
-        reactions: reactions.map(reaction => reaction.reactor),
+        reactions: mappedReactions,
+        isLiked: mappedReactions.some(
+          r => r._id.toString() === userId.toString()
+        ), // flag for if the current user liked the post
       };
     })
   );

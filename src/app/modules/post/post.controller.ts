@@ -73,7 +73,7 @@ const getPostsByUserId = catchAsync(async (req: Request, res: Response) => {
 
 // get all posts
 const getAllPosts = catchAsync(async (req: Request, res: Response) => {
-  const result = await PostServices.getAllPostsFromDB(req.query);
+  const result = await PostServices.getAllPostsFromDB(req.user.id, req.query);
 
   sendResponse(res, {
     statusCode: 200,
