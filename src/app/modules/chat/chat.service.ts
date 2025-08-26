@@ -5,6 +5,7 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import { IMessage } from '../message/message.interface';
 import { Message } from '../message/message.model';
 import { IUser } from '../user/user.interface';
+import { User } from '../user/user.model';
 
 // ---------------- create chat service ----------------
 export const createChatIntoDB = async (user: JwtPayload, payload: IChat) => {
@@ -14,14 +15,21 @@ export const createChatIntoDB = async (user: JwtPayload, payload: IChat) => {
     participants.push(user.id);
   }
 
+  // get another participant data
+  const anotherParticipantId = participants.find(p => p !== user.id);
+  const anotherParticipant = await User.findById(anotherParticipantId).select(
+    'name username image isOnline'
+  );
+
   // create chat if it does not exist
   const isExist = await Chat.findOne({ participants: { $all: participants } });
   if (isExist) {
-    return isExist;
+    return { ...isExist.toObject(), anotherParticipant };
   }
 
   const result = await Chat.create({ participants });
-  return result;
+
+  return { ...result.toObject(), anotherParticipant };
 };
 
 // ---------------- DELETE CHAT ----------------
