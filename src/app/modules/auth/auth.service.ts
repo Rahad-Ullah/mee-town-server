@@ -72,6 +72,7 @@ const loginUserFromDB = async (payload: ILoginData) => {
     accessToken,
     role: isExistUser.role,
     isFullfilled,
+    isSubscribed: !!isExistUser.subscription,
     userId: isExistUser._id,
   };
 };
