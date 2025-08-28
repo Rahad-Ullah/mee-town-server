@@ -10,11 +10,10 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, user: req.user?.id, image };
 
-  if (payload.place) {
+  if (payload.country) {
     // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...placeParts] = payload.place.trim().split(/\s+/);
+    const [countryCode, ...countryName] = payload.country.trim().split(/\s+/);
     payload.countryCode = countryCode;
-    payload.place = placeParts.join(' ');
   }
 
   const result = await TripServices.createTripIntoDB(payload);
@@ -33,11 +32,10 @@ const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, image };
 
-  if (payload.place) {
+  if (payload.country) {
     // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...placeParts] = payload.place.trim().split(/\s+/);
+    const [countryCode, ...countryName] = payload.country.trim().split(/\s+/);
     payload.countryCode = countryCode;
-    payload.place = placeParts.join(' ');
   }
 
   const result = await TripServices.updateTripIntoDB(id, payload);
