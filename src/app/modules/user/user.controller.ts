@@ -99,7 +99,15 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 
 // get all users
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.getAllUsersFromDB(req.query);
+  const query = req.query;
+
+  if (query.location && typeof query.location === 'string') {
+    // Split by one or more spaces using regex and add to the payload
+    const [countryCode, ...countryNameParts] = query.location.trim().split(' ');
+    query.location = countryNameParts.join(' ');
+  }
+
+  const result = await UserService.getAllUsersFromDB(query);
 
   sendResponse(res, {
     success: true,
