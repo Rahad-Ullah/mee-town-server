@@ -119,7 +119,13 @@ const socialLoginFromDB = async (payload: ILoginData) => {
   // check if user fullfilled
   const isFullfilled = await User.isUserFullfilled(isExistUser);
 
-  return { accessToken, role: isExistUser.role, isFullfilled };
+  return {
+    accessToken,
+    role: isExistUser.role,
+    isFullfilled,
+    isSubscribed: !!isExistUser.subscription,
+    userId: isExistUser._id,
+  };
 };
 
 // ------------------ login with phone service ------------ ----------
@@ -334,7 +340,13 @@ const verifyPhoneToDB = async (payload: IVerifyPhone) => {
   // check if user fullfilled
   const isFullfilled = await User.isUserFullfilled(isExistUser);
 
-  return { accessToken, role: isExistUser.role, isFullfilled };
+  return {
+    accessToken,
+    role: isExistUser.role,
+    isFullfilled,
+    isSubscribed: !!isExistUser.subscription,
+    userId: isExistUser._id,
+  };
 };
 
 // ------------------ reset password service ------------ ----------
