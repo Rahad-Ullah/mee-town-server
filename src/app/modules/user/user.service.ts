@@ -81,7 +81,10 @@ const getUserProfileFromDB = async (
     }
   }
 
-  return isExistUser;
+  // check if user fullfilled
+  const isFullfilled = await User.isUserFullfilled(isExistUser);
+
+  return { ...isExistUser.toObject(), isFullfilled };
 };
 
 const updateProfileToDB = async (
