@@ -32,6 +32,9 @@ export default {
     bundle_id: process.env.APPLE_BUNDLE_ID,
     private_key_path: process.env.APPLE_PRIVATE_KEY_PATH,
   },
+  google: {
+    api_key: process.env.GOOGLE_API_KEY,
+  },
   super_admin: {
     email: process.env.SUPER_ADMIN_EMAIL,
     password: process.env.SUPER_ADMIN_PASSWORD,

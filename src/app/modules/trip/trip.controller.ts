@@ -4,17 +4,16 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { getSingleFilePath } from '../../../shared/getFilePath';
 import { popularTripsCache } from '../../../DB/cache';
+import { getPlaceDetails } from '../../../util/getCityName';
 
 // create trip
 const createTrip = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
   const payload = { ...req.body, user: req.user?.id, image };
 
-  if (payload.country) {
-    // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...countryName] = payload.country.trim().split(/\s+/);
-    payload.countryCode = countryCode;
-  }
+  const { city, countryCode } = await getPlaceDetails(payload.placeId);
+  payload.place = city;
+  payload.countryCode = countryCode;
 
   const result = await TripServices.createTripIntoDB(payload);
 

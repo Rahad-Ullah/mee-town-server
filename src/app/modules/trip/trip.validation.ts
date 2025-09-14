@@ -4,8 +4,7 @@ import { TRIP_ACCOMMODATION, TRIP_VEHICLE } from './trip.constants';
 // create a schema for the trip
 const createTripSchema = z.object({
   body: z.object({
-    country: z.string().nonempty('Country cannot be empty'),
-    place: z.string().nonempty('Place cannot be empty'),
+    placeId: z.string().nonempty('Place ID cannot be empty'),
     startDate: z.coerce.date().refine(
       date => {
         const today = new Date();
@@ -38,8 +37,7 @@ const createTripSchema = z.object({
 // update a schema for the trip
 const updateTripSchema = z.object({
   body: z.object({
-    country: z.string().nonempty('Country cannot be empty').optional(),
-    place: z.string().nonempty('Place cannot be empty').optional(),
+    placeId: z.string().optional(),
     startDate: z.coerce
       .date()
       .refine(
