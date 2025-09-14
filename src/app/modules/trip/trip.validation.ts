@@ -29,7 +29,6 @@ const createTripSchema = z.object({
     airlinesType: z.string().optional(),
     accommodation: z.nativeEnum(TRIP_ACCOMMODATION),
     travelWith: z.string().nonempty('Travel with cannot be empty'),
-    image: z.string().optional(),
     isDeleted: z.boolean().optional(),
   }),
 });
@@ -70,7 +69,6 @@ const updateTripSchema = z.object({
     airlinesType: z.string().optional(),
     accommodation: z.nativeEnum(TRIP_ACCOMMODATION).optional(),
     travelWith: z.string().nonempty('Travel with cannot be empty').optional(),
-    image: z.string().optional(),
     isDeleted: z.boolean().optional(),
   }),
 });

@@ -23,7 +23,7 @@ const updateTripIntoDB = async (id: string, payload: Partial<ITrip>) => {
   });
 
   // unlink the image from the server
-  if (payload.image && result) {
+  if (payload.image && isTripExist.image && result) {
     unlinkFile(isTripExist.image);
   }
 

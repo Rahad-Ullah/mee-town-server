@@ -1,19 +1,23 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { TripServices } from './trip.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { getSingleFilePath } from '../../../shared/getFilePath';
 import { popularTripsCache } from '../../../DB/cache';
-import { getPlaceDetails } from '../../../util/getCityName';
+import { getPlaceDetails } from '../../../util/getPlaceDetails';
 
 // create trip
 const createTrip = catchAsync(async (req: Request, res: Response) => {
-  const image = getSingleFilePath(req.files, 'image');
-  const payload = { ...req.body, user: req.user?.id, image };
+  const { city, countryCode, photoUrl } = await getPlaceDetails(
+    req.body.placeId
+  );
 
-  const { city, countryCode } = await getPlaceDetails(payload.placeId);
-  payload.place = city;
-  payload.countryCode = countryCode;
+  const payload = {
+    ...req.body,
+    place: city,
+    countryCode,
+    image: photoUrl,
+    user: req.user.id,
+  };
 
   const result = await TripServices.createTripIntoDB(payload);
 
@@ -28,14 +32,18 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
 // update trip
 const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const image = getSingleFilePath(req.files, 'image');
-  const payload = { ...req.body, image };
 
-  if (payload.country) {
-    // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...countryName] = payload.country.trim().split(/\s+/);
-    payload.countryCode = countryCode;
-  }
+  const { city, countryCode, photoUrl } = await getPlaceDetails(
+    req.body.placeId
+  );
+
+  const payload = {
+    ...req.body,
+    place: city,
+    countryCode,
+    image: photoUrl,
+    user: req.user.id,
+  };
 
   const result = await TripServices.updateTripIntoDB(id, payload);
 
