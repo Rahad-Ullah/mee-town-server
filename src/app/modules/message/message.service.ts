@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { IMessage, MessageModel } from './message.interface';
+import { IMessage } from './message.interface';
 import { Chat } from '../chat/chat.model';
 import { Message } from './message.model';
 import ApiError from '../../../errors/ApiError';
@@ -17,6 +17,11 @@ export const createMessage = async (payload: IMessage): Promise<IMessage> => {
   if (!payload.text && !payload.image)
     throw new Error('Text or image is required');
 
+  // get another participant
+  const anotherParticipant = isChatExist.participants.filter(
+    participant => participant.toString() !== payload.sender.toString()
+  )[0];
+
   const result = await Message.create(payload);
 
   // emit socket event for new message
@@ -24,6 +29,11 @@ export const createMessage = async (payload: IMessage): Promise<IMessage> => {
   const io = global.io;
   if (io) {
     io.emit(`getMessage::${payload.chat}`, result);
+  }
+
+  // emit socket event for chats
+  if (io) {
+    io.emit(`getChatList::${anotherParticipant}`, result);
   }
 
   // update the chat to sort it to the top
