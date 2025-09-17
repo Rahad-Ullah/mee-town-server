@@ -10,7 +10,7 @@ const createReactionIntoDB = async (payload: IReaction) => {
   });
   // if exist then update it
   if (existReaction) {
-    const res = await Reaction.findByIdAndUpdate(existReaction._id, payload);
+    const res = await Reaction.findByIdAndUpdate(existReaction._id, payload, {new: true});
     return res;
   }
   // if not exist then create new one
