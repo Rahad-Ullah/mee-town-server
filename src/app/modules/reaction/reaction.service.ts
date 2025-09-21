@@ -1,3 +1,4 @@
+import { User } from '../user/user.model';
 import { IReaction } from './reaction.interface';
 import { Reaction } from './reaction.model';
 
@@ -10,7 +11,9 @@ const createReactionIntoDB = async (payload: IReaction) => {
   });
   // if exist then update it
   if (existReaction) {
-    const res = await Reaction.findByIdAndUpdate(existReaction._id, payload, {new: true});
+    const res = await Reaction.findByIdAndUpdate(existReaction._id, payload, {
+      new: true,
+    });
     return res;
   }
   // if not exist then create new one
@@ -20,6 +23,12 @@ const createReactionIntoDB = async (payload: IReaction) => {
 
 // --------------------- get single reaction ---------------------
 const getSingleReactionFromDB = async (userId: string, reactorId: string) => {
+  // check if the user exist
+  const isExistUser = await User.isExistUserById(userId);
+  if (!isExistUser) {
+    throw new Error("User doesn't exist!");
+  }
+
   const result = await Reaction.findOne({ user: userId, reactor: reactorId });
   return result;
 };
