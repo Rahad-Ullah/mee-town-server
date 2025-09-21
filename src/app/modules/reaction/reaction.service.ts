@@ -30,6 +30,15 @@ const getSingleReactionFromDB = async (userId: string, reactorId: string) => {
   }
 
   const result = await Reaction.findOne({ user: userId, reactor: reactorId });
+
+  if (!result) {
+    return {
+      user: userId,
+      reactor: reactorId,
+      isLike: null,
+    };
+  }
+  
   return result;
 };
 
