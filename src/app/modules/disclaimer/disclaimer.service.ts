@@ -15,7 +15,7 @@ export const createDisclaimerIntoDB = async (payload: IDisclaimer) => {
 // --------------- get disclaimer ---------------
 export const getDisclaimerFromDB = async (type: string) => {
   const result = await Disclaimer.findOne({ type }).lean();
-  return result;
+  return result || '';
 };
 
 export const DisclaimerServices = {
