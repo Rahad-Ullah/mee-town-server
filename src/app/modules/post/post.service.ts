@@ -138,10 +138,9 @@ const getMyLikedPostsFromDB = async (user: any) => {
     isLike: true,
   })
     .populate('post')
-    .select('post');
+    .populate('reactor', 'name image');
 
-  // return only post
-  return result.map(item => item.post);
+  return result;
 };
 
 export const PostServices = {
