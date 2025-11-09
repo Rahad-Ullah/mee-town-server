@@ -10,6 +10,7 @@ import {
 } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import { IUser, UserModal } from './user.interface';
+import { generateUsername } from '../../../util/generateUsername';
 
 const userSchema = new Schema<IUser, UserModal>(
   {
@@ -212,11 +213,10 @@ userSchema.pre('save', async function (next) {
     }
   }
 
-  if (this.username) {
-    const isUsernameExist = await User.findOne({ username: this.username });
-    if (isUsernameExist) {
-      throw new ApiError(StatusCodes.BAD_REQUEST, 'Username already taken!');
-    }
+  // generate username
+  if (!this.username) {
+    const username = await generateUsername(this.email! || '');
+    this.username = username;
   }
 
   if (this.phone) {
