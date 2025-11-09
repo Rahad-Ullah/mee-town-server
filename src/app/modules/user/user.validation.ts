@@ -6,6 +6,7 @@ import {
   USER_STATUS,
 } from '../../../enums/user';
 
+// create user validation
 const createUserZodSchema = z.object({
   body: z
     .object({
@@ -19,6 +20,7 @@ const createUserZodSchema = z.object({
     .strict(),
 });
 
+// update user validation
 const updateUserZodSchema = z.object({
   body: z
     .object({
@@ -33,7 +35,14 @@ const updateUserZodSchema = z.object({
         .optional(),
       profession: z.string().optional(),
       nationality: z.string().optional(),
-      birthday: z.coerce.date().optional(),
+      birthday: z.coerce
+        .date()
+        .refine(isValidDate, { message: 'Invalid date' })
+        .refine(isPastDate, { message: 'Date cannot be in the future' })
+        .refine(isAtLeast18, {
+          message: 'You need to be at least 18 years old to use this app.',
+        })
+        .optional(),
       bio: z.string().optional(),
       image: z.string().optional(),
       interests: z.array(z.string()).optional(),
@@ -50,6 +59,30 @@ const updateUserZodSchema = z.object({
     })
     .strict(),
 });
+
+// ---------- birthday validation utils ----------
+
+function isValidDate(date: Date | undefined) {
+  if (!date) return true;
+  return !isNaN(date.getTime());
+}
+
+function isPastDate(date: Date | undefined) {
+  if (!date) return true;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date <= today;
+}
+
+function isAtLeast18(date: Date | undefined) {
+  if (!date) return true;
+  const today = new Date();
+  let age = today.getFullYear() - date.getFullYear();
+  const m = today.getMonth() - date.getMonth();
+  const d = today.getDate() - date.getDate();
+  if (m < 0 || (m === 0 && d < 0)) age -= 1;
+  return age >= 18;
+}
 
 export const UserValidation = {
   createUserZodSchema,
