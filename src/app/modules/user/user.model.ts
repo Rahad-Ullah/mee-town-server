@@ -88,6 +88,10 @@ const userSchema = new Schema<IUser, UserModal>(
       type: String,
       default: '',
     },
+    lookingFor: {
+      type: String,
+      default: '',
+    },
     interests: {
       type: [String],
       default: [],

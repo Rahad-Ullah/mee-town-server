@@ -46,6 +46,7 @@ const updateUserZodSchema = z.object({
         .optional(),
       bio: z.string().optional(),
       image: z.string().optional(),
+      lookingFor: z.string().optional(),
       interests: z.array(z.string()).optional(),
       languages: z.array(z.string()).optional(),
       visitedPlaces: z.array(z.string()).optional(),

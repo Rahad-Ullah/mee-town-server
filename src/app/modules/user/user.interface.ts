@@ -22,6 +22,7 @@ export type IUser = {
   birthday?: Date;
   bio?: string;
   image?: string;
+  lookingFor?: string;
   interests?: string[];
   languages?: string[];
   visitedPlaces?: string[];

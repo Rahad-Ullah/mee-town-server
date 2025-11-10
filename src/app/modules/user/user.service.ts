@@ -146,10 +146,19 @@ const getSingleUserFromDB = async (id: string, userId: string) => {
 // ---------------------------- get all users -----------------------------
 const getAllUsersFromDB = async (query: Record<string, any>) => {
   const filter: Record<string, any> = { isDeleted: false };
-  // filter by user interest
-  if (query.interest && query.interest !== 'null') {
-    filter.interests = { $in: [query.interest] };
-  }
+  // nearby search
+  //! TODO: add the location of the user and radius to the query
+  // if (query.location) {
+  //   filter.location = {
+  //     $near: {
+  //       $maxDistance: 100000,
+  //       $geometry: {
+  //         type: 'Point',
+  //         coordinates: [query.location.lng, query.location.lat],
+  //       },
+  //     },
+  //   };
+  // }
 
   // filter by user age range
   if (
@@ -190,7 +199,7 @@ const getAllUsersFromDB = async (query: Record<string, any>) => {
     userQuery.getPaginationInfo(),
   ]);
 
-  return { users, pagination };
+  return { data: users, pagination };
 };
 
 // ---------------------------- soft delete user -----------------------------
