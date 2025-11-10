@@ -1,5 +1,6 @@
 import { Model, ObjectId } from 'mongoose';
 import {
+  GENDER,
   RELATIONSHIP_STATUS,
   USER_ROLES,
   USER_STATUS,
@@ -14,10 +15,10 @@ export type IUser = {
   username?: string;
   location?: string;
   countryCode?: string;
-  gender?: 'Male' | 'Female';
+  nationality?: string;
+  gender?: GENDER;
   relationshipStatus?: RELATIONSHIP_STATUS;
   profession?: string;
-  nationality?: string;
   birthday?: Date;
   bio?: string;
   image?: string;
