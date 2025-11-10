@@ -41,12 +41,12 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     ...req.body,
   };
 
-  if (payload.location) {
-    // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...countryNameParts] = payload.location.trim().split(' ');
-    payload.countryCode = countryCode;
-    payload.location = countryNameParts.join(' ');
-  }
+  // if (payload.location) {
+  //   // Split by one or more spaces using regex and add to the payload
+  //   const [countryCode, ...countryNameParts] = payload.location.trim().split(' ');
+  //   payload.countryCode = countryCode;
+  //   payload.location = countryNameParts.join(' ');
+  // }
 
   const result = await UserService.updateProfileToDB(user, payload);
 
@@ -72,16 +72,18 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 // delete by email-password
-const deleteByEmailPassword = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.deleteByEmailPassword(req.body);
+const deleteByEmailPassword = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await UserService.deleteByEmailPassword(req.body);
 
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: 'User deleted successfully',
-    data: result,
-  });
-})
+    sendResponse(res, {
+      success: true,
+      statusCode: StatusCodes.OK,
+      message: 'User deleted successfully',
+      data: result,
+    });
+  }
+);
 
 // get user profile
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
@@ -101,11 +103,11 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
 
-  if (query.location && typeof query.location === 'string') {
-    // Split by one or more spaces using regex and add to the payload
-    const [countryCode, ...countryNameParts] = query.location.trim().split(' ');
-    query.location = countryNameParts.join(' ');
-  }
+  // if (query.location && typeof query.location === 'string') {
+  //   // Split by one or more spaces using regex and add to the payload
+  //   const [countryCode, ...countryNameParts] = query.location.trim().split(' ');
+  //   query.location = countryNameParts.join(' ');
+  // }
 
   const result = await UserService.getAllUsersFromDB(query);
 

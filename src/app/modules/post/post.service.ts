@@ -83,7 +83,7 @@ const getAllPostsFromDB = async (
   const postQuery = new QueryBuilder(
     Post.find({ isDeleted: false }).populate(
       'user',
-      'name username image location'
+      'name username image country countryCode'
     ),
     query
   )

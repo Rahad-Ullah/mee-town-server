@@ -46,7 +46,7 @@ const userSchema = new Schema<IUser, UserModal>(
       type: String,
       default: '',
     },
-    location: {
+    country: {
       type: String,
       default: '',
     },
@@ -186,7 +186,7 @@ userSchema.statics.isUserFullfilled = async (user: Partial<IUser>) => {
     user?.name,
     user?.birthday,
     user?.interests?.length,
-    user?.location,
+    user?.country,
   ];
   for (let item of arr) {
     if (!item) {

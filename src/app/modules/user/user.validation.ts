@@ -28,13 +28,14 @@ const updateUserZodSchema = z.object({
       role: z
         .enum(Object.values(USER_ROLES) as [string, ...string[]])
         .optional(),
-      location: z.string().optional(),
       gender: z.enum(Object.values(GENDER) as [string, ...string[]]).optional(),
       relationshipStatus: z
         .enum(Object.values(RELATIONSHIP_STATUS) as [string, ...string[]])
         .optional(),
       profession: z.string().optional(),
       nationality: z.string().optional(),
+      country: z.string().optional(),
+      countryCode: z.string().optional(),
       birthday: z.coerce
         .date()
         .refine(isValidDate, { message: 'Invalid date' })
