@@ -49,7 +49,14 @@ const updateUserZodSchema = z.object({
       lookingFor: z.string().optional(),
       interests: z.array(z.string()).optional(),
       languages: z.array(z.string()).optional(),
-      visitedPlaces: z.array(z.string()).optional(),
+      location: z
+        .array(z.number())
+        .length(2, 'Location must have exactly [longitude, latitude]')
+        .refine(
+          ([lon, lat]) => lon >= -180 && lon <= 180 && lat >= -90 && lat <= 90,
+          { message: 'Invalid longitude or latitude values' }
+        )
+        .optional(),
       status: z
         .enum(Object.values(USER_STATUS) as [string, ...string[]])
         .optional(),

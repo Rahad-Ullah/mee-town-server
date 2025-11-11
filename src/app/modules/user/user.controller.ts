@@ -40,6 +40,14 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     image,
     ...req.body,
   };
+  // update location in the payload
+  if (req.body.location) {
+    const [longitude, latitude] = req.body.location;
+    payload.location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+    };
+  }
 
   // if (payload.location) {
   //   // Split by one or more spaces using regex and add to the payload

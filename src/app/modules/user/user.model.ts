@@ -104,6 +104,17 @@ const userSchema = new Schema<IUser, UserModal>(
       type: [String],
       default: [],
     },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point',
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0],
+      },
+    },
     status: {
       type: String,
       enum: {
@@ -158,6 +169,8 @@ const userSchema = new Schema<IUser, UserModal>(
     timestamps: true,
   }
 );
+// location index
+userSchema.index({ location: '2dsphere' });
 
 // Add schema-level validation for updates
 userSchema.pre(['findOneAndUpdate', 'updateOne', 'updateMany'], function () {

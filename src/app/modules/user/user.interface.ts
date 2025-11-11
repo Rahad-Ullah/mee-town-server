@@ -26,6 +26,10 @@ export type IUser = {
   interests?: string[];
   languages?: string[];
   visitedPlaces?: string[];
+  location?: {
+    type: 'Point';
+    coordinates: [number, number]; // [longitude, latitude]
+  };
   status: USER_STATUS;
   verified: boolean;
   isOnline?: boolean;
