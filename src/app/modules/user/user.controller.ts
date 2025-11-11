@@ -18,15 +18,15 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// get user profile
-const getUserProfile = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user;
-  const result = await UserService.getUserProfileFromDB(user);
+// create admin
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { ...payload } = req.body;
+  const result = await UserService.createAdminToDB(payload);
 
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: 'Profile data retrieved successfully',
+    message: 'Admin created successfully.',
     data: result,
   });
 });
@@ -65,6 +65,18 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
+// toggle user status
+const toggleUserStatus = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.toggleUserStatusIntoDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'User status updated successfully.',
+    data: result,
+  });
+})
 
 // delete user
 const deleteUser = catchAsync(async (req: Request, res: Response) => {
@@ -107,17 +119,24 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get user profile
+const getUserProfile = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const result = await UserService.getUserProfileFromDB(user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Profile data retrieved successfully',
+    data: result,
+  });
+});
+
 // get all users
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
 
-  // if (query.location && typeof query.location === 'string') {
-  //   // Split by one or more spaces using regex and add to the payload
-  //   const [countryCode, ...countryNameParts] = query.location.trim().split(' ');
-  //   query.location = countryNameParts.join(' ');
-  // }
-
-  const result = await UserService.getAllUsersFromDB(query);
+  const result = await UserService.getAllUsersFromDB(query, req.user?.id);
 
   sendResponse(res, {
     success: true,
@@ -128,30 +147,21 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// create admin
-const createAdmin = catchAsync(async (req: Request, res: Response) => {
-  const { ...payload } = req.body;
-  const result = await UserService.createAdminToDB(payload);
+// discover users
+const discoverUsers = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
+  
+  const result = await UserService.getAllUsersFromDB(query, req.user?.id);
+  const filteredUsers = result?.data.filter((user: any) => user?._id?.toString() !== req.user?.id);
 
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: 'Admin created successfully.',
-    data: result,
+    message: 'Users data retrieved successfully',
+    data: filteredUsers,
+    pagination: result?.pagination,
   });
 });
-
-// toggle user status
-const toggleUserStatus = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.toggleUserStatusIntoDB(req.params.id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: 'User status updated successfully.',
-    data: result,
-  });
-})
 
 export const UserController = {
   createUser,
@@ -163,4 +173,5 @@ export const UserController = {
   deleteByEmailPassword,
   getSingleUser,
   getAllUsers,
+  discoverUsers
 };

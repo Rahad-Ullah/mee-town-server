@@ -144,21 +144,35 @@ const getSingleUserFromDB = async (id: string, userId: string) => {
 };
 
 // ---------------------------- get all users -----------------------------
-const getAllUsersFromDB = async (query: Record<string, any>) => {
+const getAllUsersFromDB = async (
+  query: Record<string, any>,
+  userId: string
+) => {
   const filter: Record<string, any> = { isDeleted: false };
-  // nearby search
-  //! TODO: add the location of the user and radius to the query
-  // if (query.location) {
-  //   filter.location = {
-  //     $near: {
-  //       $maxDistance: 100000,
-  //       $geometry: {
-  //         type: 'Point',
-  //         coordinates: [query.location.lng, query.location.lat],
-  //       },
-  //     },
-  //   };
-  // }
+  // Nearby search (lat, lng, radius)
+  if (query.radius) {
+    const user = await User.findById(userId).select('location');
+
+    const lat = user?.location?.coordinates?.[1];
+    const long = user?.location?.coordinates?.[0];
+    const radiusKm = parseFloat(query.radius); // radius in kilometers
+
+    if (
+      !isNaN(radiusKm) &&
+      radiusKm > 0 &&
+      lat !== undefined &&
+      long !== undefined
+    ) {
+      const EARTH_RADIUS = 6378.1; // km
+      const radiusInRadians = radiusKm / EARTH_RADIUS;
+
+      filter.location = {
+        $geoWithin: {
+          $centerSphere: [[long, lat], radiusInRadians],
+        },
+      };
+    }
+  }
 
   // filter by user age range
   if (

@@ -38,7 +38,7 @@ class QueryBuilder<T> {
       'fields',
       'minAge',
       'maxAge',
-      'interest',
+      'radius',
     ];
     excludeFields.forEach(el => delete queryObj[el]);
 

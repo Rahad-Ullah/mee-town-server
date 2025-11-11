@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { USER_ROLES } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import fileUploadHandler from '../../middlewares/fileUploadHandler';
@@ -60,14 +60,17 @@ router.delete(
   UserController.deleteUser
 );
 
-// get single user
-router.get('/:id', auth(), UserController.getSingleUser);
-
-// get all users
+// get all users only for admin
 router.get(
   '/',
-  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN, USER_ROLES.USER),
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
   UserController.getAllUsers
 );
+
+// discover users
+router.get('/discover', auth(USER_ROLES.USER), UserController.discoverUsers);
+
+// get single user
+router.get('/:id', auth(), UserController.getSingleUser);
 
 export const UserRoutes = router;
