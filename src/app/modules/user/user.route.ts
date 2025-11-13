@@ -6,6 +6,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
 import { AuthValidation } from '../auth/auth.validation';
+import { FeedbackValidations } from '../feedback/feedback.validation';
 const router = express.Router();
 
 // create user
@@ -57,6 +58,7 @@ router.delete(
 router.delete(
   '/delete-my-account',
   auth(),
+  validateRequest(FeedbackValidations.createFeedbackValidation),
   UserController.deleteMyAccount
 );
 

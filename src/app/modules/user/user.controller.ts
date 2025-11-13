@@ -4,6 +4,7 @@ import catchAsync from '../../../shared/catchAsync';
 import { getSingleFilePath } from '../../../shared/getFilePath';
 import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './user.service';
+import { FeedbackServices } from '../feedback/feedback.service';
 
 // create user
 const createUser = catchAsync(async (req: Request, res: Response) => {
@@ -76,7 +77,7 @@ const toggleUserStatus = catchAsync(async (req: Request, res: Response) => {
     message: 'User status updated successfully.',
     data: result,
   });
-})
+});
 
 // delete user by id
 const deleteUserById = catchAsync(async (req: Request, res: Response) => {
@@ -94,6 +95,11 @@ const deleteUserById = catchAsync(async (req: Request, res: Response) => {
 // delete my account
 const deleteMyAccount = catchAsync(async (req: Request, res: Response) => {
   const result = await UserService.deleteUserByIdFromDB(req.user.id);
+  // save user feedback
+  await FeedbackServices.createFeedbackIntoDB({
+    user: req.user.id,
+    ...req.body,
+  });
 
   sendResponse(res, {
     success: true,
