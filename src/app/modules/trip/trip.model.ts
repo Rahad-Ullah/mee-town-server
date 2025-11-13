@@ -39,10 +39,6 @@ const tripSchema = new Schema<ITrip, TripModel>(
       enum: Object.values(TRIP_ACCOMMODATION),
       required: true,
     },
-    travelWith: {
-      type: String,
-      required: true,
-    },
     image: {
       type: String,
       required: true,

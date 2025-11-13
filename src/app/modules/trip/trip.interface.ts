@@ -11,7 +11,6 @@ export type ITrip = {
   vehicle: TRIP_VEHICLE;
   airlinesType: string;
   accommodation: TRIP_ACCOMMODATION;
-  travelWith: string;
   image: string;
   isDeleted?: boolean;
 };
