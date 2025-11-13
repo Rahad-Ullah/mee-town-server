@@ -60,6 +60,13 @@ const updateReportIntoDB = async (id: string, status: string) => {
 
 // -------------- toggle block/ unblock user ---------------
 const toggleBlockUserIntoDB = async (user: string, currentUser: string) => {
+  // check if the user is exist
+  const isExistUser = await User.exists({ _id: user });
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'User not found');
+  }
+
+  // check if the report is exist
   const existingReport = await Report.findOne({
     reporter: currentUser,
     user,
@@ -106,7 +113,9 @@ const getBlockedUsers = async (currentUserId: string) => {
   const result = await Report.find({
     reporter: currentUserId,
     type: ReportType.BLOCK,
-  }).populate('user').lean();
+  })
+    .populate('user', 'name username birthday countryCode image')
+    .lean();
 
   return result;
 };
