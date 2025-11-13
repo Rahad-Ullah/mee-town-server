@@ -1,11 +1,14 @@
 export enum TRIP_VEHICLE {
   AIRPLANE = 'Airplane',
-  BUS = 'Bus',
   TRAIN = 'Train',
+  BUS = 'Bus',
+  CAR = 'Car',
 }
 
 export enum TRIP_ACCOMMODATION {
   HOTEL = 'Hotel',
   RESORT = 'Resort',
-  HOUSE = 'House',
+  FRIENDS_HOUSE = 'Friends House',
+  AIRBNB = 'Airbnb',
+  OTHER = 'Other',
 }
