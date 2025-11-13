@@ -16,6 +16,7 @@ import { NotificationRoutes } from '../app/modules/notification/notification.rou
 import { SubscriptionRoutes } from '../app/modules/subscription/subscription.route';
 import { ReportRoutes } from '../app/modules/report/report.route';
 import { AnalyticsRoutes } from '../app/modules/analytics/analytics.route';
+import { FeedbackRoutes } from '../app/modules/feedback/feedback.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -82,6 +83,10 @@ const apiRoutes = [
   {
     path: '/reports',
     route: ReportRoutes,
+  },
+  {
+    path: '/feedbacks',
+    route: FeedbackRoutes,
   },
   {
     path: '/analytics',
