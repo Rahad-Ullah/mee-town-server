@@ -217,7 +217,7 @@ const getAllUsersFromDB = async (
 };
 
 // ---------------------------- soft delete user -----------------------------
-const deleteUserFromDB = async (id: string): Promise<Partial<IUser> | null> => {
+const deleteUserByIdFromDB = async (id: string): Promise<Partial<IUser> | null> => {
   const isExistUser = await User.findById(id);
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
@@ -289,7 +289,7 @@ export const UserService = {
   getUserProfileFromDB,
   updateProfileToDB,
   toggleUserStatusIntoDB,
-  deleteUserFromDB,
+  deleteUserByIdFromDB,
   deleteByEmailPassword,
   getSingleUserFromDB,
   getAllUsersFromDB,

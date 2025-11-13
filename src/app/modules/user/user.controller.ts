@@ -78,15 +78,27 @@ const toggleUserStatus = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
-// delete user
-const deleteUser = catchAsync(async (req: Request, res: Response) => {
+// delete user by id
+const deleteUserById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await UserService.deleteUserFromDB(id);
+  const result = await UserService.deleteUserByIdFromDB(id);
 
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
     message: 'User deleted successfully',
+    data: result,
+  });
+});
+
+// delete my account
+const deleteMyAccount = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.deleteUserByIdFromDB(req.user.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Account deleted successfully',
     data: result,
   });
 });
@@ -150,9 +162,11 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 // discover users
 const discoverUsers = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
-  
+
   const result = await UserService.getAllUsersFromDB(query, req.user?.id);
-  const filteredUsers = result?.data.filter((user: any) => user?._id?.toString() !== req.user?.id);
+  const filteredUsers = result?.data.filter(
+    (user: any) => user?._id?.toString() !== req.user?.id
+  );
 
   sendResponse(res, {
     success: true,
@@ -169,9 +183,10 @@ export const UserController = {
   getUserProfile,
   updateProfile,
   toggleUserStatus,
-  deleteUser,
+  deleteUserById,
+  deleteMyAccount,
   deleteByEmailPassword,
   getSingleUser,
   getAllUsers,
-  discoverUsers
+  discoverUsers,
 };

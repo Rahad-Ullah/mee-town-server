@@ -53,11 +53,18 @@ router.delete(
   UserController.deleteByEmailPassword
 );
 
+// delete my account
+router.delete(
+  '/delete-my-account',
+  auth(),
+  UserController.deleteMyAccount
+);
+
 // delete user by id
 router.delete(
   '/:id',
   auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
-  UserController.deleteUser
+  UserController.deleteUserById
 );
 
 // get all users only for admin
