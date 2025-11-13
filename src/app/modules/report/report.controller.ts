@@ -23,10 +23,12 @@ const createReport = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// toggle block/ unblock user
-const toggleBlockUser = catchAsync(async (req: Request, res: Response) => {
-
-  const result = await ReportServices.toggleBlockUserIntoDB(req.params.id, req.user.id);
+// update report
+const updateReport = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReportServices.updateReportIntoDB(
+    req.params.id,
+    req.body.status
+  );
 
   sendResponse(res, {
     success: true,
@@ -34,11 +36,29 @@ const toggleBlockUser = catchAsync(async (req: Request, res: Response) => {
     message: 'Report updated successfully',
     data: result,
   });
-})
+});
+
+// toggle block/ unblock user
+const toggleBlockUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReportServices.toggleBlockUserIntoDB(
+    req.params.id,
+    req.user.id
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Report updated successfully',
+    data: result,
+  });
+});
 
 // get user block status
 const getUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReportServices.getUserBlockStatus(req.params.id, req.user.id);
+  const result = await ReportServices.getUserBlockStatus(
+    req.params.id,
+    req.user.id
+  );
 
   sendResponse(res, {
     success: true,
@@ -46,7 +66,19 @@ const getUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
     message: 'Report retrieved successfully',
     data: result,
   });
-})
+});
+
+// get user blocked users
+const getBlockedUsers = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReportServices.getBlockedUsers(req.user.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Report retrieved successfully',
+    data: result,
+  });
+});
 
 // get all reports
 const getAllReports = catchAsync(async (req: Request, res: Response) => {
@@ -58,18 +90,13 @@ const getAllReports = catchAsync(async (req: Request, res: Response) => {
     message: 'Reports retrieved successfully',
     data: result,
   });
-})
+});
 
-// update report
-const updateReport = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReportServices.updateReportIntoDB(req.params.id, req.body.status);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: 'Report updated successfully',
-    data: result,
-  });
-})
-
-export const ReportController = { createReport, toggleBlockUser, getUserBlockStatus, getAllReports, updateReport };
+export const ReportController = {
+  createReport,
+  updateReport,
+  toggleBlockUser,
+  getUserBlockStatus,
+  getAllReports,
+  getBlockedUsers,
+};

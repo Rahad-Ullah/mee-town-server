@@ -48,6 +48,16 @@ const createReportIntoDB = async (payload: IReport) => {
   return result;
 };
 
+// -------------- update report status -----------------
+const updateReportIntoDB = async (id: string, status: string) => {
+  // check if the report is exist
+  const existingReport = await Report.findById(id);
+  if (!existingReport) throw new ApiError(StatusCodes.BAD_REQUEST, 'Report not found')
+  
+  const result = await Report.findByIdAndUpdate(id, { status }, {new: true});
+  return result;
+}
+
 // -------------- toggle block/ unblock user ---------------
 const toggleBlockUserIntoDB = async (user: string, currentUser: string) => {
   const existingReport = await Report.findOne({
@@ -91,6 +101,16 @@ const getUserBlockStatus = async (user: string, currentUser: string) => {
   };
 };
 
+// -------------- get blocked users -----------------
+const getBlockedUsers = async (currentUserId: string) => {
+  const result = await Report.find({
+    reporter: currentUserId,
+    type: ReportType.BLOCK,
+  }).populate('user').lean();
+
+  return result;
+};
+
 // -------------- get all reports -----------------
 const getAllReports = async (query: Record<string, any>) => {
   const reportQuery = new QueryBuilder(
@@ -108,20 +128,11 @@ const getAllReports = async (query: Record<string, any>) => {
   return { reports, pagination };
 };
 
-// -------------- update report status -----------------
-const updateReportIntoDB = async (id: string, status: string) => {
-  // check if the report is exist
-  const existingReport = await Report.findById(id);
-  if (!existingReport) throw new ApiError(StatusCodes.BAD_REQUEST, 'Report not found')
-  
-  const result = await Report.findByIdAndUpdate(id, { status }, {new: true});
-  return result;
-}
-
 export const ReportServices = {
   createReportIntoDB,
+  updateReportIntoDB,
   toggleBlockUserIntoDB,
   getUserBlockStatus,
+  getBlockedUsers,
   getAllReports,
-  updateReportIntoDB,
 };
