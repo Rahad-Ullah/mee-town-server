@@ -3,11 +3,19 @@ import { PostServices } from './post.service';
 import catchAsync from '../../../shared/catchAsync';
 import { getSingleFilePath } from '../../../shared/getFilePath';
 import sendResponse from '../../../shared/sendResponse';
+import { getPlaceDetails } from '../../../util/getPlaceDetails';
 
 // create post
 const createPost = catchAsync(async (req: Request, res: Response) => {
   const image = getSingleFilePath(req.files, 'image');
-  const payload = { ...req.body, image, user: req.user.id };
+  const { city, countryCode } = await getPlaceDetails(req.body.placeId);
+  const payload = {
+    ...req.body,
+    place: city,
+    countryCode,
+    image,
+    user: req.user.id,
+  };
 
   const result = await PostServices.createPostIntoDB(payload);
 

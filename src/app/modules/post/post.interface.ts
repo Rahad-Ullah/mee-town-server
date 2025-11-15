@@ -4,6 +4,7 @@ export type IPost = {
   _id?: Types.ObjectId;
   user: Types.ObjectId;
   place: string;
+  countryCode: string;
   title: string;
   message: string;
   image: string;

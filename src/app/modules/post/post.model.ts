@@ -12,6 +12,10 @@ const postSchema = new Schema<IPost, PostModel>(
       type: String,
       required: true,
     },
+    countryCode: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

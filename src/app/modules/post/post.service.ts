@@ -18,7 +18,7 @@ const createPostIntoDB = async (payload: IPost) => {
   await User.findByIdAndUpdate(
     payload.user,
     {
-      $addToSet: { visitedPlaces: result.place },
+      $addToSet: { visitedPlaces: result.countryCode },
     },
     { new: true }
   );
@@ -35,6 +35,21 @@ const updatePostIntoDB = async (id: string, payload: Partial<IPost>) => {
   }
 
   const result = await Post.findByIdAndUpdate(id, payload, { new: true });
+
+  // add visited place to the profile
+  if (
+    payload.countryCode &&
+    payload.countryCode !== existingPost.countryCode &&
+    result
+  ) {
+    await User.findByIdAndUpdate(
+      payload.user,
+      {
+        $addToSet: { visitedPlaces: result.countryCode },
+      },
+      { new: true }
+    );
+  }
 
   //unlink file here
   if (result && payload.image) {
