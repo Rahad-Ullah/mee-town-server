@@ -9,6 +9,7 @@ import { errorLogger, logger } from './shared/logger';
 
 //uncaught exception
 import process from 'process';
+import { seedCountries } from './DB/seedCountries';
 
 process.on('uncaughtException', error => {
   errorLogger.error('UnhandleException Detected', error);
@@ -23,14 +24,16 @@ async function main() {
 
     //Seed Super Admin after database connection is successful
     await seedSuperAdmin();
+    // seed countries after database connection is successful
+    await seedCountries();
 
     const port =
-      typeof config.port_dev === 'number' ? config.port_dev : Number(config.port_dev);
+      typeof config.port_dev === 'number'
+        ? config.port_dev
+        : Number(config.port_dev);
 
     server = app.listen(port, config.ip_address as string, () => {
-      logger.info(
-        colors.yellow(`♻️  Application listening on port:${port}`)
-      );
+      logger.info(colors.yellow(`♻️  Application listening on port:${port}`));
     });
 
     //socket

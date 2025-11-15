@@ -9,6 +9,7 @@ import { errorLogger, logger } from './shared/logger';
 
 //uncaught exception
 import process from 'process';
+import { seedCountries } from './DB/seedCountries';
 
 process.on('uncaughtException', error => {
   errorLogger.error('UnhandleException Detected', error);
@@ -23,6 +24,8 @@ async function main() {
 
     //Seed Super Admin after database connection is successful
     await seedSuperAdmin();
+    // seed countries after database connection is successful
+    await seedCountries();
 
     const port =
       typeof config.port === 'number' ? config.port : Number(config.port);
@@ -39,10 +42,10 @@ async function main() {
       },
     });
     socketHelper.socket(io);
-  //@ts-ignore
+    //@ts-ignore
     global.io = io;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     errorLogger.error(colors.red('🤢 Failed to connect Database'));
   }
 
