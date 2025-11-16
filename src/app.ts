@@ -12,16 +12,7 @@ app.use(Morgan.successHandler);
 app.use(Morgan.errorHandler);
 
 //body parser
-app.use(
-  cors({
-    origin: [
-      'http://10.10.7.102:5173',
-      'https://mee-town-dashboard.vercel.app',
-      'http://72.167.224.54:4173',
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
