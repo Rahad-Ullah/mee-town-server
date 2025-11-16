@@ -1630,6 +1630,16 @@ export const COUNTRIES = [
     region: 'Asia',
   },
   {
+    name: 'State of Palestine',
+    iso2: 'PS',
+    iso3: 'PSE',
+    flag: 'https://flagcdn.com/ps.svg',
+    currency: 'ILS',
+    capital: 'Ramallah',
+    coordinates: { lat: 31.9, lng: 35.2 },
+    region: 'Asia',
+  },
+  {
     name: 'Sudan',
     iso2: 'SD',
     iso3: 'SDN',
@@ -1677,6 +1687,16 @@ export const COUNTRIES = [
     currency: 'SYP',
     capital: 'Damascus',
     coordinates: { lat: 33.5138, lng: 36.2765 },
+    region: 'Asia',
+  },
+  {
+    name: 'Taiwan',
+    iso2: 'TW',
+    iso3: 'TWN',
+    flag: 'https://flagcdn.com/tw.svg',
+    currency: 'TWD',
+    capital: 'Taipei',
+    coordinates: { lat: 25.0478, lng: 121.5319 },
     region: 'Asia',
   },
   {
