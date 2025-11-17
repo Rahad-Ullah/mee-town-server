@@ -22,4 +22,11 @@ router.get(
   PreferenceController.getPreference
 );
 
+// get preference by user id
+router.get(
+  '/:id',
+  auth(),
+  PreferenceController.getPreferenceByUserId
+);
+
 export const PreferenceRoutes = router;
