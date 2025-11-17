@@ -14,4 +14,10 @@ const updatePreferenceIntoDB = async (payload: IPreference) => {
   return result;
 };
 
-export const PreferenceServices = { updatePreferenceIntoDB };
+// --------------- get preference service by user id ---------------
+const getPreferenceFromDB = async (userId: string) => {
+  const result = await Preference.findOne({ user: userId }).select('user airline airport hotel').lean();
+  return result;
+};
+
+export const PreferenceServices = { updatePreferenceIntoDB, getPreferenceFromDB };

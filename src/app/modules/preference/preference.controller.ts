@@ -19,4 +19,16 @@ const updatePreference = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const PreferenceController = { updatePreference };
+// get current user preference
+const getPreference = catchAsync(async (req: Request, res: Response) => {
+  const result = await PreferenceServices.getPreferenceFromDB(req.user.id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Preference retrieved successfully',
+    data: result,
+  });
+});
+
+export const PreferenceController = { updatePreference, getPreference };

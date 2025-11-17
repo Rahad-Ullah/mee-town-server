@@ -7,11 +7,19 @@ import { PreferenceValidations } from './preference.validation';
 
 const router = express.Router();
 
+// update preference
 router.patch(
   '/update',
   auth(USER_ROLES.USER),
   validateRequest(PreferenceValidations.updatePreferenceValidation),
   PreferenceController.updatePreference
-); 
+);
+
+// get current user preference
+router.get(
+  '/my-preference',
+  auth(USER_ROLES.USER),
+  PreferenceController.getPreference
+);
 
 export const PreferenceRoutes = router;
