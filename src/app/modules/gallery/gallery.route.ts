@@ -19,6 +19,13 @@ router.post(
 // delete gallery
 router.delete('/:id', auth(USER_ROLES.USER), GalleryController.deleteGallery);
 
+// set gallery as profile photo
+router.patch(
+  '/set-profile/:id',
+  auth(USER_ROLES.USER),
+  GalleryController.setGalleryAsProfilePhoto
+);
+
 // get my gallery
 router.get('/my-gallery', auth(USER_ROLES.USER), GalleryController.getMyGallery);
 

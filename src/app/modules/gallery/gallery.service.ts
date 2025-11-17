@@ -1,6 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
+import ApiError from '../../../errors/ApiError';
 import unlinkFile from '../../../shared/unlinkFile';
 import { IGallery } from './gallery.interface';
 import { Gallery } from './gallery.model';
+import { User } from '../user/user.model';
 
 // --------------- create gallery ---------------
 const createGalleryIntoDB = async (payload: IGallery) => {
@@ -26,6 +29,23 @@ const deleteGalleryFromDB = async (id: string) => {
   return result;
 };
 
+// --------------- set gallery as profile photo ---------------
+const setGalleryAsProfilePhoto = async (id: string) => {
+  const existingGallery = await Gallery.findById(id);
+  if (!existingGallery) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Image not found!');
+  }
+
+  // update the user profile photo
+  await User.findByIdAndUpdate(
+    existingGallery.user,
+    { image: existingGallery.image },
+    { new: true }
+  );
+
+  return existingGallery;
+};
+
 // --------------- get gallery by user id ---------------
 const getGalleryFromDB = async (id: string) => {
   const result = await Gallery.find({ user: id });
@@ -35,5 +55,6 @@ const getGalleryFromDB = async (id: string) => {
 export const GalleryServices = {
   createGalleryIntoDB,
   deleteGalleryFromDB,
+  setGalleryAsProfilePhoto,
   getGalleryFromDB,
 };

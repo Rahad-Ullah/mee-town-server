@@ -32,6 +32,18 @@ const deleteGallery = catchAsync(async (req: Request, res: Response) => {
   });
 })
 
+// set gallery as profile photo
+const setGalleryAsProfilePhoto = catchAsync(async (req: Request, res: Response) => {
+  const result = await GalleryServices.setGalleryAsProfilePhoto(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Profile photo updated successfully',
+    data: result,
+  });
+})
+
 // get my gallery controller
 const getMyGallery = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.user;
@@ -62,5 +74,6 @@ export const GalleryController = {
   createGallery,
   deleteGallery,
   getMyGallery,
+  setGalleryAsProfilePhoto,
   getGalleryByUserId,
 };
