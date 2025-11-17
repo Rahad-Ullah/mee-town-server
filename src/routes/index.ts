@@ -18,6 +18,7 @@ import { ReportRoutes } from '../app/modules/report/report.route';
 import { AnalyticsRoutes } from '../app/modules/analytics/analytics.route';
 import { FeedbackRoutes } from '../app/modules/feedback/feedback.route';
 import { CountryRoutes } from '../app/modules/country/country.route';
+import { PreferenceRoutes } from '../app/modules/preference/preference.route';
 const router = express.Router();
 
 const apiRoutes = [
@@ -28,6 +29,14 @@ const apiRoutes = [
   {
     path: '/auth',
     route: AuthRoutes,
+  },
+  {
+    path: '/gallery',
+    route: GalleryRoutes,
+  },
+  {
+    path: '/preferences',
+    route: PreferenceRoutes,
   },
   {
     path: '/reactions',
@@ -48,10 +57,6 @@ const apiRoutes = [
   {
     path: '/contact-info',
     route: ContactInfoRoutes,
-  },
-  {
-    path: '/gallery',
-    route: GalleryRoutes,
   },
   {
     path: '/faq',

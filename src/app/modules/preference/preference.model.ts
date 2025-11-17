@@ -10,15 +10,12 @@ const preferenceSchema = new Schema<IPreference, PreferenceModel>(
     },
     airline: {
       type: String,
-      required: true,
     },
     airport: {
       type: String,
-      required: true,
     },
     hotel: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
