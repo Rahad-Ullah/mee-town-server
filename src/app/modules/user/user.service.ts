@@ -126,21 +126,13 @@ const getSingleUserFromDB = async (id: string, userId: string) => {
   }
 
   // get all matched trips
-  const allMatchedTrips = (await TripServices.getAllMatchedTrips({})).data;
+  const allMatchedTrips = (await TripServices.getMyMatchedTrips(userId, {})) || [];
 
-  // array of both user ids
-  const userIds = [id, userId];
+  const matchedTrip = allMatchedTrips.find(
+    (trip: ITrip) => trip.user.toString() === id
+  );
 
-  // find the first matched group that contains both user ids
-  const firstMatchedGroup = allMatchedTrips.find(item => {
-    // Collect all userIds from this group's trips
-    const tripUserIds = item.trips.map((trip: ITrip) => trip.user._id.toString());
-
-    // Check if every target userId is included
-    return userIds.every(id => tripUserIds.includes(id));
-  });
-
-  return { ...isExistUser.toObject(), isMatchedWithMe: !!firstMatchedGroup };
+  return { ...isExistUser.toObject(), isMatchedWithMe: !!matchedTrip };
 };
 
 // ---------------------------- get all users -----------------------------
