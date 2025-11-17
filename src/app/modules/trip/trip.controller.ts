@@ -89,20 +89,20 @@ const getAllTrips = catchAsync(async (req: Request, res: Response) => {
     statusCode: 200,
     success: true,
     message: 'Trips retrieved successfully',
-    data: result,
+    data: result?.data,
+    pagination: result?.pagination,
   });
 });
 
-// get all matched trips
-const getAllMatchedTrips = catchAsync(async (req: Request, res: Response) => {
-  const result = await TripServices.getAllMatchedTrips(req.query);
+// get my matched trips
+const getMyMatchedTrips = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripServices.getMyMatchedTrips(req.user.id, req.query);
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'Matched trips retrieved successfully',
-    data: result?.data,
-    pagination: result?.pagination,
+    data: result,
   });
 });
 
@@ -139,24 +139,12 @@ const getPopularMatchedTrips = catchAsync(
   }
 );
 
-// get my matched trips
-const getMyMatchedTrips = catchAsync(async (req: Request, res: Response) => {
-  const result = await TripServices.getMyMatchedTrips(req.user.id, req.query);
-  return sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Matched trips retrieved successfully',
-    data: result,
-  });
-});
-
 export const TripController = {
   createTrip,
   updateTrip,
   getTripByUserId,
   getMyTrips,
   getAllTrips,
-  getAllMatchedTrips,
-  getPopularMatchedTrips,
   getMyMatchedTrips,
+  getPopularMatchedTrips,
 };

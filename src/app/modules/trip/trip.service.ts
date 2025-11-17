@@ -56,13 +56,17 @@ const getAllTrips = async (query: Record<string, unknown>) => {
   const tripQuery = new QueryBuilder(
     Trip.find({
       isDeleted: false,
-      startDate: { $gte: todayDayStart },
-      endDate: { $gte: todayDayStart },
-    }), // filter only trips that are today or later
+      startDate: query.startDate
+        ? { $gte: new Date(query.startDate as string) }
+        : { $gte: todayDayStart },
+      endDate: query.endDate
+        ? { $lte: new Date(query.endDate as string) }
+        : { $gte: todayDayStart },
+    }),
     query
   )
-    .search(['place', 'vehicle', 'accommodation'])
-    .filter()
+    .search(['place'])
+    .filter(['startDate', 'endDate'])
     .sort()
     .paginate();
 
@@ -74,8 +78,98 @@ const getAllTrips = async (query: Record<string, unknown>) => {
   return { data, pagination };
 };
 
-// --------------- get all matched trips ----------------
-const getAllMatchedTrips = async (query: Record<string, unknown>) => {
+// -------------- get my matched trips ----------------
+const getMyMatchedTrips = async (
+  userId: string,
+  query: Record<string, unknown>
+) => {
+  const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
+  const myTrips = (await Trip.find({
+    user: userId,
+    isDeleted: false,
+  })) as ITrip[];
+  const allTrips = await Trip.find({
+    isDeleted: false,
+    startDate: { $gte: todayDayStart },
+    endDate: { $gte: todayDayStart },
+    place: query.place ? { $eq: query.place } : { $exists: true },
+  })
+    .sort('-createdAt')
+    .lean();
+
+  // filter matched trips that are in my trips by place, vehicle and startDate
+  const myMatchedTrips = allTrips
+    .filter(trip => {
+      return myTrips.some(myTrip => {
+        const myTripStartDateStart = new Date(myTrip.startDate).setHours(
+          0,
+          0,
+          0,
+          0
+        ) as any;
+        const myTripStartDateEnd = new Date(myTrip.endDate).setHours(
+          23,
+          59,
+          59,
+          999
+        ) as any;
+
+        const isTripStartDateUnderMyTripStartDate =
+          new Date(trip.startDate) >= myTripStartDateStart &&
+          new Date(trip.startDate) <= myTripStartDateEnd;
+
+        return (
+          myTrip.place === trip.place &&
+          myTrip.vehicle === trip.vehicle &&
+          isTripStartDateUnderMyTripStartDate
+        );
+      });
+    })
+    // calculate common days and add to the result
+    .map(trip => {
+      return myTrips.map(myTrip => {
+        const tripStartDate = new Date(trip.startDate).setHours(
+          0,
+          0,
+          0,
+          0
+        ) as any;
+        const tripEndDate = new Date(trip.endDate).setHours(
+          23,
+          59,
+          59,
+          999
+        ) as any;
+        const myTripEndDate = new Date(myTrip.endDate).setHours(
+          23,
+          59,
+          59,
+          999
+        ) as any;
+        let commonDays = 0;
+
+        if (tripEndDate <= myTripEndDate) {
+          commonDays = Math.round(
+            Math.abs((tripEndDate - tripStartDate) / (1000 * 60 * 60 * 24))
+          );
+        } else if (myTripEndDate <= tripEndDate) {
+          commonDays = Math.round(
+            Math.abs((myTripEndDate - tripStartDate) / (1000 * 60 * 60 * 24))
+          );
+        }
+
+        return {
+          ...trip,
+          commonDays,
+        };
+      })[0];
+    });
+
+  return myMatchedTrips;
+};
+
+// --------------- get all group matched trips ----------------
+const getAllGroupMatchedTrips = async (query: Record<string, unknown>) => {
   const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
   const page = Number(query.page) || 1;
   const limit = Number(query.limit) || 10;
@@ -269,91 +363,12 @@ const getPopularMatchedTrips = async () => {
   };
 };
 
-// -------------- get my matched trips ----------------
-const getMyMatchedTrips = async (
-  userId: string,
-  query: Record<string, unknown>
-) => {
-  const myTrips = await Trip.find({ user: userId, isDeleted: false });
-  const allMatchedTrips = (await getAllMatchedTrips(query)).data;
-
-  // filter matched trips that are in my trips by place, vehicle and startDate
-  const myMatchedTrips = allMatchedTrips
-    .filter(trip => {
-      return myTrips.some(myTrip => {
-        const myTripStartDateStart = new Date(myTrip.startDate).setHours(
-          0,
-          0,
-          0,
-          0
-        ) as any;
-        const myTripStartDateEnd = new Date(myTrip.endDate).setHours(
-          23,
-          59,
-          59,
-          999
-        ) as any;
-
-        const isTripStartDateUnderMyTripStartDate =
-          new Date(trip.startDate) >= myTripStartDateStart &&
-          new Date(trip.startDate) <= myTripStartDateEnd;
-
-        return (
-          myTrip.place === trip.place &&
-          myTrip.vehicle === trip.vehicle &&
-          isTripStartDateUnderMyTripStartDate
-        );
-      });
-    })
-    // calculate common days and add to the result
-    .map(trip => {
-      return myTrips.map(myTrip => {
-        const tripStartDate = new Date(trip.startDate).setHours(
-          0,
-          0,
-          0,
-          0
-        ) as any;
-        const tripEndDate = new Date(trip.endDate).setHours(
-          23,
-          59,
-          59,
-          999
-        ) as any;
-        const myTripEndDate = new Date(myTrip.endDate).setHours(
-          23,
-          59,
-          59,
-          999
-        ) as any;
-        let commonDays = 0;
-
-        if (tripEndDate <= myTripEndDate) {
-          commonDays = Math.round(
-            Math.abs((tripEndDate - tripStartDate) / (1000 * 60 * 60 * 24))
-          );
-        } else if (myTripEndDate <= tripEndDate) {
-          commonDays = Math.round(
-            Math.abs((myTripEndDate - tripStartDate) / (1000 * 60 * 60 * 24))
-          );
-        }
-
-        return {
-          ...trip,
-          commonDays,
-        };
-      })[0];
-    });
-
-  return myMatchedTrips;
-};
-
 export const TripServices = {
   createTripIntoDB,
   updateTripIntoDB,
   getTripByUserId,
   getAllTrips,
-  getAllMatchedTrips,
-  getPopularMatchedTrips,
   getMyMatchedTrips,
+  getPopularMatchedTrips,
+  getAllGroupMatchedTrips,
 };

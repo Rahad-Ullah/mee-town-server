@@ -2,7 +2,7 @@ import { Model, Types } from 'mongoose';
 import { TRIP_ACCOMMODATION, TRIP_VEHICLE } from './trip.constants';
 
 export type ITrip = {
-  _id?: string;
+  _id?: Types.ObjectId;
   user: Types.ObjectId;
   place: string;
   countryCode: string;

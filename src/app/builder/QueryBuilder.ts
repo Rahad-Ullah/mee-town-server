@@ -11,7 +11,11 @@ class QueryBuilder<T> {
 
   //searching
   search(searchableFields: string[]) {
-    if (this?.query?.searchTerm && this?.query?.searchTerm !== 'null' && this?.query?.searchTerm !== 'undefined') {
+    if (
+      this?.query?.searchTerm &&
+      this?.query?.searchTerm !== 'null' &&
+      this?.query?.searchTerm !== 'undefined'
+    ) {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map(
           field =>
@@ -28,7 +32,7 @@ class QueryBuilder<T> {
   }
 
   //filtering
-  filter() {
+  filter(excludes: string[] = []) {
     const queryObj = { ...this.query };
     const excludeFields = [
       'searchTerm',
@@ -39,6 +43,7 @@ class QueryBuilder<T> {
       'minAge',
       'maxAge',
       'radius',
+      ...excludes,
     ];
     excludeFields.forEach(el => delete queryObj[el]);
 

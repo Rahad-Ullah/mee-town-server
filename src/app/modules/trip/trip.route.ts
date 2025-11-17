@@ -29,14 +29,11 @@ router.patch(
 // get my trips
 router.get('/my-trips', auth(USER_ROLES.USER), TripController.getMyTrips);
 
-// get all matched trips
-router.get('/all-matched', auth(), TripController.getAllMatchedTrips);
+// get my matched trips
+router.get('/my-matched', auth(), TripController.getMyMatchedTrips);
 
 // get popular matched trips
 router.get('/popular-trips', auth(), TripController.getPopularMatchedTrips);
-
-// get my matched trips
-router.get('/my-matched', auth(USER_ROLES.USER), TripController.getMyMatchedTrips);
 
 // get trip by user id
 router.get(
