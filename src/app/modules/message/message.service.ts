@@ -4,6 +4,7 @@ import { Chat } from '../chat/chat.model';
 import { Message } from './message.model';
 import ApiError from '../../../errors/ApiError';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { ReportServices } from '../report/report.service';
 
 // ----------------- create message -------------------
 export const createMessage = async (payload: IMessage): Promise<IMessage> => {
@@ -21,6 +22,14 @@ export const createMessage = async (payload: IMessage): Promise<IMessage> => {
   const anotherParticipant = isChatExist.participants.filter(
     participant => participant.toString() !== payload.sender.toString()
   )[0];
+
+  // check if the receiver blocked you or you blocked him
+  const { isHeBlocked, amIBlocked } = await ReportServices.getUserBlockStatus(
+    anotherParticipant.toString(),
+    payload.sender.toString()
+  );
+  if (isHeBlocked || amIBlocked)
+    throw new Error('You can not send message to this user');
 
   const result = await Message.create(payload);
 
