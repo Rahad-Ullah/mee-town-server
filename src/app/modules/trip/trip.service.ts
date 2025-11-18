@@ -292,17 +292,20 @@ const getAllGroupMatchedTrips = async (query: Record<string, unknown>) => {
 // --------------- get popular matched trips ----------------
 const getPopularMatchedTrips = async () => {
   const todayDayStart = new Date(new Date().setHours(0, 0, 0, 0));
+  const sevenDaysAgoStart = new Date(
+    todayDayStart.getTime() - 7 * 24 * 60 * 60 * 1000
+  );
 
   const aggregationPipeline: any[] = [
     {
       $match: {
         isDeleted: false,
-        startDate: { $gte: todayDayStart },
-        endDate: { $gte: todayDayStart },
+        startDate: { $gte: sevenDaysAgoStart },
+        endDate: { $gte: sevenDaysAgoStart },
       },
     },
 
-    // ✅ ADD THIS STAGE (populate user)
+    // populate user
     {
       $lookup: {
         from: 'users', // MongoDB collection name
@@ -314,15 +317,13 @@ const getPopularMatchedTrips = async () => {
             $project: {
               name: 1,
               image: 1,
-              gender: 1,
-              countryCode: 1,
             },
           },
         ],
       },
     },
 
-    // ✅ ADD THIS STAGE (convert user array to object)
+    // convert user array to object
     {
       $unwind: {
         path: '$user',
@@ -334,9 +335,6 @@ const getPopularMatchedTrips = async () => {
       $group: {
         _id: {
           place: '$place',
-          // startDate: '$startDate',
-          // endDate: '$endDate',
-          // vehicle: '$vehicle',
         },
         trips: { $push: '$$ROOT' },
         matchCount: { $sum: 1 },
