@@ -62,7 +62,7 @@ const getAllTrips = async (query: Record<string, unknown>) => {
       endDate: query.endDate
         ? { $lte: new Date(query.endDate as string) }
         : { $gte: todayDayStart },
-    }),
+    }).populate('user', 'name image email phone country birthday'),
     query
   )
     .search(['place'])
@@ -90,11 +90,13 @@ const getMyMatchedTrips = async (
   })) as ITrip[];
   const allTrips = await Trip.find({
     isDeleted: false,
+    user: { $ne: userId },
     startDate: { $gte: todayDayStart },
     endDate: { $gte: todayDayStart },
     place: query.place ? { $eq: query.place } : { $exists: true },
   })
     .sort('-createdAt')
+    .populate('user', 'name image email phone country birthday')
     .lean();
 
   // filter matched trips that are in my trips by place, vehicle and startDate
