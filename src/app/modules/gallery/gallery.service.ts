@@ -48,8 +48,17 @@ const setGalleryAsProfilePhoto = async (id: string) => {
 
 // --------------- get gallery by user id ---------------
 const getGalleryFromDB = async (id: string) => {
-  const result = await Gallery.find({ user: id });
-  return result;
+  const user = await User.findById(id);
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'User not found!');
+  }
+
+  const result = await Gallery.find({ user: id }).lean();
+  const galleryWithFlag = result.map(item => ({
+    ...item,
+    isProfilePhoto: item.image === user.image,
+  }));
+  return galleryWithFlag;
 };
 
 export const GalleryServices = {
