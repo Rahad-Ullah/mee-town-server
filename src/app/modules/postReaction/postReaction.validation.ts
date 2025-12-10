@@ -4,12 +4,12 @@ const createPostReactionZodSchema = z.object({
   body: z.object({
     post: z
       .string({
-        required_error: 'Post ID is required',
+        message: 'Post ID is required',
       })
       .nonempty('Post ID cannot be empty'),
     isLike: z
       .boolean({
-        required_error: 'Reaction type is required',
+        message: 'Reaction type is required',
       })
       .nullable(),
   }),
@@ -19,12 +19,12 @@ const updatePostReactionZodSchema = z.object({
   body: z.object({
     post: z
       .string({
-        required_error: 'Post ID is required',
+        message: 'Post ID is required',
       })
       .optional(),
     isLike: z
       .boolean({
-        required_error: 'Reaction type is required',
+        message: 'Reaction type is required',
       })
       .optional(),
   }),

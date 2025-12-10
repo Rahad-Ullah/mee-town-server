@@ -4,9 +4,7 @@ import { z } from 'zod';
 const createGalleryZodSchema = z.object({
   body: z.object({
     image: z
-      .string({
-        required_error: 'image is required',
-      })
+      .string("Image is required")
       .optional(),
   }),
 });
@@ -15,9 +13,7 @@ const createGalleryZodSchema = z.object({
 const updateGalleryZodSchema = z.object({
   body: z.object({
     image: z
-      .string({
-        required_error: 'image is required',
-      })
+      .string()
       .optional(),
   }),
 });

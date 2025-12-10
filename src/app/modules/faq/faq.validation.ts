@@ -4,10 +4,10 @@ import { z } from 'zod';
 const createFaqSchema = z.object({
   body: z.object({
     question: z
-      .string({ required_error: 'Question is required' })
+      .string({ message: 'Question is required' })
       .nonempty('Question cannot be empty'),
     answer: z
-      .string({ required_error: 'Question is required' })
+      .string({ message: 'Question is required' })
       .nonempty('Answer cannot be empty'),
   }),
 });

@@ -4,11 +4,11 @@ import { DisclaimerType } from './disclaimer.constants';
 const createDisclaimerZodSchema = z.object({
   body: z.object({
     type: z.nativeEnum(DisclaimerType, {
-      required_error: 'Type is required',
+      message: 'Type is required',
     }),
     content: z
       .string({
-        required_error: 'Content is required',
+        message: 'Content is required',
       })
       .nonempty({ message: 'Content cannot be empty' }),
   }),

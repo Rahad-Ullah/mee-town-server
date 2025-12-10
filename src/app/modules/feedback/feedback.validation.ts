@@ -5,12 +5,12 @@ const createFeedbackValidation = z.object({
   body: z.object({
     message: z
       .string({
-        required_error: 'Message is required',
+        message: 'Message is required',
       })
       .nonempty('Message cannot be empty'),
     rating: z
       .number({
-        required_error: 'Rating is required',
+        message: 'Rating is required',
       })
       .min(1, 'Rating must be at least 1')
       .max(5, 'Rating must be at most 5')

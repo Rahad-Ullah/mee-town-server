@@ -3,12 +3,12 @@ import { z } from 'zod';
 const createVerifyEmailZodSchema = z.object({
   body: z.object({
     email: z
-      .string({ required_error: 'Email is required' })
+      .string({ message: 'Email is required' })
       .email('Invalid email address')
       .nonempty('Email cannot be empty'),
     oneTimeCode: z
       .string({
-        required_error: 'One time code is required',
+        message: 'One time code is required',
       })
       .nonempty('One time code cannot be empty'),
   }),
@@ -17,13 +17,13 @@ const createVerifyEmailZodSchema = z.object({
 const createVerifyPhoneZodSchema = z.object({
   body: z.object({
     phone: z
-      .string({ required_error: 'Phone is required' })
+      .string({ message: 'Phone is required' })
       .nonempty('Phone cannot be empty')
       .min(8, 'Phone must be at least 8 characters long')
       .max(15, 'Phone must be at most 15 characters long'),
     oneTimeCode: z
       .string({
-        required_error: 'One time code is required',
+        message: 'One time code is required',
       })
       .nonempty('One time code cannot be empty'),
   }),
@@ -32,11 +32,11 @@ const createVerifyPhoneZodSchema = z.object({
 const createLoginZodSchema = z.object({
   body: z.object({
     email: z
-      .string({ required_error: 'Email is required' })
+      .string({ message: 'Email is required' })
       .email('Invalid email address')
       .nonempty('Email cannot be empty'),
     password: z
-      .string({ required_error: 'Password is required' })
+      .string({ message: 'Password is required' })
       .nonempty('Password cannot be empty'),
   }),
 });
@@ -44,7 +44,7 @@ const createLoginZodSchema = z.object({
 const createSocialLoginZodSchema = z.object({
   body: z.object({
     appId: z
-      .string({ required_error: 'App ID is required' })
+      .string({ message: 'App ID is required' })
       .nonempty('App ID cannot be empty'),
   }),
 });
@@ -53,7 +53,7 @@ const createSocialLoginZodSchema = z.object({
 const createPhoneLoginZodSchema = z.object({
   body: z.object({
     phone: z
-      .string({ required_error: 'Phone number is required' })
+      .string({ message: 'Phone number is required' })
       .nonempty('Phone number cannot be empty')
       .min(8, 'Phone must be at least 8 characters long')
       .max(15, 'Phone must be at most 15 characters long'),
@@ -63,7 +63,7 @@ const createPhoneLoginZodSchema = z.object({
 const createForgetPasswordZodSchema = z.object({
   body: z.object({
     email: z
-      .string({ required_error: 'Email is required' })
+      .string({ message: 'Email is required' })
       .email('Invalid email address')
       .nonempty('Email cannot be empty'),
   }),
@@ -72,11 +72,11 @@ const createForgetPasswordZodSchema = z.object({
 const createResetPasswordZodSchema = z.object({
   body: z.object({
     newPassword: z
-      .string({ required_error: 'Password is required' })
+      .string({ message: 'Password is required' })
       .nonempty('Password cannot be empty'),
     confirmPassword: z
       .string({
-        required_error: 'Confirm Password is required',
+        message: 'Confirm Password is required',
       })
       .nonempty('Confirm Password cannot be empty'),
   }),
@@ -87,16 +87,16 @@ const createChangePasswordZodSchema = z.object({
     .object({
       currentPassword: z
         .string({
-          required_error: 'Current Password is required',
+          message: 'Current Password is required',
         })
         .nonempty('Current Password cannot be empty'),
       newPassword: z
-        .string({ required_error: 'New Password is required' })
+        .string({ message: 'New Password is required' })
         .nonempty('New Password cannot be empty')
         .min(8, { message: 'Password must be at least 8 characters long' }),
       confirmPassword: z
         .string({
-          required_error: 'Confirm Password is required',
+          message: 'Confirm Password is required',
         })
         .nonempty('Confirm Password cannot be empty')
         .min(8, { message: 'Password must be at least 8 characters long' }),

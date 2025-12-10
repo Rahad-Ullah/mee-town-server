@@ -4,10 +4,11 @@ import { z } from 'zod';
 export const createChatValidation = z.object({
   body: z.object({
     participants: z
-      .array(z.string(), {
-        required_error: 'Participants are required',
-        invalid_type_error: 'Participants must be an array of strings',
-      })
+      .array(
+        z
+          .string('Participants are required')
+          .nonempty('Participants are required')
+      )
       .min(1, 'Min one participants are required'),
   }),
 });
