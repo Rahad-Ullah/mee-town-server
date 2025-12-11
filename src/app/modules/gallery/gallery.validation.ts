@@ -12,9 +12,7 @@ const createGalleryZodSchema = z.object({
 // update a zod schema for validation
 const updateGalleryZodSchema = z.object({
   body: z.object({
-    image: z
-      .string()
-      .optional(),
+    image: z.string('Image is required').optional(),
   }),
 });
 
