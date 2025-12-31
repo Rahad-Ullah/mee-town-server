@@ -201,9 +201,13 @@ userSchema.statics.isExistUserByUsername = async (username: string) => {
 userSchema.statics.isUserFullfilled = async (user: Partial<IUser>) => {
   const arr = [
     user?.name,
+    user?.image,
     user?.birthday,
-    user?.interests?.length,
+    user?.gender,
+    user?.lookingFor,
+    user?.relationshipStatus,
     user?.country,
+    user?.nationality,
   ];
   for (let item of arr) {
     if (!item) {
