@@ -38,13 +38,25 @@ const getSingleReactionFromDB = async (userId: string, reactorId: string) => {
       isLike: null,
     };
   }
-  
+
   return result;
 };
 
 // --------------------- get my reactions ---------------------
 const getMyReactionsFromDB = async (userId: string) => {
-  const result = await Reaction.find({ reactor: userId }).populate('user');
+  const result = await Reaction.find({
+    reactor: userId,
+    isLike: true,
+  }).populate('user', 'name image username birthday country countryCode');
+  return result;
+};
+
+// --------------------- get reactions to me ---------------------
+const getReactionsToMeFromDB = async (userId: string) => {
+  const result = await Reaction.find({ user: userId, isLike: true }).populate(
+    'reactor',
+    'name image username birthday country countryCode'
+  );
   return result;
 };
 
@@ -52,4 +64,5 @@ export const ReactionService = {
   createReactionIntoDB,
   getSingleReactionFromDB,
   getMyReactionsFromDB,
+  getReactionsToMeFromDB,
 };

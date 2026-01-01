@@ -14,8 +14,13 @@ router.post(
   ReactionController.createReaction
 );
 
-router.get('/:id', auth(USER_ROLES.USER), ReactionController.getSingleReaction);
+// get my reactions
+router.get('/my-reactions', auth(USER_ROLES.USER), ReactionController.getMyReactions);
 
-router.get('/', auth(USER_ROLES.USER), ReactionController.getMyReactions);
+// get reactions to me
+router.get('/reactions-to-me', auth(USER_ROLES.USER), ReactionController.getReactionsToMe);
+
+// get single reaction
+router.get('/:id', auth(USER_ROLES.USER), ReactionController.getSingleReaction);
 
 export const ReactionRoutes = router;

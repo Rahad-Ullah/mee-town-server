@@ -46,8 +46,21 @@ const getMyReactions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get reactions to me
+const getReactionsToMe = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReactionService.getReactionsToMeFromDB(req.user.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Reactions retrieved successfully!',
+    data: result,
+  });
+});
+
 export const ReactionController = {
   createReaction,
   getSingleReaction,
   getMyReactions,
+  getReactionsToMe,
 };
