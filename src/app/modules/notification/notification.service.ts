@@ -3,6 +3,8 @@ import { timeAgo } from '../../../shared/timeAgo';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { FilterQuery } from 'mongoose';
 import { Notification } from './notification.model';
+import { sendNotifications } from '../../../helpers/notificationHelper';
+import { User } from '../user/user.model';
 
 // ----------------- get notification by id -----------------
 const getNotificationFromDB = async (
@@ -47,4 +49,25 @@ const readNotificationToDB = async (user: JwtPayload): Promise<boolean> => {
   return true;
 };
 
-export const NotificationServices = { getNotificationFromDB, readNotificationToDB };
+// ----------------- create test notification -----------------
+const createTestNotification = async (userId: string) => {
+  // check if user exists
+  const user = await User.exists({ _id: userId });
+  if (!user) {
+    throw new Error('User does not exist');
+  }
+
+  sendNotifications({
+    type: 'testNotification',
+    receiver: user._id,
+    title: 'Test Notification',
+    message: 'This is a test notification',
+    referenceId: userId,
+  });
+};
+
+export const NotificationServices = {
+  getNotificationFromDB,
+  readNotificationToDB,
+  createTestNotification,
+};

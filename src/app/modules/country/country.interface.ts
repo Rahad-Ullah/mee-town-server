@@ -6,6 +6,7 @@ export type ICountry = {
   iso2: string;
   iso3: string;
   flag: string;
+  phoneCode: string;
   currency: string;
   capital: string;
   coordinates: {

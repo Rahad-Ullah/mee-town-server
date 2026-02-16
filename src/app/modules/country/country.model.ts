@@ -18,6 +18,10 @@ const countrySchema = new Schema<ICountry, CountryModel>({
     type: String,
     required: true,
   },
+  phoneCode: {
+    type: String,
+    required: true,
+  },
   currency: {
     type: String,
     required: true,

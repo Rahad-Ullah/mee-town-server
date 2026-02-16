@@ -8,4 +8,6 @@ router.get('/', auth(), NotificationController.getNotificationFromDB);
 
 router.patch('/read', auth(), NotificationController.readNotificationToDB);
 
+router.post('/test/:id', NotificationController.createTestNotification);
+
 export const NotificationRoutes = router;

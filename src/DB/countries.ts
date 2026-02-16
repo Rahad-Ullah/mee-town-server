@@ -8,6 +8,7 @@ export const COUNTRIES = [
     capital: 'Kabul',
     region: 'Asia',
     coordinates: { lat: 34.5289, lng: 69.1725 },
+    phoneCode: '+93',
   },
   {
     name: 'Albania',
@@ -18,6 +19,7 @@ export const COUNTRIES = [
     capital: 'Tirana',
     region: 'Europe',
     coordinates: { lat: 41.3275, lng: 19.8189 },
+    phoneCode: '+355',
   },
   {
     name: 'Algeria',
@@ -28,6 +30,7 @@ export const COUNTRIES = [
     capital: 'Algiers',
     region: 'Africa',
     coordinates: { lat: 36.7525, lng: 3.04197 },
+    phoneCode: '+213',
   },
   {
     name: 'Andorra',
@@ -38,6 +41,7 @@ export const COUNTRIES = [
     capital: 'Andorra la Vella',
     region: 'Europe',
     coordinates: { lat: 42.5078, lng: 1.5211 },
+    phoneCode: '+376',
   },
   {
     name: 'Angola',
@@ -48,6 +52,7 @@ export const COUNTRIES = [
     capital: 'Luanda',
     region: 'Africa',
     coordinates: { lat: -8.8368, lng: 13.2343 },
+    phoneCode: '+244',
   },
   {
     name: 'Antigua and Barbuda',
@@ -58,6 +63,7 @@ export const COUNTRIES = [
     capital: "Saint John's",
     region: 'North America',
     coordinates: { lat: 17.1274, lng: -61.8468 },
+    phoneCode: '+1',
   },
   {
     name: 'Argentina',
@@ -68,6 +74,7 @@ export const COUNTRIES = [
     capital: 'Buenos Aires',
     region: 'South America',
     coordinates: { lat: -34.6037, lng: -58.3816 },
+    phoneCode: '+54',
   },
   {
     name: 'Armenia',
@@ -78,6 +85,7 @@ export const COUNTRIES = [
     capital: 'Yerevan',
     region: 'Asia',
     coordinates: { lat: 40.1772, lng: 44.5035 },
+    phoneCode: '+374',
   },
   {
     name: 'Australia',
@@ -88,6 +96,7 @@ export const COUNTRIES = [
     capital: 'Canberra',
     region: 'Oceania',
     coordinates: { lat: -35.2809, lng: 149.13 },
+    phoneCode: '+61',
   },
   {
     name: 'Austria',
@@ -98,6 +107,7 @@ export const COUNTRIES = [
     capital: 'Vienna',
     region: 'Europe',
     coordinates: { lat: 48.2082, lng: 16.3738 },
+    phoneCode: '+43',
   },
   {
     name: 'Azerbaijan',
@@ -108,6 +118,7 @@ export const COUNTRIES = [
     capital: 'Baku',
     region: 'Asia',
     coordinates: { lat: 40.4093, lng: 49.8671 },
+    phoneCode: '+994',
   },
   {
     name: 'Bahamas',
@@ -118,6 +129,7 @@ export const COUNTRIES = [
     capital: 'Nassau',
     region: 'North America',
     coordinates: { lat: 25.047, lng: -77.3554 },
+    phoneCode: '+1',
   },
   {
     name: 'Bahrain',
@@ -128,6 +140,7 @@ export const COUNTRIES = [
     capital: 'Manama',
     region: 'Asia',
     coordinates: { lat: 26.2285, lng: 50.5861 },
+    phoneCode: '+973',
   },
   {
     name: 'Bangladesh',
@@ -138,6 +151,7 @@ export const COUNTRIES = [
     capital: 'Dhaka',
     region: 'Asia',
     coordinates: { lat: 23.8103, lng: 90.4125 },
+    phoneCode: '+880',
   },
   {
     name: 'Barbados',
@@ -148,6 +162,7 @@ export const COUNTRIES = [
     capital: 'Bridgetown',
     region: 'North America',
     coordinates: { lat: 13.0975, lng: -59.6165 },
+    phoneCode: '+1',
   },
   {
     name: 'Belarus',
@@ -158,6 +173,7 @@ export const COUNTRIES = [
     capital: 'Minsk',
     region: 'Europe',
     coordinates: { lat: 53.9045, lng: 27.5615 },
+    phoneCode: '+375',
   },
   {
     name: 'Belgium',
@@ -168,6 +184,7 @@ export const COUNTRIES = [
     capital: 'Brussels',
     region: 'Europe',
     coordinates: { lat: 50.8503, lng: 4.3517 },
+    phoneCode: '+32',
   },
   {
     name: 'Belize',
@@ -178,6 +195,7 @@ export const COUNTRIES = [
     capital: 'Belmopan',
     region: 'North America',
     coordinates: { lat: 17.2514, lng: -88.7669 },
+    phoneCode: '+501',
   },
   {
     name: 'Benin',
@@ -188,6 +206,7 @@ export const COUNTRIES = [
     capital: 'Porto-Novo',
     region: 'Africa',
     coordinates: { lat: 6.4969, lng: 2.6289 },
+    phoneCode: '+229',
   },
   {
     name: 'Bhutan',
@@ -198,6 +217,7 @@ export const COUNTRIES = [
     capital: 'Thimphu',
     region: 'Asia',
     coordinates: { lat: 27.4712, lng: 89.6339 },
+    phoneCode: '+975',
   },
   {
     name: 'Bolivia',
@@ -208,6 +228,7 @@ export const COUNTRIES = [
     capital: 'Sucre',
     region: 'South America',
     coordinates: { lat: -19.0196, lng: -65.2619 },
+    phoneCode: '+591',
   },
   {
     name: 'Bosnia and Herzegovina',
@@ -218,6 +239,7 @@ export const COUNTRIES = [
     capital: 'Sarajevo',
     region: 'Europe',
     coordinates: { lat: 43.8563, lng: 18.4131 },
+    phoneCode: '+387',
   },
   {
     name: 'Botswana',
@@ -228,6 +250,7 @@ export const COUNTRIES = [
     capital: 'Gaborone',
     region: 'Africa',
     coordinates: { lat: -24.6282, lng: 25.9231 },
+    phoneCode: '+267',
   },
   {
     name: 'Brazil',
@@ -238,6 +261,7 @@ export const COUNTRIES = [
     capital: 'Brasília',
     region: 'South America',
     coordinates: { lat: -15.7939, lng: -47.8828 },
+    phoneCode: '+55',
   },
   {
     name: 'Brunei',
@@ -248,6 +272,7 @@ export const COUNTRIES = [
     capital: 'Bandar Seri Begawan',
     region: 'Asia',
     coordinates: { lat: 4.9031, lng: 114.9398 },
+    phoneCode: '+673',
   },
   {
     name: 'Bulgaria',
@@ -258,6 +283,7 @@ export const COUNTRIES = [
     capital: 'Sofia',
     region: 'Europe',
     coordinates: { lat: 42.6977, lng: 23.3219 },
+    phoneCode: '+359',
   },
   {
     name: 'Burkina Faso',
@@ -268,6 +294,7 @@ export const COUNTRIES = [
     capital: 'Ouagadougou',
     region: 'Africa',
     coordinates: { lat: 12.3714, lng: -1.5197 },
+    phoneCode: '+226',
   },
   {
     name: 'Burundi',
@@ -278,6 +305,7 @@ export const COUNTRIES = [
     capital: 'Gitega',
     region: 'Africa',
     coordinates: { lat: -3.4264, lng: 29.9306 },
+    phoneCode: '+257',
   },
   {
     name: 'Cabo Verde',
@@ -288,6 +316,7 @@ export const COUNTRIES = [
     capital: 'Praia',
     region: 'Africa',
     coordinates: { lat: 14.933, lng: -23.5133 },
+    phoneCode: '+238',
   },
   {
     name: 'Cambodia',
@@ -298,6 +327,7 @@ export const COUNTRIES = [
     capital: 'Phnom Penh',
     region: 'Asia',
     coordinates: { lat: 11.5564, lng: 104.9282 },
+    phoneCode: '+855',
   },
   {
     name: 'Cameroon',
@@ -308,6 +338,7 @@ export const COUNTRIES = [
     capital: 'Yaoundé',
     region: 'Africa',
     coordinates: { lat: 3.848, lng: 11.5021 },
+    phoneCode: '+237',
   },
   {
     name: 'Canada',
@@ -318,6 +349,7 @@ export const COUNTRIES = [
     capital: 'Ottawa',
     region: 'North America',
     coordinates: { lat: 45.4215, lng: -75.6972 },
+    phoneCode: '+1',
   },
   {
     name: 'Central African Republic',
@@ -328,6 +360,7 @@ export const COUNTRIES = [
     capital: 'Bangui',
     region: 'Africa',
     coordinates: { lat: 4.3947, lng: 18.5582 },
+    phoneCode: '+236',
   },
   {
     name: 'Chad',
@@ -338,6 +371,7 @@ export const COUNTRIES = [
     capital: "N'Djamena",
     region: 'Africa',
     coordinates: { lat: 12.1348, lng: 15.0557 },
+    phoneCode: '+235',
   },
   {
     name: 'Chile',
@@ -348,6 +382,7 @@ export const COUNTRIES = [
     capital: 'Santiago',
     region: 'South America',
     coordinates: { lat: -33.4489, lng: -70.6693 },
+    phoneCode: '+56',
   },
   {
     name: 'China',
@@ -358,6 +393,7 @@ export const COUNTRIES = [
     capital: 'Beijing',
     region: 'Asia',
     coordinates: { lat: 39.9042, lng: 116.4074 },
+    phoneCode: '+86',
   },
   {
     name: 'Colombia',
@@ -368,6 +404,7 @@ export const COUNTRIES = [
     capital: 'Bogotá',
     region: 'South America',
     coordinates: { lat: 4.711, lng: -74.0721 },
+    phoneCode: '+57',
   },
   {
     name: 'Comoros',
@@ -378,6 +415,7 @@ export const COUNTRIES = [
     capital: 'Moroni',
     region: 'Africa',
     coordinates: { lat: -11.7172, lng: 43.2473 },
+    phoneCode: '+269',
   },
   {
     name: 'Congo, Democratic Republic',
@@ -388,6 +426,7 @@ export const COUNTRIES = [
     capital: 'Kinshasa',
     region: 'Africa',
     coordinates: { lat: -4.4419, lng: 15.2663 },
+    phoneCode: '+243',
   },
   {
     name: 'Congo, Republic',
@@ -398,6 +437,7 @@ export const COUNTRIES = [
     capital: 'Brazzaville',
     region: 'Africa',
     coordinates: { lat: -4.2634, lng: 15.2429 },
+    phoneCode: '+242',
   },
   {
     name: 'Costa Rica',
@@ -408,6 +448,7 @@ export const COUNTRIES = [
     capital: 'San José',
     region: 'North America',
     coordinates: { lat: 9.9281, lng: -84.0907 },
+    phoneCode: '+506',
   },
   {
     name: 'Croatia',
@@ -418,6 +459,7 @@ export const COUNTRIES = [
     capital: 'Zagreb',
     region: 'Europe',
     coordinates: { lat: 45.815, lng: 15.9819 },
+    phoneCode: '+385',
   },
   {
     name: 'Cuba',
@@ -428,6 +470,7 @@ export const COUNTRIES = [
     capital: 'Havana',
     region: 'North America',
     coordinates: { lat: 23.1136, lng: -82.3666 },
+    phoneCode: '+53',
   },
   {
     name: 'Cyprus',
@@ -438,6 +481,7 @@ export const COUNTRIES = [
     capital: 'Nicosia',
     region: 'Europe',
     coordinates: { lat: 35.1856, lng: 33.3823 },
+    phoneCode: '+357',
   },
   {
     name: 'Czech Republic',
@@ -448,6 +492,7 @@ export const COUNTRIES = [
     capital: 'Prague',
     region: 'Europe',
     coordinates: { lat: 50.0755, lng: 14.4378 },
+    phoneCode: '+420',
   },
   {
     name: 'Denmark',
@@ -458,6 +503,7 @@ export const COUNTRIES = [
     capital: 'Copenhagen',
     region: 'Europe',
     coordinates: { lat: 55.6761, lng: 12.5683 },
+    phoneCode: '+45',
   },
   {
     name: 'Djibouti',
@@ -468,6 +514,7 @@ export const COUNTRIES = [
     capital: 'Djibouti',
     region: 'Africa',
     coordinates: { lat: 11.8251, lng: 42.5903 },
+    phoneCode: '+253',
   },
   {
     name: 'Dominica',
@@ -478,6 +525,7 @@ export const COUNTRIES = [
     capital: 'Roseau',
     region: 'North America',
     coordinates: { lat: 15.3092, lng: -61.3794 },
+    phoneCode: '+1',
   },
   {
     name: 'Dominican Republic',
@@ -488,6 +536,7 @@ export const COUNTRIES = [
     capital: 'Santo Domingo',
     region: 'North America',
     coordinates: { lat: 18.4861, lng: -69.9312 },
+    phoneCode: '+1',
   },
   {
     name: 'Ecuador',
@@ -498,6 +547,7 @@ export const COUNTRIES = [
     capital: 'Quito',
     region: 'South America',
     coordinates: { lat: -0.1807, lng: -78.4678 },
+    phoneCode: '+593',
   },
   {
     name: 'Egypt',
@@ -508,6 +558,7 @@ export const COUNTRIES = [
     capital: 'Cairo',
     region: 'Africa',
     coordinates: { lat: 30.0444, lng: 31.2357 },
+    phoneCode: '+20',
   },
   {
     name: 'El Salvador',
@@ -518,6 +569,7 @@ export const COUNTRIES = [
     capital: 'San Salvador',
     region: 'North America',
     coordinates: { lat: 13.6929, lng: -89.2182 },
+    phoneCode: '+503',
   },
   {
     name: 'Equatorial Guinea',
@@ -528,6 +580,7 @@ export const COUNTRIES = [
     capital: 'Malabo',
     region: 'Africa',
     coordinates: { lat: 3.7504, lng: 8.7371 },
+    phoneCode: '+240',
   },
   {
     name: 'Eritrea',
@@ -538,6 +591,7 @@ export const COUNTRIES = [
     capital: 'Asmara',
     region: 'Africa',
     coordinates: { lat: 15.3229, lng: 38.9251 },
+    phoneCode: '+291',
   },
   {
     name: 'Estonia',
@@ -548,6 +602,7 @@ export const COUNTRIES = [
     capital: 'Tallinn',
     region: 'Europe',
     coordinates: { lat: 59.437, lng: 24.7536 },
+    phoneCode: '+372',
   },
   {
     name: 'Eswatini',
@@ -558,6 +613,7 @@ export const COUNTRIES = [
     capital: 'Mbabane',
     region: 'Africa',
     coordinates: { lat: -26.3054, lng: 31.1367 },
+    phoneCode: '+268',
   },
   {
     name: 'Ethiopia',
@@ -568,6 +624,7 @@ export const COUNTRIES = [
     capital: 'Addis Ababa',
     region: 'Africa',
     coordinates: { lat: 9.0084, lng: 38.7578 },
+    phoneCode: '+251',
   },
   {
     name: 'Fiji',
@@ -578,6 +635,7 @@ export const COUNTRIES = [
     capital: 'Suva',
     region: 'Oceania',
     coordinates: { lat: -18.1248, lng: 178.4501 },
+    phoneCode: '+679',
   },
   {
     name: 'Finland',
@@ -588,6 +646,7 @@ export const COUNTRIES = [
     capital: 'Helsinki',
     region: 'Europe',
     coordinates: { lat: 60.1699, lng: 24.9384 },
+    phoneCode: '+358',
   },
   {
     name: 'France',
@@ -598,6 +657,7 @@ export const COUNTRIES = [
     capital: 'Paris',
     region: 'Europe',
     coordinates: { lat: 48.8566, lng: 2.3522 },
+    phoneCode: '+33',
   },
   {
     name: 'Gabon',
@@ -608,6 +668,7 @@ export const COUNTRIES = [
     capital: 'Libreville',
     region: 'Africa',
     coordinates: { lat: 0.4162, lng: 9.4673 },
+    phoneCode: '+241',
   },
   {
     name: 'Gambia',
@@ -618,6 +679,7 @@ export const COUNTRIES = [
     capital: 'Banjul',
     region: 'Africa',
     coordinates: { lat: 13.4549, lng: -16.579 },
+    phoneCode: '+220',
   },
   {
     name: 'Georgia',
@@ -628,6 +690,7 @@ export const COUNTRIES = [
     capital: 'Tbilisi',
     region: 'Asia',
     coordinates: { lat: 41.7151, lng: 44.8271 },
+    phoneCode: '+995',
   },
   {
     name: 'Germany',
@@ -638,6 +701,7 @@ export const COUNTRIES = [
     capital: 'Berlin',
     region: 'Europe',
     coordinates: { lat: 52.52, lng: 13.405 },
+    phoneCode: '+49',
   },
   {
     name: 'Ghana',
@@ -648,6 +712,7 @@ export const COUNTRIES = [
     capital: 'Accra',
     region: 'Africa',
     coordinates: { lat: 5.6037, lng: -0.187 },
+    phoneCode: '+233',
   },
   {
     name: 'Greece',
@@ -658,6 +723,7 @@ export const COUNTRIES = [
     capital: 'Athens',
     region: 'Europe',
     coordinates: { lat: 37.9838, lng: 23.7275 },
+    phoneCode: '+30',
   },
   {
     name: 'Grenada',
@@ -668,6 +734,7 @@ export const COUNTRIES = [
     capital: "St. George's",
     region: 'North America',
     coordinates: { lat: 12.0561, lng: -61.7488 },
+    phoneCode: '+1',
   },
   {
     name: 'Guatemala',
@@ -678,6 +745,7 @@ export const COUNTRIES = [
     capital: 'Guatemala City',
     region: 'North America',
     coordinates: { lat: 14.6349, lng: -90.5069 },
+    phoneCode: '+502',
   },
   {
     name: 'Guinea',
@@ -688,6 +756,7 @@ export const COUNTRIES = [
     capital: 'Conakry',
     region: 'Africa',
     coordinates: { lat: 9.6412, lng: -13.5784 },
+    phoneCode: '+224',
   },
   {
     name: 'Guinea-Bissau',
@@ -698,6 +767,7 @@ export const COUNTRIES = [
     capital: 'Bissau',
     region: 'Africa',
     coordinates: { lat: 11.8636, lng: -15.5977 },
+    phoneCode: '+245',
   },
   {
     name: 'Guyana',
@@ -708,6 +778,7 @@ export const COUNTRIES = [
     capital: 'Georgetown',
     region: 'South America',
     coordinates: { lat: 6.8013, lng: -58.1551 },
+    phoneCode: '+592',
   },
   {
     name: 'Haiti',
@@ -718,6 +789,7 @@ export const COUNTRIES = [
     capital: 'Port-au-Prince',
     region: 'North America',
     coordinates: { lat: 18.5944, lng: -72.3074 },
+    phoneCode: '+509',
   },
   {
     name: 'Honduras',
@@ -728,6 +800,7 @@ export const COUNTRIES = [
     capital: 'Tegucigalpa',
     region: 'North America',
     coordinates: { lat: 14.0723, lng: -87.1921 },
+    phoneCode: '+504',
   },
   {
     name: 'Hungary',
@@ -738,6 +811,7 @@ export const COUNTRIES = [
     capital: 'Budapest',
     region: 'Europe',
     coordinates: { lat: 47.4979, lng: 19.0402 },
+    phoneCode: '+36',
   },
   {
     name: 'Iceland',
@@ -748,6 +822,7 @@ export const COUNTRIES = [
     capital: 'Reykjavik',
     region: 'Europe',
     coordinates: { lat: 64.1466, lng: -21.9426 },
+    phoneCode: '+354',
   },
   {
     name: 'India',
@@ -758,6 +833,7 @@ export const COUNTRIES = [
     capital: 'New Delhi',
     region: 'Asia',
     coordinates: { lat: 28.6139, lng: 77.209 },
+    phoneCode: '+91',
   },
   {
     name: 'Indonesia',
@@ -768,6 +844,7 @@ export const COUNTRIES = [
     capital: 'Jakarta',
     region: 'Asia',
     coordinates: { lat: -6.2088, lng: 106.8456 },
+    phoneCode: '+62',
   },
   {
     name: 'Iran',
@@ -778,6 +855,7 @@ export const COUNTRIES = [
     capital: 'Tehran',
     region: 'Asia',
     coordinates: { lat: 35.6892, lng: 51.389 },
+    phoneCode: '+98',
   },
   {
     name: 'Iraq',
@@ -788,6 +866,7 @@ export const COUNTRIES = [
     capital: 'Baghdad',
     region: 'Asia',
     coordinates: { lat: 33.3152, lng: 44.3661 },
+    phoneCode: '+964',
   },
   {
     name: 'Ireland',
@@ -798,6 +877,7 @@ export const COUNTRIES = [
     capital: 'Dublin',
     region: 'Europe',
     coordinates: { lat: 53.3498, lng: -6.2603 },
+    phoneCode: '+353',
   },
   {
     name: 'Israel',
@@ -808,6 +888,7 @@ export const COUNTRIES = [
     capital: 'Jerusalem',
     region: 'Asia',
     coordinates: { lat: 31.7683, lng: 35.2137 },
+    phoneCode: '+972',
   },
   {
     name: 'Italy',
@@ -818,6 +899,7 @@ export const COUNTRIES = [
     capital: 'Rome',
     region: 'Europe',
     coordinates: { lat: 41.9028, lng: 12.4964 },
+    phoneCode: '+39',
   },
   {
     name: 'Jamaica',
@@ -828,6 +910,7 @@ export const COUNTRIES = [
     capital: 'Kingston',
     region: 'North America',
     coordinates: { lat: 17.9714, lng: -76.792 },
+    phoneCode: '+1',
   },
   {
     name: 'Japan',
@@ -838,6 +921,7 @@ export const COUNTRIES = [
     capital: 'Tokyo',
     region: 'Asia',
     coordinates: { lat: 35.6762, lng: 139.6503 },
+    phoneCode: '+81',
   },
   {
     name: 'Jordan',
@@ -848,6 +932,7 @@ export const COUNTRIES = [
     capital: 'Amman',
     region: 'Asia',
     coordinates: { lat: 31.9454, lng: 35.9284 },
+    phoneCode: '+962',
   },
   {
     name: 'Kazakhstan',
@@ -858,6 +943,7 @@ export const COUNTRIES = [
     capital: 'Astana',
     region: 'Asia',
     coordinates: { lat: 51.1605, lng: 71.4704 },
+    phoneCode: '+7',
   },
   {
     name: 'Kenya',
@@ -868,6 +954,7 @@ export const COUNTRIES = [
     capital: 'Nairobi',
     region: 'Africa',
     coordinates: { lat: -1.2864, lng: 36.8172 },
+    phoneCode: '+254',
   },
   {
     name: 'Kiribati',
@@ -878,6 +965,7 @@ export const COUNTRIES = [
     capital: 'Tarawa',
     region: 'Oceania',
     coordinates: { lat: 1.4518, lng: 173.0308 },
+    phoneCode: '+686',
   },
   {
     name: 'Kuwait',
@@ -888,6 +976,7 @@ export const COUNTRIES = [
     capital: 'Kuwait City',
     region: 'Asia',
     coordinates: { lat: 29.3759, lng: 47.9774 },
+    phoneCode: '+965',
   },
   {
     name: 'Kyrgyzstan',
@@ -898,6 +987,7 @@ export const COUNTRIES = [
     capital: 'Bishkek',
     region: 'Asia',
     coordinates: { lat: 42.8746, lng: 74.5698 },
+    phoneCode: '+996',
   },
   {
     name: 'Laos',
@@ -908,6 +998,7 @@ export const COUNTRIES = [
     capital: 'Vientiane',
     region: 'Asia',
     coordinates: { lat: 17.9757, lng: 102.6331 },
+    phoneCode: '+856',
   },
   {
     name: 'Latvia',
@@ -918,6 +1009,7 @@ export const COUNTRIES = [
     capital: 'Riga',
     coordinates: { lat: 56.9496, lng: 24.1052 },
     region: 'Europe',
+    phoneCode: '+371',
   },
   {
     name: 'Lebanon',
@@ -928,6 +1020,7 @@ export const COUNTRIES = [
     capital: 'Beirut',
     coordinates: { lat: 33.8938, lng: 35.5018 },
     region: 'Asia',
+    phoneCode: '+961',
   },
   {
     name: 'Lesotho',
@@ -938,6 +1031,7 @@ export const COUNTRIES = [
     capital: 'Maseru',
     coordinates: { lat: -29.3151, lng: 27.4869 },
     region: 'Africa',
+    phoneCode: '+266',
   },
   {
     name: 'Liberia',
@@ -948,6 +1042,7 @@ export const COUNTRIES = [
     capital: 'Monrovia',
     coordinates: { lat: 6.3005, lng: -10.7972 },
     region: 'Africa',
+    phoneCode: '+231',
   },
   {
     name: 'Libya',
@@ -958,6 +1053,7 @@ export const COUNTRIES = [
     capital: 'Tripoli',
     coordinates: { lat: 32.8872, lng: 13.1913 },
     region: 'Africa',
+    phoneCode: '+218',
   },
   {
     name: 'Liechtenstein',
@@ -968,6 +1064,7 @@ export const COUNTRIES = [
     capital: 'Vaduz',
     coordinates: { lat: 47.141, lng: 9.5215 },
     region: 'Europe',
+    phoneCode: '+423',
   },
   {
     name: 'Lithuania',
@@ -978,6 +1075,7 @@ export const COUNTRIES = [
     capital: 'Vilnius',
     coordinates: { lat: 54.6872, lng: 25.2797 },
     region: 'Europe',
+    phoneCode: '+370',
   },
   {
     name: 'Luxembourg',
@@ -988,6 +1086,7 @@ export const COUNTRIES = [
     capital: 'Luxembourg City',
     coordinates: { lat: 49.6117, lng: 6.13 },
     region: 'Europe',
+    phoneCode: '+352',
   },
   {
     name: 'Madagascar',
@@ -998,6 +1097,7 @@ export const COUNTRIES = [
     capital: 'Antananarivo',
     coordinates: { lat: -18.8792, lng: 47.5079 },
     region: 'Africa',
+    phoneCode: '+261',
   },
   {
     name: 'Malawi',
@@ -1008,6 +1108,7 @@ export const COUNTRIES = [
     capital: 'Lilongwe',
     coordinates: { lat: -13.9626, lng: 33.7741 },
     region: 'Africa',
+    phoneCode: '+265',
   },
   {
     name: 'Malaysia',
@@ -1018,6 +1119,7 @@ export const COUNTRIES = [
     capital: 'Kuala Lumpur',
     coordinates: { lat: 3.139, lng: 101.6869 },
     region: 'Asia',
+    phoneCode: '+60',
   },
   {
     name: 'Maldives',
@@ -1028,6 +1130,7 @@ export const COUNTRIES = [
     capital: 'Malé',
     coordinates: { lat: 4.1755, lng: 73.5093 },
     region: 'Asia',
+    phoneCode: '+960',
   },
   {
     name: 'Mali',
@@ -1038,6 +1141,7 @@ export const COUNTRIES = [
     capital: 'Bamako',
     coordinates: { lat: 12.6392, lng: -8.0029 },
     region: 'Africa',
+    phoneCode: '+223',
   },
   {
     name: 'Malta',
@@ -1048,6 +1152,7 @@ export const COUNTRIES = [
     capital: 'Valletta',
     coordinates: { lat: 35.8997, lng: 14.5147 },
     region: 'Europe',
+    phoneCode: '+356',
   },
   {
     name: 'Marshall Islands',
@@ -1058,6 +1163,7 @@ export const COUNTRIES = [
     capital: 'Majuro',
     coordinates: { lat: 7.1164, lng: 171.185 },
     region: 'Oceania',
+    phoneCode: '+692',
   },
   {
     name: 'Mauritania',
@@ -1068,6 +1174,7 @@ export const COUNTRIES = [
     capital: 'Nouakchott',
     coordinates: { lat: 18.0735, lng: -15.9582 },
     region: 'Africa',
+    phoneCode: '+222',
   },
   {
     name: 'Mauritius',
@@ -1078,6 +1185,7 @@ export const COUNTRIES = [
     capital: 'Port Louis',
     coordinates: { lat: -20.1609, lng: 57.5012 },
     region: 'Africa',
+    phoneCode: '+230',
   },
   {
     name: 'Mexico',
@@ -1088,6 +1196,7 @@ export const COUNTRIES = [
     capital: 'Mexico City',
     coordinates: { lat: 19.4326, lng: -99.1332 },
     region: 'North America',
+    phoneCode: '+52',
   },
   {
     name: 'Micronesia',
@@ -1098,6 +1207,7 @@ export const COUNTRIES = [
     capital: 'Palikir',
     coordinates: { lat: 6.9147, lng: 158.161 },
     region: 'Oceania',
+    phoneCode: '+691',
   },
   {
     name: 'Moldova',
@@ -1108,6 +1218,7 @@ export const COUNTRIES = [
     capital: 'Chișinău',
     coordinates: { lat: 47.0105, lng: 28.8638 },
     region: 'Europe',
+    phoneCode: '+373',
   },
   {
     name: 'Monaco',
@@ -1118,6 +1229,7 @@ export const COUNTRIES = [
     capital: 'Monaco',
     coordinates: { lat: 43.7384, lng: 7.4246 },
     region: 'Europe',
+    phoneCode: '+377',
   },
   {
     name: 'Mongolia',
@@ -1128,6 +1240,7 @@ export const COUNTRIES = [
     capital: 'Ulaanbaatar',
     coordinates: { lat: 47.8864, lng: 106.9057 },
     region: 'Asia',
+    phoneCode: '+976',
   },
   {
     name: 'Montenegro',
@@ -1138,6 +1251,7 @@ export const COUNTRIES = [
     capital: 'Podgorica',
     coordinates: { lat: 42.4304, lng: 19.2594 },
     region: 'Europe',
+    phoneCode: '+382',
   },
   {
     name: 'Morocco',
@@ -1148,6 +1262,7 @@ export const COUNTRIES = [
     capital: 'Rabat',
     coordinates: { lat: 34.0209, lng: -6.8416 },
     region: 'Africa',
+    phoneCode: '+212',
   },
   {
     name: 'Mozambique',
@@ -1158,6 +1273,7 @@ export const COUNTRIES = [
     capital: 'Maputo',
     coordinates: { lat: -25.9692, lng: 32.5732 },
     region: 'Africa',
+    phoneCode: '+258',
   },
   {
     name: 'Myanmar',
@@ -1168,6 +1284,7 @@ export const COUNTRIES = [
     capital: 'Naypyidaw',
     coordinates: { lat: 19.7633, lng: 96.0785 },
     region: 'Asia',
+    phoneCode: '+95',
   },
   {
     name: 'Namibia',
@@ -1178,6 +1295,7 @@ export const COUNTRIES = [
     capital: 'Windhoek',
     coordinates: { lat: -22.5609, lng: 17.0658 },
     region: 'Africa',
+    phoneCode: '+264',
   },
   {
     name: 'Nauru',
@@ -1188,6 +1306,7 @@ export const COUNTRIES = [
     capital: 'Yaren District',
     coordinates: { lat: -0.5477, lng: 166.9209 },
     region: 'Oceania',
+    phoneCode: '+674',
   },
   {
     name: 'Nepal',
@@ -1198,6 +1317,7 @@ export const COUNTRIES = [
     capital: 'Kathmandu',
     coordinates: { lat: 27.7172, lng: 85.324 },
     region: 'Asia',
+    phoneCode: '+977',
   },
   {
     name: 'Netherlands',
@@ -1208,6 +1328,7 @@ export const COUNTRIES = [
     capital: 'Amsterdam',
     coordinates: { lat: 52.3676, lng: 4.9041 },
     region: 'Europe',
+    phoneCode: '+31',
   },
   {
     name: 'New Zealand',
@@ -1218,6 +1339,7 @@ export const COUNTRIES = [
     capital: 'Wellington',
     coordinates: { lat: -41.2865, lng: 174.7762 },
     region: 'Oceania',
+    phoneCode: '+64',
   },
   {
     name: 'Nicaragua',
@@ -1228,6 +1350,7 @@ export const COUNTRIES = [
     capital: 'Managua',
     coordinates: { lat: 12.1364, lng: -86.2514 },
     region: 'North America',
+    phoneCode: '+505',
   },
   {
     name: 'Niger',
@@ -1238,6 +1361,7 @@ export const COUNTRIES = [
     capital: 'Niamey',
     coordinates: { lat: 13.5116, lng: 2.1254 },
     region: 'Africa',
+    phoneCode: '+227',
   },
   {
     name: 'Nigeria',
@@ -1248,6 +1372,7 @@ export const COUNTRIES = [
     capital: 'Abuja',
     coordinates: { lat: 9.0765, lng: 7.3986 },
     region: 'Africa',
+    phoneCode: '+234',
   },
   {
     name: 'North Korea',
@@ -1258,6 +1383,7 @@ export const COUNTRIES = [
     capital: 'Pyongyang',
     coordinates: { lat: 39.0392, lng: 125.7625 },
     region: 'Asia',
+    phoneCode: '+850',
   },
   {
     name: 'North Macedonia',
@@ -1268,6 +1394,7 @@ export const COUNTRIES = [
     capital: 'Skopje',
     coordinates: { lat: 41.9973, lng: 21.428 },
     region: 'Europe',
+    phoneCode: '+389',
   },
   {
     name: 'Norway',
@@ -1278,6 +1405,7 @@ export const COUNTRIES = [
     capital: 'Oslo',
     coordinates: { lat: 59.9139, lng: 10.7522 },
     region: 'Europe',
+    phoneCode: '+47',
   },
   {
     name: 'Oman',
@@ -1288,6 +1416,7 @@ export const COUNTRIES = [
     capital: 'Muscat',
     coordinates: { lat: 23.588, lng: 58.3829 },
     region: 'Asia',
+    phoneCode: '+968',
   },
   {
     name: 'Pakistan',
@@ -1298,6 +1427,7 @@ export const COUNTRIES = [
     capital: 'Islamabad',
     coordinates: { lat: 33.6844, lng: 73.0479 },
     region: 'Asia',
+    phoneCode: '+92',
   },
   {
     name: 'Palau',
@@ -1308,6 +1438,7 @@ export const COUNTRIES = [
     capital: 'Ngerulmud',
     coordinates: { lat: 7.5004, lng: 134.6243 },
     region: 'Oceania',
+    phoneCode: '+680',
   },
   {
     name: 'Panama',
@@ -1318,6 +1449,7 @@ export const COUNTRIES = [
     capital: 'Panama City',
     coordinates: { lat: 8.9824, lng: -79.5199 },
     region: 'North America',
+    phoneCode: '+507',
   },
   {
     name: 'Papua New Guinea',
@@ -1328,6 +1460,7 @@ export const COUNTRIES = [
     capital: 'Port Moresby',
     coordinates: { lat: -9.4438, lng: 147.1803 },
     region: 'Oceania',
+    phoneCode: '+675',
   },
   {
     name: 'Paraguay',
@@ -1338,6 +1471,7 @@ export const COUNTRIES = [
     capital: 'Asunción',
     coordinates: { lat: -25.2637, lng: -57.5759 },
     region: 'South America',
+    phoneCode: '+595',
   },
   {
     name: 'Peru',
@@ -1348,6 +1482,7 @@ export const COUNTRIES = [
     capital: 'Lima',
     coordinates: { lat: -12.0464, lng: -77.0428 },
     region: 'South America',
+    phoneCode: '+51',
   },
   {
     name: 'Philippines',
@@ -1358,6 +1493,7 @@ export const COUNTRIES = [
     capital: 'Manila',
     coordinates: { lat: 14.5995, lng: 120.9842 },
     region: 'Asia',
+    phoneCode: '+63',
   },
   {
     name: 'Poland',
@@ -1368,6 +1504,7 @@ export const COUNTRIES = [
     capital: 'Warsaw',
     coordinates: { lat: 52.2298, lng: 21.0118 },
     region: 'Europe',
+    phoneCode: '+48',
   },
   {
     name: 'Portugal',
@@ -1378,6 +1515,7 @@ export const COUNTRIES = [
     capital: 'Lisbon',
     coordinates: { lat: 38.7223, lng: -9.1393 },
     region: 'Europe',
+    phoneCode: '+351',
   },
   {
     name: 'Qatar',
@@ -1388,6 +1526,7 @@ export const COUNTRIES = [
     capital: 'Doha',
     coordinates: { lat: 25.2854, lng: 51.531 },
     region: 'Asia',
+    phoneCode: '+974',
   },
   {
     name: 'Romania',
@@ -1398,6 +1537,7 @@ export const COUNTRIES = [
     capital: 'Bucharest',
     coordinates: { lat: 44.4268, lng: 26.1025 },
     region: 'Europe',
+    phoneCode: '+40',
   },
   {
     name: 'Russia',
@@ -1408,6 +1548,7 @@ export const COUNTRIES = [
     capital: 'Moscow',
     coordinates: { lat: 55.7558, lng: 37.6173 },
     region: 'Europe',
+    phoneCode: '+7',
   },
   {
     name: 'Rwanda',
@@ -1418,6 +1559,7 @@ export const COUNTRIES = [
     capital: 'Kigali',
     coordinates: { lat: -1.9441, lng: 30.0619 },
     region: 'Africa',
+    phoneCode: '+250',
   },
   {
     name: 'Saint Kitts and Nevis',
@@ -1428,6 +1570,7 @@ export const COUNTRIES = [
     capital: 'Basseterre',
     coordinates: { lat: 17.3026, lng: -62.7177 },
     region: 'North America',
+    phoneCode: '+1',
   },
   {
     name: 'Saint Lucia',
@@ -1438,6 +1581,7 @@ export const COUNTRIES = [
     capital: 'Castries',
     coordinates: { lat: 13.9094, lng: -60.9789 },
     region: 'North America',
+    phoneCode: '+1',
   },
   {
     name: 'Saint Vincent and the Grenadines',
@@ -1448,6 +1592,7 @@ export const COUNTRIES = [
     capital: 'Kingstown',
     coordinates: { lat: 13.16, lng: -61.224 },
     region: 'North America',
+    phoneCode: '+1',
   },
   {
     name: 'Samoa',
@@ -1458,6 +1603,7 @@ export const COUNTRIES = [
     capital: 'Apia',
     coordinates: { lat: -13.8333, lng: -171.7667 },
     region: 'Oceania',
+    phoneCode: '+685',
   },
   {
     name: 'San Marino',
@@ -1468,6 +1614,7 @@ export const COUNTRIES = [
     capital: 'San Marino',
     coordinates: { lat: 43.9333, lng: 12.45 },
     region: 'Europe',
+    phoneCode: '+378',
   },
   {
     name: 'Sao Tome and Principe',
@@ -1478,6 +1625,7 @@ export const COUNTRIES = [
     capital: 'São Tomé',
     coordinates: { lat: 0.3365, lng: 6.7273 },
     region: 'Africa',
+    phoneCode: '+239',
   },
   {
     name: 'Saudi Arabia',
@@ -1488,6 +1636,7 @@ export const COUNTRIES = [
     capital: 'Riyadh',
     coordinates: { lat: 24.7136, lng: 46.6753 },
     region: 'Asia',
+    phoneCode: '+966',
   },
   {
     name: 'Senegal',
@@ -1498,6 +1647,7 @@ export const COUNTRIES = [
     capital: 'Dakar',
     coordinates: { lat: 14.7167, lng: -17.4677 },
     region: 'Africa',
+    phoneCode: '+221',
   },
   {
     name: 'Serbia',
@@ -1508,6 +1658,7 @@ export const COUNTRIES = [
     capital: 'Belgrade',
     coordinates: { lat: 44.7866, lng: 20.4489 },
     region: 'Europe',
+    phoneCode: '+381',
   },
   {
     name: 'Seychelles',
@@ -1518,6 +1669,7 @@ export const COUNTRIES = [
     capital: 'Victoria',
     coordinates: { lat: -4.6191, lng: 55.4513 },
     region: 'Africa',
+    phoneCode: '+248',
   },
   {
     name: 'Sierra Leone',
@@ -1528,6 +1680,7 @@ export const COUNTRIES = [
     capital: 'Freetown',
     coordinates: { lat: 8.4844, lng: -13.2344 },
     region: 'Africa',
+    phoneCode: '+232',
   },
   {
     name: 'Singapore',
@@ -1538,6 +1691,7 @@ export const COUNTRIES = [
     capital: 'Singapore',
     coordinates: { lat: 1.3521, lng: 103.8198 },
     region: 'Asia',
+    phoneCode: '+65',
   },
   {
     name: 'Slovakia',
@@ -1548,6 +1702,7 @@ export const COUNTRIES = [
     capital: 'Bratislava',
     coordinates: { lat: 48.1486, lng: 17.1077 },
     region: 'Europe',
+    phoneCode: '+421',
   },
   {
     name: 'Slovenia',
@@ -1558,6 +1713,7 @@ export const COUNTRIES = [
     capital: 'Ljubljana',
     coordinates: { lat: 46.0569, lng: 14.5058 },
     region: 'Europe',
+    phoneCode: '+386',
   },
   {
     name: 'Solomon Islands',
@@ -1568,6 +1724,7 @@ export const COUNTRIES = [
     capital: 'Honiara',
     coordinates: { lat: -9.4456, lng: 159.9729 },
     region: 'Oceania',
+    phoneCode: '+677',
   },
   {
     name: 'Somalia',
@@ -1578,6 +1735,7 @@ export const COUNTRIES = [
     capital: 'Mogadishu',
     coordinates: { lat: 2.0469, lng: 45.3182 },
     region: 'Africa',
+    phoneCode: '+252',
   },
   {
     name: 'South Africa',
@@ -1588,6 +1746,7 @@ export const COUNTRIES = [
     capital: 'Pretoria',
     coordinates: { lat: -25.7479, lng: 28.2293 },
     region: 'Africa',
+    phoneCode: '+27',
   },
   {
     name: 'South Korea',
@@ -1598,6 +1757,7 @@ export const COUNTRIES = [
     capital: 'Seoul',
     coordinates: { lat: 37.5665, lng: 126.978 },
     region: 'Asia',
+    phoneCode: '+82',
   },
   {
     name: 'South Sudan',
@@ -1608,6 +1768,7 @@ export const COUNTRIES = [
     capital: 'Juba',
     coordinates: { lat: 4.8594, lng: 31.5713 },
     region: 'Africa',
+    phoneCode: '+211',
   },
   {
     name: 'Spain',
@@ -1618,6 +1779,7 @@ export const COUNTRIES = [
     capital: 'Madrid',
     coordinates: { lat: 40.4168, lng: -3.7038 },
     region: 'Europe',
+    phoneCode: '+34',
   },
   {
     name: 'Sri Lanka',
@@ -1628,6 +1790,7 @@ export const COUNTRIES = [
     capital: 'Sri Jayawardenepura Kotte',
     coordinates: { lat: 6.8941, lng: 79.902 },
     region: 'Asia',
+    phoneCode: '+94',
   },
   {
     name: 'State of Palestine',
@@ -1638,6 +1801,7 @@ export const COUNTRIES = [
     capital: 'Ramallah',
     coordinates: { lat: 31.9, lng: 35.2 },
     region: 'Asia',
+    phoneCode: '+970',
   },
   {
     name: 'Sudan',
@@ -1648,6 +1812,7 @@ export const COUNTRIES = [
     capital: 'Khartoum',
     coordinates: { lat: 15.5007, lng: 32.5599 },
     region: 'Africa',
+    phoneCode: '+249',
   },
   {
     name: 'Suriname',
@@ -1658,6 +1823,7 @@ export const COUNTRIES = [
     capital: 'Paramaribo',
     coordinates: { lat: 5.852, lng: -55.2038 },
     region: 'South America',
+    phoneCode: '+597',
   },
   {
     name: 'Sweden',
@@ -1668,6 +1834,7 @@ export const COUNTRIES = [
     capital: 'Stockholm',
     coordinates: { lat: 59.3293, lng: 18.0686 },
     region: 'Europe',
+    phoneCode: '+46',
   },
   {
     name: 'Switzerland',
@@ -1678,6 +1845,7 @@ export const COUNTRIES = [
     capital: 'Bern',
     coordinates: { lat: 46.948, lng: 7.4474 },
     region: 'Europe',
+    phoneCode: '+41',
   },
   {
     name: 'Syria',
@@ -1688,6 +1856,7 @@ export const COUNTRIES = [
     capital: 'Damascus',
     coordinates: { lat: 33.5138, lng: 36.2765 },
     region: 'Asia',
+    phoneCode: '+963',
   },
   {
     name: 'Taiwan',
@@ -1698,6 +1867,7 @@ export const COUNTRIES = [
     capital: 'Taipei',
     coordinates: { lat: 25.0478, lng: 121.5319 },
     region: 'Asia',
+    phoneCode: '+886',
   },
   {
     name: 'Tajikistan',
@@ -1708,6 +1878,7 @@ export const COUNTRIES = [
     capital: 'Dushanbe',
     coordinates: { lat: 38.5598, lng: 68.787 },
     region: 'Asia',
+    phoneCode: '+992',
   },
   {
     name: 'Tanzania',
@@ -1718,6 +1889,7 @@ export const COUNTRIES = [
     capital: 'Dodoma',
     coordinates: { lat: -6.163, lng: 35.7516 },
     region: 'Africa',
+    phoneCode: '+255',
   },
   {
     name: 'Thailand',
@@ -1728,6 +1900,7 @@ export const COUNTRIES = [
     capital: 'Bangkok',
     coordinates: { lat: 13.7563, lng: 100.5018 },
     region: 'Asia',
+    phoneCode: '+66',
   },
   {
     name: 'Timor-Leste',
@@ -1738,6 +1911,7 @@ export const COUNTRIES = [
     capital: 'Dili',
     coordinates: { lat: -8.5569, lng: 125.5603 },
     region: 'Asia',
+    phoneCode: '+670',
   },
   {
     name: 'Togo',
@@ -1748,6 +1922,7 @@ export const COUNTRIES = [
     capital: 'Lomé',
     coordinates: { lat: 6.1375, lng: 1.2123 },
     region: 'Africa',
+    phoneCode: '+228',
   },
   {
     name: 'Tonga',
@@ -1758,6 +1933,7 @@ export const COUNTRIES = [
     capital: 'Nukuʻalofa',
     coordinates: { lat: -21.1394, lng: -175.2018 },
     region: 'Oceania',
+    phoneCode: '+676',
   },
   {
     name: 'Trinidad and Tobago',
@@ -1768,6 +1944,7 @@ export const COUNTRIES = [
     capital: 'Port of Spain',
     coordinates: { lat: 10.6667, lng: -61.5167 },
     region: 'North America',
+    phoneCode: '+1',
   },
   {
     name: 'Tunisia',
@@ -1778,6 +1955,7 @@ export const COUNTRIES = [
     capital: 'Tunis',
     coordinates: { lat: 36.8065, lng: 10.1815 },
     region: 'Africa',
+    phoneCode: '+216',
   },
   {
     name: 'Turkey',
@@ -1788,6 +1966,7 @@ export const COUNTRIES = [
     capital: 'Ankara',
     coordinates: { lat: 39.9334, lng: 32.8597 },
     region: 'Asia',
+    phoneCode: '+90',
   },
   {
     name: 'Turkmenistan',
@@ -1798,6 +1977,7 @@ export const COUNTRIES = [
     capital: 'Ashgabat',
     coordinates: { lat: 37.9601, lng: 58.3261 },
     region: 'Asia',
+    phoneCode: '+993',
   },
   {
     name: 'Tuvalu',
@@ -1808,6 +1988,7 @@ export const COUNTRIES = [
     capital: 'Funafuti',
     coordinates: { lat: -8.5167, lng: 179.2167 },
     region: 'Oceania',
+    phoneCode: '+688',
   },
   {
     name: 'Uganda',
@@ -1818,6 +1999,7 @@ export const COUNTRIES = [
     capital: 'Kampala',
     coordinates: { lat: 0.3476, lng: 32.5825 },
     region: 'Africa',
+    phoneCode: '+256',
   },
   {
     name: 'Ukraine',
@@ -1828,6 +2010,7 @@ export const COUNTRIES = [
     capital: 'Kyiv',
     coordinates: { lat: 50.4501, lng: 30.5234 },
     region: 'Europe',
+    phoneCode: '+380',
   },
   {
     name: 'United Arab Emirates',
@@ -1838,6 +2021,7 @@ export const COUNTRIES = [
     capital: 'Abu Dhabi',
     coordinates: { lat: 24.4539, lng: 54.3773 },
     region: 'Asia',
+    phoneCode: '+971',
   },
   {
     name: 'United Kingdom',
@@ -1848,6 +2032,7 @@ export const COUNTRIES = [
     capital: 'London',
     coordinates: { lat: 51.5072, lng: -0.1276 },
     region: 'Europe',
+    phoneCode: '+44',
   },
   {
     name: 'United States',
@@ -1858,6 +2043,7 @@ export const COUNTRIES = [
     capital: 'Washington, D.C.',
     coordinates: { lat: 38.9072, lng: -77.0369 },
     region: 'North America',
+    phoneCode: '+1',
   },
   {
     name: 'Uruguay',
@@ -1868,6 +2054,7 @@ export const COUNTRIES = [
     capital: 'Montevideo',
     coordinates: { lat: -34.9011, lng: -56.1645 },
     region: 'South America',
+    phoneCode: '+598',
   },
   {
     name: 'Uzbekistan',
@@ -1878,6 +2065,7 @@ export const COUNTRIES = [
     capital: 'Tashkent',
     coordinates: { lat: 41.2995, lng: 69.24 },
     region: 'Asia',
+    phoneCode: '+998',
   },
   {
     name: 'Vanuatu',
@@ -1888,6 +2076,7 @@ export const COUNTRIES = [
     capital: 'Port Vila',
     coordinates: { lat: -17.7333, lng: 168.3167 },
     region: 'Oceania',
+    phoneCode: '+678',
   },
   {
     name: 'Vatican City',
@@ -1898,6 +2087,7 @@ export const COUNTRIES = [
     capital: 'Vatican City',
     coordinates: { lat: 41.9029, lng: 12.4534 },
     region: 'Europe',
+    phoneCode: '+39',
   },
   {
     name: 'Venezuela',
@@ -1908,6 +2098,7 @@ export const COUNTRIES = [
     capital: 'Caracas',
     coordinates: { lat: 10.4806, lng: -66.9036 },
     region: 'South America',
+    phoneCode: '+58',
   },
   {
     name: 'Vietnam',
@@ -1918,6 +2109,7 @@ export const COUNTRIES = [
     capital: 'Hanoi',
     coordinates: { lat: 21.0278, lng: 105.8342 },
     region: 'Asia',
+    phoneCode: '+84',
   },
   {
     name: 'Yemen',
@@ -1928,6 +2120,7 @@ export const COUNTRIES = [
     capital: "Sana'a",
     coordinates: { lat: 15.3694, lng: 44.191 },
     region: 'Asia',
+    phoneCode: '+967',
   },
   {
     name: 'Zambia',
@@ -1938,6 +2131,7 @@ export const COUNTRIES = [
     capital: 'Lusaka',
     coordinates: { lat: -15.3875, lng: 28.3228 },
     region: 'Africa',
+    phoneCode: '+260',
   },
   {
     name: 'Zimbabwe',
@@ -1948,5 +2142,6 @@ export const COUNTRIES = [
     capital: 'Harare',
     coordinates: { lat: -17.8292, lng: 31.0522 },
     region: 'Africa',
+    phoneCode: '+263',
   },
 ];
